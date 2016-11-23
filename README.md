@@ -3,7 +3,7 @@
 
 What it currently does:
 
-- Opens .filter files, parses them, creates an internal representation of the filter (split by "Line" and "Entry")
+- Opens .filter files, parses them, creates an internal representation of the filter (split by "Line" and "Entry"). It's designed in a way that preserves all comments.
 
 - Removes redundancies and cleans a bit - aligns lines, removes filler characters, adjusts indents
 
