@@ -49,11 +49,12 @@ namespace FilterPolish
         public enum LineAttributeVisual
         {
             Unknown = 0,
-            SetTextColor = 1,
-            SetBorderColor = 2,
-            SetBackgroundColor = 3,
-            SetFontSize = 4,
+            SetFontSize = 1,
+            SetTextColor = 2,
+            SetBorderColor = 3,
+            SetBackgroundColor = 4,
             PlayAlertSound = 5
+
         }
 
         public static bool Match_Operator(string s)
@@ -122,7 +123,6 @@ namespace FilterPolish
 
         public static int GetEnumC(string s)
         {
-            int found = 0;
             int i = Enum.GetNames(typeof(LineAttributeClass)).Length;
             for (int n = 0; n < i; n++)
             {
@@ -136,7 +136,6 @@ namespace FilterPolish
 
         public static int GetEnumV(string s)
         {
-            int found = 0;
             int i = Enum.GetNames(typeof(LineAttributeVisual)).Length;
             for (int n = 0; n < i; n++)
             {

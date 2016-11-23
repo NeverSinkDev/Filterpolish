@@ -5,12 +5,14 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Text.RegularExpressions;
 using System.Windows.Forms;
+using System.Drawing;
 
 namespace FilterPolish
 {
     public class Line
     {
-        char[] _charsToTrim = { '*', '\t', '\'', ' ' };
+        static char[] _charsToTrim = { '*', '\t', '\'', ' ' };
+
         public string Raw = "";
         public string Rebuilt = "";
         public string TypeLine;
@@ -20,8 +22,8 @@ namespace FilterPolish
         public string Identifier = "";
         public string Oper = "";
         public string Value = "";
-        public string Comment = "";
         public string Outtro = "";
+        public string Comment = "";
 
         public List<string> Tags = new List<string>();
         public List<string> BuildTags = new List<string>();
@@ -43,21 +45,31 @@ namespace FilterPolish
         public int CountAttri;
         public bool Commentfound = false;
 
+        /// <summary>
+        /// Standard consturctor Takes a raw bunch of text and turns it into a line. Needs to be initialized with Init();
+        /// </summary>
+        /// <param name="text"></param>
         public Line(string text)
         {
             Raw = text;
         }
 
+        /// <summary>
+        /// Rebuilds the line from the gathered components. Setting the optional param to true enables, also replaces the Raw value with the rebuilt line.
+        /// </summary>
+        /// <param name="ApplyToRaw"></param>
+        /// <returns></returns>
         public string RebuildLine(bool ApplyToRaw = false)
         {
-            
+
             this.Rebuilt =
                     Intro +
                     Identifier + (Value != "" ? " " : "") +
                     Oper + (Oper != "" ? " " : "") +
                     Value + ((Comment != "" && (Identifier == "Show" || Identifier == "Hide")) ? " " : "") +
-                    Comment +
-                    Outtro;
+                    Outtro +
+                    Comment;
+
 
             if (ApplyToRaw)
             {
@@ -67,15 +79,21 @@ namespace FilterPolish
             return this.Rebuilt;
         }
 
+        /// <summary>
+        /// Directly applies the component to the Raw 
+        /// </summary>
         public void UpdateRaw()
         {
             this.Raw =
                     Intro +
-                    string.Join(" ", Attributes) + ((Comment != "" && (Identifier == "Show" || Identifier == "Hide")) ? " " : "") +
-                    Comment + 
-                    Outtro;
+                    string.Join(" ", Attributes) + ((Comment != "" && (Identifier == "Show" || Identifier == "Hide")) ? " " : "")
+                    + Outtro + Comment;
         }
 
+        /// <summary>
+        /// Calculates the "priority" of the line. This is used in order to sort the lines in an entry
+        /// </summary>
+        /// <returns></returns>
         public int CalculateLinePriority()
         {
             this.LinePriority = Type.GetLinePriority(this);
@@ -88,6 +106,10 @@ namespace FilterPolish
             return this.LinePriority;
         }
 
+        /// <summary>
+        /// Rebuilds the line from the broken down components,  but alos adds debug information.
+        /// </summary>
+        /// <returns></returns>
         public string RebuildLineTypeDebug()
         {
             this.RebuildLine();
@@ -103,11 +125,18 @@ namespace FilterPolish
                    this.Rebuilt;
         }
 
+        /// <summary>
+        /// Checks if the rebuilt result is different from the initial input
+        /// </summary>
+        /// <returns></returns>
         public bool CompareRebuild()
         {
             return (Intro + Identifier + Oper + Value + Comment + Outtro) == Raw;
         }
 
+        /// <summary>
+        /// Checks the comments for tags. Those tags are latr used to generate subversions.
+        /// </summary>
         public void LookForCommentTags()
         {
             if (this.Identifier == "Show" || this.Identifier == "Hide")
@@ -123,31 +152,35 @@ namespace FilterPolish
                             s.Trim();
                             if (s.Contains("%"))
                             {
-                                this.BuildTags.Add(Comment.Substring(Comment.IndexOf("%")+1));
+                                this.BuildTags.Add(Comment.Substring(Comment.IndexOf("%") + 1));
                             }
                             else
-                            { 
-                            this.Tags.Add(s);
+                            {
+                                this.Tags.Add(s);
                             }
                         }
                     }
                     else if (Comment.Contains("%"))
                     {
-                        this.BuildTags.Add(Comment.Substring(Comment.IndexOf("%")+1));
+                        this.BuildTags.Add(Comment.Substring(Comment.IndexOf("%") + 1));
                     }
                 }
             }
         }
 
+        /// <summary>
+        /// Identifies the line. Breaks it into pieces. WHile this method works, it is very ugly and needs a real rework.
+        /// </summary>
+        /// <returns></returns>
         public string Identify()
         {
             this.Intro = "";
             this.Identifier = "";
             this.Outtro = "";
             this.Comment = "";
-            if (this.Attributes != null){ this.Attributes.Clear(); }
+            if (this.Attributes != null) { this.Attributes.Clear(); }
             if (this.Values != null) { this.Values.Clear(); }
-            if (SplitString != null){SplitString.Clear(); }
+            if (SplitString != null) { SplitString.Clear(); }
             this.Value = "";
             this.Oper = "";
 
@@ -228,6 +261,7 @@ namespace FilterPolish
             {
                 if (Attributes[0].Equals("Show"))
                 {
+                    this.Intro = "";
                     TypeLine = Type.LineType.Show.ToString();
                     Identifier = "Show";
 
@@ -245,6 +279,7 @@ namespace FilterPolish
 
                 else if (Attributes[0].Equals("Hide"))
                 {
+                    this.Intro = "";
                     TypeLine = Type.LineType.Hide.ToString();
                     Identifier = "Hide";
 
@@ -262,6 +297,7 @@ namespace FilterPolish
 
                 if (!(Type.Match_Attribute_Class(Attributes[0]).Equals("Unknown")))
                 {
+                    this.Intro = "\t";
                     TypeLine = Type.LineType.AttributeClass.ToString();
                     Identifier = Attributes[0];
 
@@ -295,6 +331,7 @@ namespace FilterPolish
 
                 else if (!(Type.Match_Attribute_Visual(Attributes[0]).Equals("Unknown")))
                 {
+                    this.Intro = "\t";
                     TypeLine = Type.LineType.AttributeVisual.ToString();
                     Identifier = Attributes[0];
 
@@ -352,6 +389,12 @@ namespace FilterPolish
 
         }
 
+        /// <summary>
+        /// Tests if the liat is not empty or null
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="source"></param>
+        /// <returns></returns>
         public static bool IsNotEmpty<T>(IEnumerable<T> source)
         {
             if (source == null)
@@ -359,47 +402,87 @@ namespace FilterPolish
             return source.Any();
         }
 
-        public static bool IsAtLeastThisLong<T>(IEnumerable<T> source, int index)
+        /// <summary>
+        /// Compares the line in the ENTRY to another one
+        /// -1  : line is null
+        /// 0   : line has different idents/operas/params
+        /// 1   : line has same params, line: NEW, this: ?
+        /// 2   : line has same params, comments are the same, no tags
+        /// 3   : line has same params, line: STABLE, this: NEW
+        /// 4   : line has same params, line: STABLE, this: STABLE
+        /// </summary>
+        public int CompareLine(Line line, string commentTag = "")
         {
-            if (source != null)
+
+            if (line == null)
             {
-                if (source.Count() >= index)
-                    return true;
+                return -1;
+            }
+
+            if (line.Identifier != this.Identifier || this.Oper != line.Oper)
+            {
+                return 0;
+            }
+
+            if (!this.Attributes.SequenceEqual(line.Attributes))
+            {
+                return 0;
+            }
+
+            // OLD COMPARISON METHOD, SEEMS TO IGNORE ORDER
+            //var d1 = this.Attributes.Except(line.Attributes).ToList();
+            //var d2 = line.Attributes.Except(this.Attributes).ToList();
+            //if (d1.Any() || d2.Any())
+            //{
+            //   return 0;
+            //}
+
+            if (this.Comment != line.Comment)
+            {
+                // The comment in the line is uninteresting
+                if (line.Comment == "")
+                {
+                    return 1;
+                }
+
+                if (commentTag != "" && line.CommentContains(commentTag))
+                {
+                    return 1;
+                }
+
+                if (commentTag != "" && this.CommentContains(commentTag) && !line.CommentContains(commentTag))
+                {
+                    return 3;
+                }
+
+                if (commentTag != "" && !this.CommentContains(commentTag) && !line.CommentContains(commentTag))
+                {
+                    return 4;
+                }
+
+
+
+            }
+            return 2;
+
+        }
+
+        public bool CommentContains(string tag)
+        {
+            if (this.Comment != null && this.Comment.Contains(tag))
+            {
+                return true;
             }
 
             return false;
         }
 
-        public void HandleCommentTags()
-        {
-            
-        }
-
-        public void SetAttributes(List<string> change)
-        {
-            if (this.TypeLine == "Show" || this.TypeLine == "Hide")
-            {
-                
-            }
-            else if (this.TypeLine == "AttributeClass")
-            {
-
-            }
-            else if (this.TypeLine == "AttributeVisual")
-            {
-                if (this.Identifier == "SetBorderColor" || this.Identifier == "SetTextColor" ||
-                    this.Identifier == "SetBackgroundColor")
-                {
-                    
-                }  
-            }
-        }
-
-        public void AddAttribute()
-        {
-            
-        }
-
+        /// <summary>
+        /// Splits the list into the list<string> this.SplitString, Used to break the line into pieces.
+        /// Another fairly ugly recursive method, works surprisingly well though.
+        /// </summary>
+        /// <param name="text"></param>
+        /// <returns></returns>
         public bool SplitToList(string text)
         {
 
@@ -411,7 +494,7 @@ namespace FilterPolish
                     n = text.IndexOf(" ");
                     if (n > 0)
                     {
-                        SplitString.Add(text.Substring(0, n).Trim(_charsToTrim));
+                        this.SplitString.Add(text.Substring(0, n).Trim(_charsToTrim));
                         SplitToList(text.Substring(n));
 
                     }
@@ -429,10 +512,27 @@ namespace FilterPolish
             return false;
         }
 
+        /// <summary>
+        /// Changes the attribute N to value V and applies the result to the raw text. 
+        /// </summary>
+        /// <param name="n"></param>
+        /// <param name="v"></param>
         public void ChangeValueAndApplyToRaw(int n, string v)
         {
             this.Attributes[n] = v;
             UpdateRaw();
+        }
+
+        public float GetARGB_Brightness() 
+        {
+            float f = Color.FromArgb(O, R, G, B).GetBrightness();
+            return f;
+        }
+
+        public float GetARGB_Hue()
+        {
+            float f = Color.FromArgb(O, R, G, B).GetHue();
+            return f;
         }
     }
 

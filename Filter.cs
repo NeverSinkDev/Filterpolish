@@ -10,7 +10,7 @@ using System.Windows.Forms;
 
 namespace FilterPolish
 {
-    class Filter
+    public class Filter
     {
         bool _loaded = false;
         public string RawFilter = "";
@@ -19,7 +19,9 @@ namespace FilterPolish
         public List<Line> LineList = new List<Line>();
         public Form1 form1;
         public FilterSettings settings;
-
+        public StyleSheet CurrentStyle;
+        public StyleSheet ImportedStyle;
+        public TableOfContentsEntry TOC;
 
         char[] _delimiterChars = { ' ', '\t' };
 
@@ -312,24 +314,56 @@ namespace FilterPolish
             return true;
         }
 
-        public void AdjustVersionNumber()
+        /// <summary>
+        /// Label Style information
+        /// </summary>
+        /// <returns></returns>
+        public StyleSheet GenerateStyleSheet(bool labelNewStyles)
+        {
+            this.CurrentStyle = new StyleSheet(this);
+            this.CurrentStyle.Init();
+            this.CurrentStyle.CheckFilterForStyles(labelNewStyles);
+            return this.CurrentStyle;
+        }
+
+        public void ApplyStyleSheet(StyleSheet s)
+        {
+            s.AppliedFilter = this;
+            s.ApplyStyleSheetCommentsToData();
+        }
+
+        /// <summary>
+        /// Changes the version number of the filter within the file.
+        /// </summary>
+        /// <param name="entryNumber"></param>
+        /// <param name="lineNumber"></param>
+        public void AdjustVersionNumber(int entryNumber, int lineNumber)
         {
             AddFilterProgressToLogBox("Adjusting version number...");
-            if (this.EntryList[0].getType() == "Comment")
+            if (this.EntryList[entryNumber].getType() == "Comment")
             {
-                this.EntryList[0].Lines[2].Raw = "# VERSION:\t" + this.settings.versionNumber;
+                this.EntryList[entryNumber].Lines[lineNumber].Raw = "# VERSION:\t" + this.settings.versionNumber;
             }
         }
 
-        public void AdjustVersionName()
+        /// <summary>
+        /// Changes the subversion name of the filter within the file
+        /// </summary>
+        /// <param name="entryNumber"></param>
+        /// <param name="lineNumber"></param>
+        public void AdjustVersionName(int entryNumber, int lineNumber)
         {
             AddFilterProgressToLogBox("Adjusting version name...");
-            if (this.EntryList[0].getType() == "Comment")
+            if (this.EntryList[entryNumber].getType() == "Comment")
             {
-                this.EntryList[0].Lines[3].Raw = "# TYPE:\t\t" + this.settings.subVersionName;
+                this.EntryList[entryNumber].Lines[lineNumber].Raw = "# TYPE:\t\t" + this.settings.subVersionName;
             }
         }
 
+        /// <summary>
+        /// Logs progression in the logbox
+        /// </summary>
+        /// <param name="line"></param>
         public void AddFilterProgressToLogBox(string line)
         {
             if (this.settings.subVersionName == null || this.settings.versionNumber == null)
@@ -340,14 +374,57 @@ namespace FilterPolish
             form1.AddTextToLogBox("FLOG: " + this.settings.subVersionName + " " + this.settings.versionNumber + " :" + line);
         }
 
+        /// <summary>
+        /// Saves the filter to a file.
+        /// </summary>
         public void SaveToFile()
         {
             this.AddFilterProgressToLogBox("Creating filter file...");
             System.IO.File.WriteAllText(@"C:\FilterOutput\"
-                                            + "NeverSink's filter " + this.settings.versionNumber + " - "
+                                            + "NeverSink's filter - "
                                                                     + this.settings.subVersionName + ".filter",
                                                                     this.RawFilterRebuilt);
             this.AddFilterProgressToLogBox("Done! Size:" + RawFilterRebuilt.Length);
+        }
+
+        /// <summary>
+        /// Save file to loaction
+        /// </summary>
+        /// <param name="dialog"></param>
+        public void SaveToFile(FileDialog dialog)
+        {
+            this.AddFilterProgressToLogBox("Creating filter file...");
+            System.IO.File.WriteAllText(dialog.FileName,this.RawFilterRebuilt);
+            this.AddFilterProgressToLogBox("Done! Size:" + RawFilterRebuilt.Length);
+        }
+
+        public void GenerateTOC(bool ApplyToc = true)
+        {
+            this.TOC = new TableOfContentsEntry(this);
+            this.TOC.RunTOCParsing(ApplyToc);
+        }
+
+        /// <summary>
+        /// Gets entries that contain certain attributes
+        /// </summary>
+        /// <param name="attributes"></param>
+        /// <param name="comment"></param>
+        /// <returns></returns>
+        public List<Entry> GetEntriesContaining(string attributes, string comment)
+        {
+            string finalText = "";
+            List<Entry> results = new List<Entry>();
+            Line tempLine = new Line(attributes);
+            tempLine.Identify();
+            foreach (Entry e in this.EntryList)
+            {
+                if (e.FindLineSimilarities(tempLine) >= 1)
+                {
+                    results.Add(e);
+                }
+            }
+
+            return results;
         }
     }
 

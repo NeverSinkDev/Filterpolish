@@ -14,16 +14,29 @@ namespace FilterPolish
         public int N = 0;
         public List<string> BuildTags = new List<string>();
 
+        /// <summary>
+        /// Default constructor
+        /// </summary>
         public Entry()
         {
             this.Lines = new List<Line>();
         }
 
+        /// <summary>
+        /// Construct Entry with a list of Lines
+        /// </summary>
+        /// <param name="Lines"></param>
         public Entry(List<Line> Lines)
         {
             this.Lines = new List<Line>(Lines);
         }
 
+        /// <summary>
+        /// Construct from a list of Lines, but only using a certain subsection
+        /// </summary>
+        /// <param name="Lines"></param>
+        /// <param name="start"></param>
+        /// <param name="length"></param>
         public Entry(List<Line> Lines, int start, int length)
         {
             N = start;
@@ -32,18 +45,52 @@ namespace FilterPolish
                 this.Lines.Add(Lines[n]);
         }
 
-        public void ModifyAttribute(string mod, string op, string change)
+        /// <summary>
+        /// Modify thea attribute every line with a specific identifier
+        /// </summary>
+        /// <param name="mod"></param>
+        /// <param name="op"></param>
+        /// <param name="change"></param>
+        public List<Line> ModifyAttribute(string mod, string op = "default", string change = "default", string com = "default")
         {
-            foreach (Line l in this.Lines)
+            List<Line> changedLines = new List<Line>();
+            for(int n = 0; n < this.Lines.Count; n++)
             {
-                if (l.Identifier == mod)
+                bool changes = false;
+                if (this.Lines[n].Identifier == mod)
                 {
-                    l.Oper = op;
-                    l.Value = change;
+                    if (op != "default")
+                    {
+                        changes = true;
+                        this.Lines[n].Oper = op;
+                    }
+
+                    if (change != "default")
+                    {
+                        changes = true;
+                        string comment = this.Lines[n].Comment;
+                        this.Lines[n].Raw = change + comment;
+                        this.Lines[n].Identify();
+                    }
+
+                    if (com != "default")
+                    {
+                        changes = true;
+                        this.Lines[n].Comment = com;
+                    }
+                    
+                    if (changes == true) {
+                        this.Lines[n].UpdateRaw();
+                        changedLines.Add(this.Lines[n]);
+                    };
                 }
             }
+            return changedLines;
         }
 
+        /// <summary>
+        /// Get the first version tag of an entry
+        /// </summary>
         public void FindFirstVersionTag()
         {
             if (this.Type == 1 || this.Type == 2)
@@ -55,6 +102,11 @@ namespace FilterPolish
             }
         }
 
+        /// <summary>
+        /// Foreach loop that handles all version tags in the entry
+        /// </summary>
+        /// <param name="strictness"></param>
+        /// <returns></returns>
         public bool HandleVersionTags(int strictness)
         {
             bool changed = false;
@@ -73,6 +125,10 @@ namespace FilterPolish
             return changed;
         }
 
+        /// <summary>
+        /// Defines the action to be performed with every tag. Should be moved to it's own class if the vtag system becomes more complex
+        /// </summary>
+        /// <param name="tag"></param>
         public void HandleInnerTag(string tag)
         {
             if (tag=="D")
@@ -97,6 +153,12 @@ namespace FilterPolish
             }
         }
 
+        /// <summary>
+        /// Wow. I did a booboo, that's some fugly code. Anyway, this thing tests if the strictness value applies to the current filter
+        /// </summary>
+        /// <param name="strictness"></param>
+        /// <param name="tag"></param>
+        /// <returns></returns>
         public string ReturnTagIfApplies(int strictness, string tag)
         {
             int index = tag.IndexOfAny(new char[]{ '0', '1', '2', '3', '4', '5', '6', '7', '8', '9' });
@@ -118,21 +180,235 @@ namespace FilterPolish
             return "";
         }
 
-        public void ModifyAttribute(string mod, string change)
+        /// <summary>
+        /// Removes all matching lines
+        /// </summary>
+        /// <param name="mod"></param>
+        /// <param name="op"></param>
+        /// <param name="change"></param>
+        public void RemoveLines(Line line)
         {
-
+                this.Lines.RemoveAll(l => l.CompareLine(line) > 0);
+        }
+        /// <summary>
+        /// Removes matching lines that also match in their comment
+        /// </summary>
+        /// <param name="mod"></param>
+        /// <param name="op"></param>
+        /// <param name="change"></param>
+        public void RemoveLinesFullMatch(Line line)
+        {
+                this.Lines.RemoveAll(l => l.CompareLine(line) == 3);
         }
 
-        public void EntryModifyOrAddLine(string mod, string op, List<string> change)
+        /// <summary>
+        /// Removes all matching lines that contain a certain common comment Tag
+        /// </summary>
+        /// <param name="mod"></param>
+        /// <param name="op"></param>
+        /// <param name="change"></param>
+        public void RemoveLineWithCommentTag(Line line, string removeTag)
         {
-
+            if (removeTag != null)
+            {
+                this.Lines.RemoveAll(l => l.CompareLine(line, removeTag) == 2);
+            }
         }
 
-        public void ModifyAttributeRemoveLine(string mod, string op, List<string> change)
+        /// <summary>
+        /// Removes all matching lines containing a Tag or matching (including Comments)
+        /// </summary>
+        /// <param name="mod"></param>
+        /// <param name="op"></param>
+        /// <param name="change"></param>
+        public void RemoveLineWithCommentTagOrMatch(Line line, string removeTag)
         {
-
+            if (removeTag != null)
+            {
+                this.Lines.RemoveAll(l => l.CompareLine(line, removeTag) >= 2);
+            }
         }
 
+
+        /// <summary>
+        /// Checks if a line with the requested identifier exists
+        /// </summary>
+        /// <param name="ident"></param>
+        /// <returns></returns>
+        public bool Any(string ident)
+        {
+            if (this.Lines != null && this.Lines.Count >= 0)
+            {
+                return this.Lines.Any(i => i.Identifier == ident);
+            }
+            else return false;
+        }
+
+        /// <summary>
+        /// Test if there are similar lines in the entry:
+        /// -1: Error
+        /// 0: The line is Unique
+        /// 1   : line has same params, line: NEW, this: ?
+        /// 2   : line has same params, comments are the same, no tags
+        /// 3   : line has same params, line: STABLE, this: NEW
+        /// 4   : line has same params, line: STABLE, this: STABLE
+        /// </summary>
+        /// <param name="ident"></param>
+        /// <returns></returns>
+        public int FindLineSimilarities(Line line, string commentTag = "")
+        {
+            // NO INFORMATION ABOUT THE LINE, RETURN NOPE
+            if (line == null)
+            {
+                return -1;
+            }
+
+            // TEST IF THE ENTRY IS EMPTY - THE LINE iS AUTOMATAICALLY UNIQUE IF IT IS
+            if ( this.Lines.Count == 0)
+            {
+                return 0;
+            }
+
+            // NOW THEN: LET'S GET EVERY LINE WITH THE SAME IDENTIFIER
+            List<Line> lines = this.GetLines(line.Identifier);
+            if( lines == null )
+            {
+                // should this ever happen?
+                return 0;
+            }
+
+            // LETS PARSE ALL LINES. WE'RE COMPARING THE PAIRS, UNTIL WE MANAGE TO FIND A MATCH
+            foreach (Line l in lines)
+            {
+                int result = l.CompareLine(line, commentTag);
+                if (result >= 1)
+                {
+                    return result;
+                }
+            }
+            // Case: Line is unique.
+            return 0;
+            
+        }
+
+        public Line FindLineWithSameComment(Line line)
+        {
+            Line newLine = null;
+
+            if (line == null)
+            {
+                return newLine;
+            }
+
+            if (this.Lines.Count == 0)
+            {
+                return newLine;
+            }
+
+            foreach(Line l in this.Lines)
+            {
+                if (l.Identifier == line.Identifier)
+                {
+                    if (l.Comment == line.Comment)
+                    {
+                        return l;
+                    }
+                }
+            }
+            return newLine;
+        }
+
+
+        /// <summary>
+        /// Returns the first Line with the requested identifier
+        /// </summary>
+        /// <param name="mod"></param>
+        /// <param name="op"></param>
+        /// <param name="change"></param>
+        public Line GetLine(string ident)
+        {
+            if (this.Any(ident))
+            { return this.Lines.Find(i => i.Identifier == ident); }
+            return null;
+        }
+
+        /// <summary>
+        /// Returns the first Line with the requested identifier and params
+        /// </summary>
+        /// <param name="mod"></param>
+        /// <param name="op"></param>
+        /// <param name="change"></param>
+        public int GetLineIndex(Line line)
+        {
+            foreach (Line l in this.Lines)
+            {
+                if (line != null)
+                {
+                    if (line.CompareLine(l) > 0)
+                    {
+                        return this.Lines.IndexOf(l);
+                    }
+                }
+            }
+            return -1;
+        }
+
+        /// <summary>
+        /// Returns the commend of the first Line with the requested identifier and params
+        /// </summary>
+        /// <param name="mod"></param>
+        /// <param name="op"></param>
+        /// <param name="change"></param>
+        public string GetLineComment(Line line)
+        {
+            foreach (Line l in this.Lines)
+            {
+                if (line != null)
+                {
+                    if (line.CompareLine(l) > 0)
+                    {
+                        return l.Comment;
+                    }
+                }
+            }
+            return "";
+        }
+
+        /// <summary>
+        /// Returns the commend of the first Line with the requested identifier and params
+        /// </summary>
+        /// <param name="mod"></param>
+        /// <param name="op"></param>
+        /// <param name="change"></param>
+        public Line GetLineByFullString(string attributes)
+        {
+            foreach (Line l in this.Lines)
+            {
+                if (String.Join(" ",l.Attributes) == attributes)
+                    {
+                        return l;
+                    }
+            }
+            return null;
+        }
+
+        
+        /// <summary>
+        /// Returns a list of lines, with the request identifier
+        /// </summary>
+        /// <param name="mod"></param>
+        /// <param name="op"></param>
+        /// <param name="change"></param>
+        public List<Line> GetLines(string ident)
+        {
+            if (this.Any(ident))
+            { return this.Lines.FindAll(i => i.Identifier == ident); }
+            return null;
+        }
+
+        /// <summary>
+        /// comments the entry out
+        /// </summary>
         public void DisableEntry()
         {
             foreach (Line l in this.Lines)
@@ -143,6 +419,9 @@ namespace FilterPolish
             }
         }
 
+        /// <summary>
+        /// switches the "Show" of an entry to "Hide"
+        /// </summary>
         public void SwitchToHide()
         {
             if (this.Type == 1)
@@ -153,37 +432,18 @@ namespace FilterPolish
             }
         }
 
-        public void EnableEntry()
-        {
-            
-        }
-
-        public void RemoveAllTags()
-        {
-
-        }
-
-        public void AddTagToList()
-        {
-
-        }
-
-        public void CheckEntryByLineFilter(string mod, string op, List<List<string>> change)
-        {
-            
-        }
-
-        public static Entry operator +(Entry a, Line b)
-        {
-            a.Lines.Add(b);
-            return a;
-        }
-
+        /// <summary>
+        /// Sorts all lines in an entry, by their weighting
+        /// </summary>
         public void SortEntry()
         {
             this.Lines = this.Lines.OrderBy(l => l.LinePriority).ToList();
         }
 
+        /// <summary>
+        /// Sets the type of an entry, can be "Show", "Hide", "Comment" and "Filler". Ugly method
+        /// </summary>
+        /// <param name="setTo"></param>
         public void SetType(string setTo)
         {
             if (setTo == "show") { Type = 1; return; }
@@ -196,6 +456,10 @@ namespace FilterPolish
             else if (setTo == "Filler") { Type = 4; return; };
         }
 
+        /// <summary>
+        /// Returns the Entrytype.
+        /// </summary>
+        /// <returns></returns>
         public string getType()
         {
             if (Type == 0) { return "Undefined"; }

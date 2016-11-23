@@ -18,5 +18,12 @@ namespace FilterPolish
             this.versionNumber = versionnumber;
             this.strictLevel = strictness;
         }
+
+        public FilterSettings()
+        {
+            this.subVersionName = "unnamed";
+            this.versionNumber = "0.1";
+            this.strictLevel = 0;
+        }
     }
 }
