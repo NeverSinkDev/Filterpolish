@@ -28,10 +28,10 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.ListViewGroup listViewGroup5 = new System.Windows.Forms.ListViewGroup("ListViewGroup", System.Windows.Forms.HorizontalAlignment.Left);
-            System.Windows.Forms.ListViewGroup listViewGroup6 = new System.Windows.Forms.ListViewGroup("ListViewGroup", System.Windows.Forms.HorizontalAlignment.Left);
-            System.Windows.Forms.ListViewGroup listViewGroup7 = new System.Windows.Forms.ListViewGroup("ListViewGroup", System.Windows.Forms.HorizontalAlignment.Left);
-            System.Windows.Forms.ListViewGroup listViewGroup8 = new System.Windows.Forms.ListViewGroup("ListViewGroup", System.Windows.Forms.HorizontalAlignment.Left);
+            System.Windows.Forms.ListViewGroup listViewGroup1 = new System.Windows.Forms.ListViewGroup("ListViewGroup", System.Windows.Forms.HorizontalAlignment.Left);
+            System.Windows.Forms.ListViewGroup listViewGroup2 = new System.Windows.Forms.ListViewGroup("ListViewGroup", System.Windows.Forms.HorizontalAlignment.Left);
+            System.Windows.Forms.ListViewGroup listViewGroup3 = new System.Windows.Forms.ListViewGroup("ListViewGroup", System.Windows.Forms.HorizontalAlignment.Left);
+            System.Windows.Forms.ListViewGroup listViewGroup4 = new System.Windows.Forms.ListViewGroup("ListViewGroup", System.Windows.Forms.HorizontalAlignment.Left);
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
@@ -319,42 +319,49 @@
             // 
             // settingsToolStripMenuItem
             // 
+            this.settingsToolStripMenuItem.Enabled = false;
             this.settingsToolStripMenuItem.Name = "settingsToolStripMenuItem";
             this.settingsToolStripMenuItem.Size = new System.Drawing.Size(187, 22);
             this.settingsToolStripMenuItem.Text = "Settings";
             // 
             // subversionConfigToolStripMenuItem
             // 
+            this.subversionConfigToolStripMenuItem.Enabled = false;
             this.subversionConfigToolStripMenuItem.Name = "subversionConfigToolStripMenuItem";
             this.subversionConfigToolStripMenuItem.Size = new System.Drawing.Size(187, 22);
             this.subversionConfigToolStripMenuItem.Text = "Subversion Config";
             // 
             // generateSubversionsToolStripMenuItem
             // 
+            this.generateSubversionsToolStripMenuItem.Enabled = false;
             this.generateSubversionsToolStripMenuItem.Name = "generateSubversionsToolStripMenuItem";
             this.generateSubversionsToolStripMenuItem.Size = new System.Drawing.Size(187, 22);
             this.generateSubversionsToolStripMenuItem.Text = "Generate Subversions";
             // 
             // uploadToolStripMenuItem
             // 
+            this.uploadToolStripMenuItem.Enabled = false;
             this.uploadToolStripMenuItem.Name = "uploadToolStripMenuItem";
             this.uploadToolStripMenuItem.Size = new System.Drawing.Size(187, 22);
             this.uploadToolStripMenuItem.Text = "Upload";
             // 
             // addChangelogToolStripMenuItem
             // 
+            this.addChangelogToolStripMenuItem.Enabled = false;
             this.addChangelogToolStripMenuItem.Name = "addChangelogToolStripMenuItem";
             this.addChangelogToolStripMenuItem.Size = new System.Drawing.Size(187, 22);
             this.addChangelogToolStripMenuItem.Text = "Add changelog";
             // 
             // updateThreadToolStripMenuItem
             // 
+            this.updateThreadToolStripMenuItem.Enabled = false;
             this.updateThreadToolStripMenuItem.Name = "updateThreadToolStripMenuItem";
             this.updateThreadToolStripMenuItem.Size = new System.Drawing.Size(187, 22);
             this.updateThreadToolStripMenuItem.Text = "Update thread";
             // 
             // announceOnTwitterToolStripMenuItem
             // 
+            this.announceOnTwitterToolStripMenuItem.Enabled = false;
             this.announceOnTwitterToolStripMenuItem.Name = "announceOnTwitterToolStripMenuItem";
             this.announceOnTwitterToolStripMenuItem.Size = new System.Drawing.Size(187, 22);
             this.announceOnTwitterToolStripMenuItem.Text = "Announce on Twitter";
@@ -563,19 +570,19 @@
             this.columnHeader2});
             this.StyleListView.Dock = System.Windows.Forms.DockStyle.Fill;
             this.StyleListView.Font = new System.Drawing.Font("Lucida Console", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            listViewGroup5.Header = "ListViewGroup";
-            listViewGroup5.Name = "listViewGroup1";
-            listViewGroup6.Header = "ListViewGroup";
-            listViewGroup6.Name = "listViewGroup2";
-            listViewGroup7.Header = "ListViewGroup";
-            listViewGroup7.Name = "listViewGroup3";
-            listViewGroup8.Header = "ListViewGroup";
-            listViewGroup8.Name = "listViewGroup4";
+            listViewGroup1.Header = "ListViewGroup";
+            listViewGroup1.Name = "listViewGroup1";
+            listViewGroup2.Header = "ListViewGroup";
+            listViewGroup2.Name = "listViewGroup2";
+            listViewGroup3.Header = "ListViewGroup";
+            listViewGroup3.Name = "listViewGroup3";
+            listViewGroup4.Header = "ListViewGroup";
+            listViewGroup4.Name = "listViewGroup4";
             this.StyleListView.Groups.AddRange(new System.Windows.Forms.ListViewGroup[] {
-            listViewGroup5,
-            listViewGroup6,
-            listViewGroup7,
-            listViewGroup8});
+            listViewGroup1,
+            listViewGroup2,
+            listViewGroup3,
+            listViewGroup4});
             this.StyleListView.HideSelection = false;
             this.StyleListView.Location = new System.Drawing.Point(3, 3);
             this.StyleListView.MultiSelect = false;
