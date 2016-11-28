@@ -28,10 +28,10 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.ListViewGroup listViewGroup5 = new System.Windows.Forms.ListViewGroup("ListViewGroup", System.Windows.Forms.HorizontalAlignment.Left);
-            System.Windows.Forms.ListViewGroup listViewGroup6 = new System.Windows.Forms.ListViewGroup("ListViewGroup", System.Windows.Forms.HorizontalAlignment.Left);
-            System.Windows.Forms.ListViewGroup listViewGroup7 = new System.Windows.Forms.ListViewGroup("ListViewGroup", System.Windows.Forms.HorizontalAlignment.Left);
-            System.Windows.Forms.ListViewGroup listViewGroup8 = new System.Windows.Forms.ListViewGroup("ListViewGroup", System.Windows.Forms.HorizontalAlignment.Left);
+            System.Windows.Forms.ListViewGroup listViewGroup1 = new System.Windows.Forms.ListViewGroup("ListViewGroup", System.Windows.Forms.HorizontalAlignment.Left);
+            System.Windows.Forms.ListViewGroup listViewGroup2 = new System.Windows.Forms.ListViewGroup("ListViewGroup", System.Windows.Forms.HorizontalAlignment.Left);
+            System.Windows.Forms.ListViewGroup listViewGroup3 = new System.Windows.Forms.ListViewGroup("ListViewGroup", System.Windows.Forms.HorizontalAlignment.Left);
+            System.Windows.Forms.ListViewGroup listViewGroup4 = new System.Windows.Forms.ListViewGroup("ListViewGroup", System.Windows.Forms.HorizontalAlignment.Left);
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
@@ -48,6 +48,7 @@
             this.gatherAndApplyToCToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.stylesheetToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.openStylesheetToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.applyCommentsFromStyleToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.gatherUniqueStylesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator4 = new System.Windows.Forms.ToolStripSeparator();
             this.applyStylesheetToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -97,10 +98,11 @@
             this.T1 = new System.Windows.Forms.TextBox();
             this.tabPage5 = new System.Windows.Forms.TabPage();
             this.ToCText = new System.Windows.Forms.RichTextBox();
-            this.applyCommentsFromStyleToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.label2 = new System.Windows.Forms.Label();
             this.menuStrip1.SuspendLayout();
             this.statusStrip1.SuspendLayout();
             this.tabControl.SuspendLayout();
+            this.tabPage3.SuspendLayout();
             this.tabPage2.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.tableLayoutPanel1.SuspendLayout();
@@ -248,48 +250,55 @@
             this.openStylesheetToolStripMenuItem.Text = "Open Stylesheet + Change: attributes";
             this.openStylesheetToolStripMenuItem.Click += new System.EventHandler(this.openStylesheetToolStripMenuItem_Click);
             // 
+            // applyCommentsFromStyleToolStripMenuItem
+            // 
+            this.applyCommentsFromStyleToolStripMenuItem.Name = "applyCommentsFromStyleToolStripMenuItem";
+            this.applyCommentsFromStyleToolStripMenuItem.Size = new System.Drawing.Size(277, 22);
+            this.applyCommentsFromStyleToolStripMenuItem.Text = "Open Stylesheet + Change: comments";
+            this.applyCommentsFromStyleToolStripMenuItem.Click += new System.EventHandler(this.applyCommentsFromStyleToolStripMenuItem_Click);
+            // 
             // gatherUniqueStylesToolStripMenuItem
             // 
             this.gatherUniqueStylesToolStripMenuItem.Name = "gatherUniqueStylesToolStripMenuItem";
-            this.gatherUniqueStylesToolStripMenuItem.Size = new System.Drawing.Size(243, 22);
+            this.gatherUniqueStylesToolStripMenuItem.Size = new System.Drawing.Size(277, 22);
             this.gatherUniqueStylesToolStripMenuItem.Text = "Gather Unique Styles";
             this.gatherUniqueStylesToolStripMenuItem.Click += new System.EventHandler(this.gatherUniqueStylesToolStripMenuItem_Click);
             // 
             // toolStripSeparator4
             // 
             this.toolStripSeparator4.Name = "toolStripSeparator4";
-            this.toolStripSeparator4.Size = new System.Drawing.Size(240, 6);
+            this.toolStripSeparator4.Size = new System.Drawing.Size(274, 6);
             // 
             // applyStylesheetToolStripMenuItem
             // 
             this.applyStylesheetToolStripMenuItem.Name = "applyStylesheetToolStripMenuItem";
-            this.applyStylesheetToolStripMenuItem.Size = new System.Drawing.Size(243, 22);
+            this.applyStylesheetToolStripMenuItem.Size = new System.Drawing.Size(277, 22);
             this.applyStylesheetToolStripMenuItem.Text = "Apply Stylesheet";
             this.applyStylesheetToolStripMenuItem.Click += new System.EventHandler(this.applyStylesheetToolStripMenuItem_Click);
             // 
             // toolStripSeparator3
             // 
             this.toolStripSeparator3.Name = "toolStripSeparator3";
-            this.toolStripSeparator3.Size = new System.Drawing.Size(240, 6);
+            this.toolStripSeparator3.Size = new System.Drawing.Size(274, 6);
             // 
             // removeAllStyleEntryMarkupsToolStripMenuItem
             // 
             this.removeAllStyleEntryMarkupsToolStripMenuItem.Name = "removeAllStyleEntryMarkupsToolStripMenuItem";
-            this.removeAllStyleEntryMarkupsToolStripMenuItem.Size = new System.Drawing.Size(243, 22);
+            this.removeAllStyleEntryMarkupsToolStripMenuItem.Size = new System.Drawing.Size(277, 22);
             this.removeAllStyleEntryMarkupsToolStripMenuItem.Text = "Remove all Style-Entry-Markups";
             this.removeAllStyleEntryMarkupsToolStripMenuItem.Click += new System.EventHandler(this.removeAllStyleEntryMarkupsToolStripMenuItem_Click);
             // 
             // clearAllStylesToolStripMenuItem
             // 
             this.clearAllStylesToolStripMenuItem.Name = "clearAllStylesToolStripMenuItem";
-            this.clearAllStylesToolStripMenuItem.Size = new System.Drawing.Size(243, 22);
+            this.clearAllStylesToolStripMenuItem.Size = new System.Drawing.Size(277, 22);
             this.clearAllStylesToolStripMenuItem.Text = "Clear Stylesheet";
             this.clearAllStylesToolStripMenuItem.Click += new System.EventHandler(this.clearAllStylesToolStripMenuItem_Click);
             // 
             // saveStyleToolStripMenuItem
             // 
             this.saveStyleToolStripMenuItem.Name = "saveStyleToolStripMenuItem";
-            this.saveStyleToolStripMenuItem.Size = new System.Drawing.Size(243, 22);
+            this.saveStyleToolStripMenuItem.Size = new System.Drawing.Size(277, 22);
             this.saveStyleToolStripMenuItem.Text = "Save Style";
             this.saveStyleToolStripMenuItem.Click += new System.EventHandler(this.saveStyleToolStripMenuItem_Click);
             // 
@@ -421,6 +430,7 @@
             // 
             // tabPage3
             // 
+            this.tabPage3.Controls.Add(this.label2);
             this.tabPage3.Location = new System.Drawing.Point(4, 25);
             this.tabPage3.Name = "tabPage3";
             this.tabPage3.Padding = new System.Windows.Forms.Padding(3);
@@ -552,19 +562,19 @@
             this.columnHeader2});
             this.StyleListView.Dock = System.Windows.Forms.DockStyle.Fill;
             this.StyleListView.Font = new System.Drawing.Font("Lucida Console", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            listViewGroup5.Header = "ListViewGroup";
-            listViewGroup5.Name = "listViewGroup1";
-            listViewGroup6.Header = "ListViewGroup";
-            listViewGroup6.Name = "listViewGroup2";
-            listViewGroup7.Header = "ListViewGroup";
-            listViewGroup7.Name = "listViewGroup3";
-            listViewGroup8.Header = "ListViewGroup";
-            listViewGroup8.Name = "listViewGroup4";
+            listViewGroup1.Header = "ListViewGroup";
+            listViewGroup1.Name = "listViewGroup1";
+            listViewGroup2.Header = "ListViewGroup";
+            listViewGroup2.Name = "listViewGroup2";
+            listViewGroup3.Header = "ListViewGroup";
+            listViewGroup3.Name = "listViewGroup3";
+            listViewGroup4.Header = "ListViewGroup";
+            listViewGroup4.Name = "listViewGroup4";
             this.StyleListView.Groups.AddRange(new System.Windows.Forms.ListViewGroup[] {
-            listViewGroup5,
-            listViewGroup6,
-            listViewGroup7,
-            listViewGroup8});
+            listViewGroup1,
+            listViewGroup2,
+            listViewGroup3,
+            listViewGroup4});
             this.StyleListView.HideSelection = false;
             this.StyleListView.Location = new System.Drawing.Point(3, 3);
             this.StyleListView.MultiSelect = false;
@@ -714,12 +724,14 @@
             this.ToCText.TabIndex = 0;
             this.ToCText.Text = "";
             // 
-            // applyCommentsFromStyleToolStripMenuItem
+            // label2
             // 
-            this.applyCommentsFromStyleToolStripMenuItem.Name = "applyCommentsFromStyleToolStripMenuItem";
-            this.applyCommentsFromStyleToolStripMenuItem.Size = new System.Drawing.Size(277, 22);
-            this.applyCommentsFromStyleToolStripMenuItem.Text = "Open Stylesheet + Change: comments";
-            this.applyCommentsFromStyleToolStripMenuItem.Click += new System.EventHandler(this.applyCommentsFromStyleToolStripMenuItem_Click);
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(449, 205);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(135, 13);
+            this.label2.TabIndex = 0;
+            this.label2.Text = "Settings tab coming soon :(";
             // 
             // Form1
             // 
@@ -738,6 +750,8 @@
             this.statusStrip1.ResumeLayout(false);
             this.statusStrip1.PerformLayout();
             this.tabControl.ResumeLayout(false);
+            this.tabPage3.ResumeLayout(false);
+            this.tabPage3.PerformLayout();
             this.tabPage2.ResumeLayout(false);
             this.tabPage2.PerformLayout();
             this.tabPage1.ResumeLayout(false);
@@ -822,6 +836,7 @@
         private System.Windows.Forms.RichTextBox ToCText;
         private System.Windows.Forms.ToolStripMenuItem gatherAndApplyToCToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem applyCommentsFromStyleToolStripMenuItem;
+        private System.Windows.Forms.Label label2;
     }
 }
 
