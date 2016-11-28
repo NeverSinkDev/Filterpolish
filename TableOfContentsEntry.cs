@@ -29,7 +29,7 @@ namespace FilterPolish
         public TableOfContentsEntry(Filter f)
         {
             this.AppliedFilter = f;
-            this.TOCHead = "TABLE OF CONTENTS + QUICKJUMP TABLE";
+            this.TOCHead = "LOOKUP AND QUICKJUMP TABLE";
 
             this.beginsigns.Add("[[");
             this.endsigns.Add("]]");

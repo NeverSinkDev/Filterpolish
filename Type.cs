@@ -32,18 +32,18 @@ namespace FilterPolish
         public enum LineAttributeClass
         {
             Unknown = 0,
-            LinkedSockets = 1,
-            Sockets = 2,
-            Quality = 3,
-            Identified = 4,
-            SocketGroup = 5,
-            Width = 6,
-            Height = 7,
-            DropLevel = 8,
-            Class = 9,
-            BaseType = 10,
-            Rarity = 11,
-            ItemLevel = 12
+            Class = 1,
+            BaseType = 2,
+            Rarity = 3,
+            DropLevel = 4,
+            ItemLevel = 5,
+            Sockets = 6,
+            LinkedSockets = 7,
+            SocketGroup = 8,
+            Quality = 9,
+            Width = 10,
+            Height = 11,
+            Identified = 12
         }
 
         public enum LineAttributeVisual

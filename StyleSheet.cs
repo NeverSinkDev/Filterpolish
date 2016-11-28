@@ -23,17 +23,11 @@ namespace FilterPolish
         VisualEntry USounds = new VisualEntry("PlayAlertSound", "DROPSOUND:\t", "");
         VisualEntry USizes = new VisualEntry("SetFontSize", "FONTSIZE:\t", "");
 
-        public string Name = ""; 
-        public bool initialized = false;
+        public  bool initialized = false;
 
         public StyleSheet(Filter filter)
         {
             this.AppliedFilter = filter;
-        }
-
-        public StyleSheet(string name)
-        {
-            this.Name = name;
         }
 
         /// <summary>
@@ -103,10 +97,9 @@ namespace FilterPolish
                 {
                     Line l = e.GetLine(v.identifier);
                     {
-                        int index = v.GetLineIndex(l);
-                        if ( index != -1)
+                        if (v.FindLineSimilarities(l) >= 1)
                         {
-                            e.ModifyAttribute(v.identifier, com: v.Lines[index].Comment);
+                            v.ModifyAttribute(v.identifier, com: l.Comment);
                         }
                     }
                 }
@@ -128,14 +121,8 @@ namespace FilterPolish
                         Line result = v.FindLineWithSameComment(l);
                         if (result != null)
                         {
-                            if (result.Comment.Contains("<REMOVE>"))
-                            {
-                                e.RemoveLines(l);
-                            }
-                            else
-                            {
-                                e.ModifyAttribute(v.identifier, change: string.Join(" ", result.Attributes));
-                            }
+
+                            e.ModifyAttribute(v.identifier, change: string.Join(" ",result.Attributes));
                         }
                     }
                 }
@@ -332,6 +319,10 @@ namespace FilterPolish
                     item.SubItems.Add(l.Comment);
                     item.Group = LV.Groups[v.identifier];
 
+                    if (l.Comment.Contains("NEW"))
+                    {
+                        item.ForeColor = Color.Red;
+                    }
 
                     if (v.identifier != "PlayAlertSound" && v.identifier != "SetFontSize")
                     {
@@ -342,15 +333,6 @@ namespace FilterPolish
                         int B = (int)Math.Round(((float)l.B * ((float)transparency) / (float)255));
                         Color color = Color.FromArgb(l.O, R, G, B);
                         item.BackColor = color;
-                    }
-
-                    if (l.Comment.Contains("NEW"))
-                    {
-                        item.ForeColor = Color.GreenYellow;
-                    }
-                    else
-                    {
-                        item.ForeColor = (item.BackColor.R * 0.299 + item.BackColor.G * 0.587 + item.BackColor.B * 0.114) > 186 ? Color.Black : Color.White;
                     }
 
                     LV.Items.Add(item);

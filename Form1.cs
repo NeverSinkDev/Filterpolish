@@ -149,8 +149,9 @@ namespace FilterPolish
                 AddTextToLogBox("GENERATING FILTER SETTINGS...");
                 ts_label1.Text = "Loading";
 
-                string version = "4.3";
+                string version = "4.24";
 
+                //  rework this!
                 FilterSettings Sregular = new FilterSettings("REGULAR", version, 0);
                 FilterSettings Ssemistrict = new FilterSettings("SEMI-STRICT", version, 1);
                 FilterSettings Sstrict = new FilterSettings("STRICT", version, 2);
@@ -162,56 +163,26 @@ namespace FilterPolish
                 Fsemistrict = new Filter(text, Ssemistrict);
                 Fuberstrict = new Filter(text, Suberstrict);
 
-                StyleSheet SSdef = new StyleSheet("default");
-                StyleSheet SSBlue = new StyleSheet("Blue");
-                //StyleSheet SSSlick = new StyleSheet("Slick");
-
                 List<Filter> FilterArray = new List<Filter>();
-                List<StyleSheet> StyleSheetArray = new List<StyleSheet>();
 
                 FilterArray.Add(Fregular);
                 FilterArray.Add(Fstrict);
                 FilterArray.Add(Fsemistrict);
                 FilterArray.Add(Fuberstrict);
 
-                StyleSheetArray.Add(SSdef);
-                StyleSheetArray.Add(SSBlue);
-                //StyleSheetArray.Add(SSSlick);
-
-                    foreach (Filter f in FilterArray)
-                    {
-                        f.ReadLines(this);
-                        f.GenerateEntries();
-                        f.GenerateTOC(true);
-                        f.AdjustVersionName(0, 4);
-                        f.AdjustVersionNumber(0, 3);
-                        f.FindAndHandleVersionTags();
-                        f.SortEntries();
-
-                    foreach (StyleSheet s in StyleSheetArray)
-                    {
-                        if (s.Name!="default")
-                        {
-                            s.Init();
-                            s.LoadStyle(true, @"C:\FilterOutput\ADDITIONAL-FILES\StyleSheets\" + s.Name + ".fsty");
-                            f.AdjustStyleName(0, 5, s.Name.ToUpper());
-                            s.AppliedFilter = f;
-                            s.ApplyStyleSheetDataToAttributes();
-                        }
+                foreach (Filter f in FilterArray)
+                {
+                    f.ReadLines(this);
+                    f.GenerateEntries();
+                    f.GenerateTOC(true);
+                    f.AdjustVersionName(0, 2);
+                    f.AdjustVersionNumber(0, 3);
+                    f.FindAndHandleVersionTags();
+                    f.SortEntries();
+                    
 
                     f.RebuildFilterFromEntries();
-
-                        if (s.Name != "default")
-                        {
-                            f.SaveToFile("(STYLE) " + s.Name.ToUpper().ToString(), s.Name);
-                        }
-                        else
-                        {
-                            f.SaveToFile();
-                        }
-                    }
-
-
+                    f.SaveToFile();
                 }
 
                 OutputTransform.Text = Fregular.RawFilterRebuilt;
@@ -554,17 +525,6 @@ namespace FilterPolish
 
 
             }
-        }
-
-        private void applyCommentsFromStyleToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            StyleSheet s = new StyleSheet(Fregular);
-            s.Init();
-            s.LoadStyle();
-            s.ApplyStyleSheetDataToComments();
-            //s.ApplyStyleSheetDataToAttributes();
-            //Fregular.RebuildFilterFromEntries();
-            this.GenerateStyleSheetFromFilter(false);
         }
     }
 }

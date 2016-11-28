@@ -342,7 +342,7 @@ namespace FilterPolish
             AddFilterProgressToLogBox("Adjusting version number...");
             if (this.EntryList[entryNumber].getType() == "Comment")
             {
-                this.EntryList[entryNumber].Lines[lineNumber].Raw = "# VERSION:\t\t" + this.settings.versionNumber;
+                this.EntryList[entryNumber].Lines[lineNumber].Raw = "# VERSION:\t" + this.settings.versionNumber;
             }
         }
 
@@ -356,21 +356,7 @@ namespace FilterPolish
             AddFilterProgressToLogBox("Adjusting version name...");
             if (this.EntryList[entryNumber].getType() == "Comment")
             {
-                this.EntryList[entryNumber].Lines[lineNumber].Raw = "# TYPE:\t\t\t" + this.settings.subVersionName;
-            }
-        }
-
-        /// <summary>
-        /// Changes the subversion name of the filter within the file
-        /// </summary>
-        /// <param name="entryNumber"></param>
-        /// <param name="lineNumber"></param>
-        public void AdjustStyleName(int entryNumber, int lineNumber, string Text)
-        {
-            AddFilterProgressToLogBox("Adjusting version name...");
-            if (this.EntryList[entryNumber].getType() == "Comment")
-            {
-                this.EntryList[entryNumber].Lines[lineNumber].Raw = "# TYPE:\t\t\t" + Text;
+                this.EntryList[entryNumber].Lines[lineNumber].Raw = "# TYPE:\t\t" + this.settings.subVersionName;
             }
         }
 
@@ -397,21 +383,6 @@ namespace FilterPolish
             System.IO.File.WriteAllText(@"C:\FilterOutput\"
                                             + "NeverSink's filter - "
                                                                     + this.settings.subVersionName + ".filter",
-                                                                    this.RawFilterRebuilt);
-            this.AddFilterProgressToLogBox("Done! Size:" + RawFilterRebuilt.Length);
-        }
-
-        public void SaveToFile(string foldersuffix, string stylename)
-        {
-            this.AddFilterProgressToLogBox("Creating filter file...");
-
-            System.IO.FileInfo folder = new System.IO.FileInfo(@"C:\FilterOutput\" + foldersuffix + @"\");
-            folder.Directory.Create();
-            System.IO.File.WriteAllText(folder 
-                                            + "NeverSink's filter - "
-                                                                    + this.settings.subVersionName
-                                                                     + " (" + stylename + ") "
-                                                                    + ".filter",
                                                                     this.RawFilterRebuilt);
             this.AddFilterProgressToLogBox("Done! Size:" + RawFilterRebuilt.Length);
         }
