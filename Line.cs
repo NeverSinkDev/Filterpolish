@@ -62,11 +62,19 @@ namespace FilterPolish
         public string RebuildLine(bool ApplyToRaw = false)
         {
 
+            int StylePadding = 36;
+
+            if ((this.Identifier == "SetTextColor" || this.Identifier == "SetBorderColor" || this.Identifier == "SetBackgroundColor" || this.Identifier == "PlayAlertSound") 
+                && (this.Comment != "" && !this.Comment.Contains("<NOTHING>")))
+            {
+                Value = Value.PadRight(StylePadding - Identifier.Length, ' ');
+            }
+
             this.Rebuilt =
                     Intro +
                     Identifier + (Value != "" ? " " : "") +
                     Oper + (Oper != "" ? " " : "") +
-                    Value + ((Comment != "" && (Identifier == "Show" || Identifier == "Hide")) ? " " : "") +
+                    Value + ((Comment != "" && (Identifier == "Show" || Identifier == "Hide")) ? " " : "") + 
                     Outtro +
                     Comment;
 
