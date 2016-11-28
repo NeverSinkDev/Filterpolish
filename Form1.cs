@@ -566,6 +566,11 @@ namespace FilterPolish
             //Fregular.RebuildFilterFromEntries();
             this.GenerateStyleSheetFromFilter(false);
         }
+
+        private void aboutToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            MessageBox.Show("Uh. Oh. This is one poor dialog box. Anyway, app created by NeverSink - that's me. I'm sorry for all the bugs and the messy code, I'll promise I'll clean it up soon O.O. For now, you can open your filter, clean and sort it (cleaning tab) and observe it's glory in the StyleSheets tab. I'm also going to add a small instruction and make the whole app a tiiiiny bit more userfriendly. \n https://github.com/NeverSinkDev ");
+        }
     }
 }
 

@@ -80,7 +80,8 @@ namespace FilterPolish
 
                 if (situation == 4)
                 {
-                    MessageBox.Show("Multipple stable Style-Comments. Memory: " + this.Lines[this.GetLineIndex(l)].Comment + "Line:" + l.Comment);
+                    // TODO: This should be handled differently. Next time *whispers* Next tiiime.
+                    // MessageBox.Show("Multipple stable Style-Comments. Memory: " + this.Lines[this.GetLineIndex(l)].Comment + "Line:" + l.Comment);
                     return;
                 }
             }
