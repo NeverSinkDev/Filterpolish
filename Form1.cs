@@ -164,7 +164,7 @@ namespace FilterPolish
 
                 StyleSheet SSdef = new StyleSheet("default");
                 StyleSheet SSBlue = new StyleSheet("Blue");
-                //StyleSheet SSSlick = new StyleSheet("Slick");
+                StyleSheet SSSlick = new StyleSheet("Slick");
 
                 List<Filter> FilterArray = new List<Filter>();
                 List<StyleSheet> StyleSheetArray = new List<StyleSheet>();
@@ -176,7 +176,7 @@ namespace FilterPolish
 
                 StyleSheetArray.Add(SSdef);
                 StyleSheetArray.Add(SSBlue);
-                //StyleSheetArray.Add(SSSlick);
+                StyleSheetArray.Add(SSSlick);
 
                     foreach (Filter f in FilterArray)
                     {
