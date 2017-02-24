@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.IO;
 using System.Linq;
 using System.Runtime.Serialization.Formatters.Binary;
@@ -52,6 +53,16 @@ namespace FilterPolish
         public static string ReadFileToString(string FullPath)
         {
             return System.IO.File.ReadAllText(FullPath);
+        }
+
+        public static string getConfigValue(string key)
+        {
+            return ConfigurationManager.OpenExeConfiguration(Application.ExecutablePath).AppSettings.Settings[key].Value;
+        }
+
+        public static string GetOutputPath()
+        {
+            return getConfigValue("Output Folder");
         }
     }
 }

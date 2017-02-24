@@ -115,6 +115,17 @@ namespace FilterPolish
             AddFilterProgressToLogBox("Entries generated " + this.EntryList.Count.ToString());
         }
 
+        //public Entry MatchItem(Item i)
+        //{
+        //    for (int n=0; n<EntryList.Count; n++)
+        //    {
+        //        if (EntryList[n].getType() == "Show" || EntryList[n].getType() == "Hide")
+        //        {
+
+        //        }
+        //    }
+        //}
+
         /// <summary>
         /// Reads a filter from file
         /// </summary>
@@ -370,7 +381,7 @@ namespace FilterPolish
             AddFilterProgressToLogBox("Adjusting version name...");
             if (this.EntryList[entryNumber].getType() == "Comment")
             {
-                this.EntryList[entryNumber].Lines[lineNumber].Raw = "# TYPE:\t\t\t" + Text;
+                this.EntryList[entryNumber].Lines[lineNumber].Raw = "# STYLE:\t\t\t" + Text;
             }
         }
 
@@ -394,7 +405,7 @@ namespace FilterPolish
         public void SaveToFile()
         {
             this.AddFilterProgressToLogBox("Creating filter file...");
-            System.IO.File.WriteAllText(@"C:\FilterOutput\"
+            System.IO.File.WriteAllText(Util.GetOutputPath()
                                             + "NeverSink's filter - "
                                                                     + this.settings.subVersionName + ".filter",
                                                                     this.RawFilterRebuilt);
@@ -405,7 +416,7 @@ namespace FilterPolish
         {
             this.AddFilterProgressToLogBox("Creating filter file...");
 
-            System.IO.FileInfo folder = new System.IO.FileInfo(@"C:\FilterOutput\" + foldersuffix + @"\");
+            System.IO.FileInfo folder = new System.IO.FileInfo(Util.GetOutputPath() + foldersuffix + @"\");
             folder.Directory.Create();
             System.IO.File.WriteAllText(folder 
                                             + "NeverSink's filter - "

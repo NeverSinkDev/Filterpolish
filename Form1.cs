@@ -8,6 +8,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Configuration;
 using System.Windows.Forms;
 using static System.Windows.Forms.ListView;
 
@@ -17,8 +18,10 @@ namespace FilterPolish
     {
         Filter Fregular;
         Filter Fsemistrict;
+        Filter Fverystrict;
         Filter Fstrict;
         Filter Fuberstrict;
+        Configuration config;
 
         public Form1()
         {
@@ -26,7 +29,16 @@ namespace FilterPolish
             ts_label1.Text = "Ready";
             ts_label2.Text = "Lines = 0";
             ts_label3.Text = "Errors = 0";
-            return;
+            this.config = ConfigurationManager.OpenExeConfiguration(Application.ExecutablePath);
+            var appSettings = ConfigurationManager.AppSettings;
+            //this.ConfigView.DataSource = appSettings;
+
+            foreach (string key in appSettings)
+            {
+
+                this.ConfigView.Rows.Add(key, appSettings[key], "Set");
+            }
+                return;
         }
 
         public void control_ts_label1(string s)
@@ -109,6 +121,10 @@ namespace FilterPolish
             Fregular.ReadLines(this);
             Fregular.GenerateEntries();
             this.GenerateStyleSheetFromFilter(false);
+
+            Item i = new Item("Empower", "Gems");
+
+            //Fregular.MatchItem(i);
         }
 
         /// <summary>
@@ -149,22 +165,25 @@ namespace FilterPolish
                 AddTextToLogBox("GENERATING FILTER SETTINGS...");
                 ts_label1.Text = "Loading";
 
-                string version = "4.3";
+                string version = "4.5";
 
-                FilterSettings Sregular = new FilterSettings("REGULAR", version, 0);
-                FilterSettings Ssemistrict = new FilterSettings("SEMI-STRICT", version, 1);
-                FilterSettings Sstrict = new FilterSettings("STRICT", version, 2);
-                FilterSettings Suberstrict = new FilterSettings("UBER-STRICT", version, 3);
+                FilterSettings Sregular = new FilterSettings("1-REGULAR", version, 0);
+                FilterSettings Ssemistrict = new FilterSettings("2-SEMI-STRICT", version, 1);
+                FilterSettings Sstrict = new FilterSettings("3-STRICT", version, 2);
+                FilterSettings Sverystrict = new FilterSettings("4-VERY-STRICT", version, 3);
+                FilterSettings Suberstrict = new FilterSettings("5-UBER-STRICT", version, 4);
                 FilterSettings Sslick = new FilterSettings("SLICK", version, 0);
 
                 Fregular = new Filter(text, Sregular);
                 Fstrict = new Filter(text, Sstrict);
                 Fsemistrict = new Filter(text, Ssemistrict);
+                Fverystrict = new Filter(text, Sverystrict);
                 Fuberstrict = new Filter(text, Suberstrict);
 
                 StyleSheet SSdef = new StyleSheet("default");
                 StyleSheet SSBlue = new StyleSheet("Blue");
                 StyleSheet SSSlick = new StyleSheet("Slick");
+                StyleSheet SSStreamer = new StyleSheet("StreamSound");
 
                 List<Filter> FilterArray = new List<Filter>();
                 List<StyleSheet> StyleSheetArray = new List<StyleSheet>();
@@ -172,13 +191,15 @@ namespace FilterPolish
                 FilterArray.Add(Fregular);
                 FilterArray.Add(Fstrict);
                 FilterArray.Add(Fsemistrict);
+                FilterArray.Add(Fverystrict);
                 FilterArray.Add(Fuberstrict);
 
                 StyleSheetArray.Add(SSdef);
                 StyleSheetArray.Add(SSBlue);
                 StyleSheetArray.Add(SSSlick);
+                StyleSheetArray.Add(SSStreamer);
 
-                    foreach (Filter f in FilterArray)
+                foreach (Filter f in FilterArray)
                     {
                         f.ReadLines(this);
                         f.GenerateEntries();
@@ -188,35 +209,35 @@ namespace FilterPolish
                         f.FindAndHandleVersionTags();
                         f.SortEntries();
 
-                    foreach (StyleSheet s in StyleSheetArray)
-                    {
-                        if (s.Name!="default")
+                        foreach (StyleSheet s in StyleSheetArray)
                         {
-                            s.Init();
-                            s.LoadStyle(true, @"C:\FilterOutput\ADDITIONAL-FILES\StyleSheets\" + s.Name + ".fsty");
-                            f.AdjustStyleName(0, 5, s.Name.ToUpper());
-                            s.AppliedFilter = f;
-                            s.ApplyStyleSheetDataToAttributes();
-                        }
+                            if (s.Name!="default")
+                            {
+                                s.Init();
+                                s.LoadStyle(true, Util.GetOutputPath() + @"ADDITIONAL -FILES\StyleSheets\" + s.Name + ".fsty");
+                                f.AdjustStyleName(0, 5, s.Name.ToUpper());
+                                s.AppliedFilter = f;
+                                s.ApplyStyleSheetDataToAttributes();
+                            }
 
-                    f.RebuildFilterFromEntries();
+                        f.RebuildFilterFromEntries();
 
-                        if (s.Name != "default")
-                        {
-                            f.SaveToFile("(STYLE) " + s.Name.ToUpper().ToString(), s.Name);
+                            if (s.Name != "default")
+                            {
+                                f.SaveToFile("(STYLE) " + s.Name.ToUpper().ToString(), s.Name);
+                            }
+                            else
+                            {
+                                f.SaveToFile();
+                            }
                         }
-                        else
-                        {
-                            f.SaveToFile();
-                        }
-                    }
 
 
                 }
 
                 OutputTransform.Text = Fregular.RawFilterRebuilt;
                 ts_label1.Text = "Ready";
-                Process.Start(@"C:\FilterOutput");
+                Process.Start(Util.GetOutputPath());
             }
 
         }
@@ -275,7 +296,7 @@ namespace FilterPolish
 
             OutputTransform.Text = Fregular.RawFilterRebuilt;
             ts_label1.Text = "Ready";
-            Process.Start(@"C:\FilterOutput");
+            Process.Start(Util.GetOutputPath());
         }
 
         /// <summary>
@@ -570,6 +591,21 @@ namespace FilterPolish
         private void aboutToolStripMenuItem_Click(object sender, EventArgs e)
         {
             MessageBox.Show("Uh. Oh. This is one poor dialog box. Anyway, app created by NeverSink - that's me. I'm sorry for all the bugs and the messy code, I'll promise I'll clean it up soon O.O. For now, you can open your filter, clean and sort it (cleaning tab) and observe it's glory in the StyleSheets tab. I'm also going to add a small instruction and make the whole app a tiiiiny bit more userfriendly. \n https://github.com/NeverSinkDev ");
+        }
+
+        private void ConfigView_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+            if (e.ColumnIndex == 2 && (this.ConfigView[0, e.RowIndex].Value != null && 
+                this.ConfigView[1, e.RowIndex].Value != null))
+            {
+                
+                config.AppSettings.Settings[this.ConfigView[0, e.RowIndex].Value.ToString()].Value = this.ConfigView[1, e.RowIndex].Value.ToString();
+                config.Save(ConfigurationSaveMode.Full);
+                ConfigurationManager.RefreshSection("appSettings");
+                this.ConfigView.Refresh();
+
+
+            }
         }
     }
 }

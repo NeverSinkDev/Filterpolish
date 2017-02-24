@@ -102,6 +102,16 @@ namespace FilterPolish
             }
         }
 
+        public bool FullMatch(object item)
+        {
+            if (this.getType() == "Show" || this.getType() == "Hide")
+            {
+
+            }
+
+            return false;
+        }
+
         /// <summary>
         /// Foreach loop that handles all version tags in the entry
         /// </summary>
@@ -432,6 +442,15 @@ namespace FilterPolish
             }
         }
 
+        public bool CheckItemMatch(Item i)
+        {
+            foreach (Line l in this.Lines)
+            { 
+
+            }
+            return false;
+        }
+
         /// <summary>
         /// Sorts all lines in an entry, by their weighting
         /// </summary>
@@ -467,6 +486,7 @@ namespace FilterPolish
             if (Type == 2) { return "Hide"; }
             if (Type == 3) { return "Comment"; }
             if (Type == 4) { return "Filler"; }
+            if (Type == 5) { return "TestItem"; }
             return "error";
         }
     }

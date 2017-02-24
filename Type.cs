@@ -29,6 +29,15 @@ namespace FilterPolish
             Disabled = 7
         }
 
+        public enum Raritiy
+        {
+            Unknown = 0,
+            Normal = 1,
+            Magic = 2,
+            Rare = 3,
+            Unique = 4,
+        }
+
         public enum LineAttributeClass
         {
             Unknown = 0,

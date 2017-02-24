@@ -60,16 +60,18 @@ namespace FilterPolish
             foreach (VisualEntry v in this.Styles)
             {
                 v.configuration_LabelNewStyles = labelNewStyles;
+
                 foreach (Entry e in this.AppliedFilter.EntryList)
                 {
                     v.AddStylesFromEntryToList(e);
                 }
+
                 v.SortByRGB();
+
                 if (labelNewStyles)
                 { 
-                v.OptimizeEntry();
+                    v.OptimizeEntry();
                 }
-
 
                 this.AppliedFilter.AddFilterProgressToLogBox("STYLES: " + v.commentIdentifierDescription + "COUNT: " + v.Lines.Count);
             }

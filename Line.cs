@@ -437,15 +437,7 @@ namespace FilterPolish
                 return 0;
             }
 
-            // OLD COMPARISON METHOD, SEEMS TO IGNORE ORDER
-            //var d1 = this.Attributes.Except(line.Attributes).ToList();
-            //var d2 = line.Attributes.Except(this.Attributes).ToList();
-            //if (d1.Any() || d2.Any())
-            //{
-            //   return 0;
-            //}
-
-            if (this.Comment != line.Comment)
+            if (this.Comment.Trim() != line.Comment.Trim())
             {
                 // The comment in the line is uninteresting
                 if (line.Comment == "")
@@ -467,9 +459,6 @@ namespace FilterPolish
                 {
                     return 4;
                 }
-
-
-
             }
             return 2;
 
@@ -542,6 +531,11 @@ namespace FilterPolish
             float f = Color.FromArgb(O, R, G, B).GetHue();
             return f;
         }
+
+        //Func<object,object,bool> GetComparisonPredicate()
+        //{
+               
+        //}
     }
 
 }
