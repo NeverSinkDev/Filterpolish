@@ -1,4 +1,4 @@
-﻿using Newtonsoft.Json;
+﻿//using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
@@ -179,7 +179,8 @@ namespace FilterPolish
         /// </summary>
         public void SaveStyleAsJson()
         {
-            string json = JsonConvert.SerializeObject(this.Styles);
+            string json = "";
+            //string json = JsonConvert.SerializeObject(this.Styles);
             SaveFileDialog dlg = new SaveFileDialog();
             dlg.Filter = "JSON|*.json";
             dlg.Title = "Save the JSON";
@@ -249,7 +250,8 @@ namespace FilterPolish
                     }
                 }
 
-                this.Styles = JsonConvert.DeserializeObject<List<VisualEntry>>(text);
+                this.Styles = null;
+                //this.Styles = JsonConvert.DeserializeObject<List<VisualEntry>>(text);
 
                 if (this.Styles!=null)
                 { return true; }

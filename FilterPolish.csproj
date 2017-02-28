@@ -69,9 +69,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Tier.cs" />
     <Compile Include="Comparison Delegates.cs" />
     <Compile Include="Item.cs" />
     <Compile Include="TableOfContentsEntry.cs" />
+    <Compile Include="TierListManager.cs" />
     <Compile Include="Util.cs" />
     <Compile Include="VisualEntry.cs" />
     <Compile Include="Entry.cs" />

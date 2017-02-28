@@ -28,10 +28,10 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.ListViewGroup listViewGroup1 = new System.Windows.Forms.ListViewGroup("ListViewGroup", System.Windows.Forms.HorizontalAlignment.Left);
-            System.Windows.Forms.ListViewGroup listViewGroup2 = new System.Windows.Forms.ListViewGroup("ListViewGroup", System.Windows.Forms.HorizontalAlignment.Left);
-            System.Windows.Forms.ListViewGroup listViewGroup3 = new System.Windows.Forms.ListViewGroup("ListViewGroup", System.Windows.Forms.HorizontalAlignment.Left);
-            System.Windows.Forms.ListViewGroup listViewGroup4 = new System.Windows.Forms.ListViewGroup("ListViewGroup", System.Windows.Forms.HorizontalAlignment.Left);
+            System.Windows.Forms.ListViewGroup listViewGroup9 = new System.Windows.Forms.ListViewGroup("ListViewGroup", System.Windows.Forms.HorizontalAlignment.Left);
+            System.Windows.Forms.ListViewGroup listViewGroup10 = new System.Windows.Forms.ListViewGroup("ListViewGroup", System.Windows.Forms.HorizontalAlignment.Left);
+            System.Windows.Forms.ListViewGroup listViewGroup11 = new System.Windows.Forms.ListViewGroup("ListViewGroup", System.Windows.Forms.HorizontalAlignment.Left);
+            System.Windows.Forms.ListViewGroup listViewGroup12 = new System.Windows.Forms.ListViewGroup("ListViewGroup", System.Windows.Forms.HorizontalAlignment.Left);
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
@@ -44,8 +44,7 @@
             this.basicToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.tidyUpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.sortEntriesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.generateNotesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.gatherAndApplyToCToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.structureToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.stylesheetToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.openStylesheetToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.applyCommentsFromStyleToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -57,13 +56,6 @@
             this.clearAllStylesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.saveStyleToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.advancedToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.settingsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.subversionConfigToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.generateSubversionsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.uploadToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.addChangelogToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.updateThreadToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.announceOnTwitterToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.debugAndTestingToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.generateDebugVersionToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.aboutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -106,6 +98,11 @@
             this.tabPage6 = new System.Windows.Forms.TabPage();
             this.tabPage7 = new System.Windows.Forms.TabPage();
             this.tabPage8 = new System.Windows.Forms.TabPage();
+            this.generateNotesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.gatherAndApplyToCToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator5 = new System.Windows.Forms.ToolStripSeparator();
+            this.gatherListsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.applyListsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.statusStrip1.SuspendLayout();
             this.tabControl.SuspendLayout();
@@ -128,6 +125,7 @@
             this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.fileToolStripMenuItem,
             this.basicToolStripMenuItem,
+            this.structureToolStripMenuItem,
             this.stylesheetToolStripMenuItem,
             this.advancedToolStripMenuItem,
             this.aboutToolStripMenuItem});
@@ -201,9 +199,7 @@
             // 
             this.basicToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.tidyUpToolStripMenuItem,
-            this.sortEntriesToolStripMenuItem,
-            this.generateNotesToolStripMenuItem,
-            this.gatherAndApplyToCToolStripMenuItem});
+            this.sortEntriesToolStripMenuItem});
             this.basicToolStripMenuItem.Name = "basicToolStripMenuItem";
             this.basicToolStripMenuItem.Size = new System.Drawing.Size(66, 20);
             this.basicToolStripMenuItem.Text = "Cleaning";
@@ -211,30 +207,28 @@
             // tidyUpToolStripMenuItem
             // 
             this.tidyUpToolStripMenuItem.Name = "tidyUpToolStripMenuItem";
-            this.tidyUpToolStripMenuItem.Size = new System.Drawing.Size(226, 22);
+            this.tidyUpToolStripMenuItem.Size = new System.Drawing.Size(133, 22);
             this.tidyUpToolStripMenuItem.Text = "Tidy Up";
             this.tidyUpToolStripMenuItem.Click += new System.EventHandler(this.tidyUpToolStripMenuItem_Click);
             // 
             // sortEntriesToolStripMenuItem
             // 
             this.sortEntriesToolStripMenuItem.Name = "sortEntriesToolStripMenuItem";
-            this.sortEntriesToolStripMenuItem.Size = new System.Drawing.Size(226, 22);
+            this.sortEntriesToolStripMenuItem.Size = new System.Drawing.Size(133, 22);
             this.sortEntriesToolStripMenuItem.Text = "Sort Entries";
             this.sortEntriesToolStripMenuItem.Click += new System.EventHandler(this.sortEntriesToolStripMenuItem_Click);
             // 
-            // generateNotesToolStripMenuItem
+            // structureToolStripMenuItem
             // 
-            this.generateNotesToolStripMenuItem.Name = "generateNotesToolStripMenuItem";
-            this.generateNotesToolStripMenuItem.Size = new System.Drawing.Size(226, 22);
-            this.generateNotesToolStripMenuItem.Text = "Gather ToC without applying";
-            this.generateNotesToolStripMenuItem.Click += new System.EventHandler(this.generateNotesToolStripMenuItem_Click);
-            // 
-            // gatherAndApplyToCToolStripMenuItem
-            // 
-            this.gatherAndApplyToCToolStripMenuItem.Name = "gatherAndApplyToCToolStripMenuItem";
-            this.gatherAndApplyToCToolStripMenuItem.Size = new System.Drawing.Size(226, 22);
-            this.gatherAndApplyToCToolStripMenuItem.Text = "Gather and apply ToC";
-            this.gatherAndApplyToCToolStripMenuItem.Click += new System.EventHandler(this.gatherAndApplyToCToolStripMenuItem_Click);
+            this.structureToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.generateNotesToolStripMenuItem,
+            this.gatherAndApplyToCToolStripMenuItem,
+            this.toolStripSeparator5,
+            this.gatherListsToolStripMenuItem,
+            this.applyListsToolStripMenuItem});
+            this.structureToolStripMenuItem.Name = "structureToolStripMenuItem";
+            this.structureToolStripMenuItem.Size = new System.Drawing.Size(67, 20);
+            this.structureToolStripMenuItem.Text = "Structure";
             // 
             // stylesheetToolStripMenuItem
             // 
@@ -314,66 +308,10 @@
             // advancedToolStripMenuItem
             // 
             this.advancedToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.settingsToolStripMenuItem,
-            this.subversionConfigToolStripMenuItem,
-            this.generateSubversionsToolStripMenuItem,
-            this.uploadToolStripMenuItem,
-            this.addChangelogToolStripMenuItem,
-            this.updateThreadToolStripMenuItem,
-            this.announceOnTwitterToolStripMenuItem,
             this.debugAndTestingToolStripMenuItem});
             this.advancedToolStripMenuItem.Name = "advancedToolStripMenuItem";
             this.advancedToolStripMenuItem.Size = new System.Drawing.Size(72, 20);
             this.advancedToolStripMenuItem.Text = "Advanced";
-            // 
-            // settingsToolStripMenuItem
-            // 
-            this.settingsToolStripMenuItem.Enabled = false;
-            this.settingsToolStripMenuItem.Name = "settingsToolStripMenuItem";
-            this.settingsToolStripMenuItem.Size = new System.Drawing.Size(187, 22);
-            this.settingsToolStripMenuItem.Text = "Settings";
-            // 
-            // subversionConfigToolStripMenuItem
-            // 
-            this.subversionConfigToolStripMenuItem.Enabled = false;
-            this.subversionConfigToolStripMenuItem.Name = "subversionConfigToolStripMenuItem";
-            this.subversionConfigToolStripMenuItem.Size = new System.Drawing.Size(187, 22);
-            this.subversionConfigToolStripMenuItem.Text = "Subversion Config";
-            // 
-            // generateSubversionsToolStripMenuItem
-            // 
-            this.generateSubversionsToolStripMenuItem.Enabled = false;
-            this.generateSubversionsToolStripMenuItem.Name = "generateSubversionsToolStripMenuItem";
-            this.generateSubversionsToolStripMenuItem.Size = new System.Drawing.Size(187, 22);
-            this.generateSubversionsToolStripMenuItem.Text = "Generate Subversions";
-            // 
-            // uploadToolStripMenuItem
-            // 
-            this.uploadToolStripMenuItem.Enabled = false;
-            this.uploadToolStripMenuItem.Name = "uploadToolStripMenuItem";
-            this.uploadToolStripMenuItem.Size = new System.Drawing.Size(187, 22);
-            this.uploadToolStripMenuItem.Text = "Upload";
-            // 
-            // addChangelogToolStripMenuItem
-            // 
-            this.addChangelogToolStripMenuItem.Enabled = false;
-            this.addChangelogToolStripMenuItem.Name = "addChangelogToolStripMenuItem";
-            this.addChangelogToolStripMenuItem.Size = new System.Drawing.Size(187, 22);
-            this.addChangelogToolStripMenuItem.Text = "Add changelog";
-            // 
-            // updateThreadToolStripMenuItem
-            // 
-            this.updateThreadToolStripMenuItem.Enabled = false;
-            this.updateThreadToolStripMenuItem.Name = "updateThreadToolStripMenuItem";
-            this.updateThreadToolStripMenuItem.Size = new System.Drawing.Size(187, 22);
-            this.updateThreadToolStripMenuItem.Text = "Update thread";
-            // 
-            // announceOnTwitterToolStripMenuItem
-            // 
-            this.announceOnTwitterToolStripMenuItem.Enabled = false;
-            this.announceOnTwitterToolStripMenuItem.Name = "announceOnTwitterToolStripMenuItem";
-            this.announceOnTwitterToolStripMenuItem.Size = new System.Drawing.Size(187, 22);
-            this.announceOnTwitterToolStripMenuItem.Text = "Announce on Twitter";
             // 
             // debugAndTestingToolStripMenuItem
             // 
@@ -470,7 +408,7 @@
             this.tableLayoutPanel4.Name = "tableLayoutPanel4";
             this.tableLayoutPanel4.RowCount = 1;
             this.tableLayoutPanel4.RowStyles.Add(new System.Windows.Forms.RowStyle());
-            this.tableLayoutPanel4.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 558F));
+            this.tableLayoutPanel4.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 563F));
             this.tableLayoutPanel4.Size = new System.Drawing.Size(1159, 558);
             this.tableLayoutPanel4.TabIndex = 0;
             // 
@@ -485,7 +423,7 @@
             this.ConfigView.Dock = System.Windows.Forms.DockStyle.Fill;
             this.ConfigView.Location = new System.Drawing.Point(3, 3);
             this.ConfigView.Name = "ConfigView";
-            this.ConfigView.Size = new System.Drawing.Size(1153, 552);
+            this.ConfigView.Size = new System.Drawing.Size(1155, 557);
             this.ConfigView.TabIndex = 0;
             this.ConfigView.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.ConfigView_CellContentClick);
             // 
@@ -631,19 +569,19 @@
             this.columnHeader2});
             this.StyleListView.Dock = System.Windows.Forms.DockStyle.Fill;
             this.StyleListView.Font = new System.Drawing.Font("Lucida Console", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            listViewGroup1.Header = "ListViewGroup";
-            listViewGroup1.Name = "listViewGroup1";
-            listViewGroup2.Header = "ListViewGroup";
-            listViewGroup2.Name = "listViewGroup2";
-            listViewGroup3.Header = "ListViewGroup";
-            listViewGroup3.Name = "listViewGroup3";
-            listViewGroup4.Header = "ListViewGroup";
-            listViewGroup4.Name = "listViewGroup4";
+            listViewGroup9.Header = "ListViewGroup";
+            listViewGroup9.Name = "listViewGroup1";
+            listViewGroup10.Header = "ListViewGroup";
+            listViewGroup10.Name = "listViewGroup2";
+            listViewGroup11.Header = "ListViewGroup";
+            listViewGroup11.Name = "listViewGroup3";
+            listViewGroup12.Header = "ListViewGroup";
+            listViewGroup12.Name = "listViewGroup4";
             this.StyleListView.Groups.AddRange(new System.Windows.Forms.ListViewGroup[] {
-            listViewGroup1,
-            listViewGroup2,
-            listViewGroup3,
-            listViewGroup4});
+            listViewGroup9,
+            listViewGroup10,
+            listViewGroup11,
+            listViewGroup12});
             this.StyleListView.HideSelection = false;
             this.StyleListView.Location = new System.Drawing.Point(3, 3);
             this.StyleListView.MultiSelect = false;
@@ -688,7 +626,7 @@
             this.panel1.Controls.Add(this.T1);
             this.panel1.Location = new System.Drawing.Point(3, 510);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(1159, 51);
+            this.panel1.Size = new System.Drawing.Size(1159, 50);
             this.panel1.TabIndex = 2;
             // 
             // UnusedButton
@@ -821,6 +759,37 @@
             this.tabPage8.Text = "Rares";
             this.tabPage8.UseVisualStyleBackColor = true;
             // 
+            // generateNotesToolStripMenuItem
+            // 
+            this.generateNotesToolStripMenuItem.Name = "generateNotesToolStripMenuItem";
+            this.generateNotesToolStripMenuItem.Size = new System.Drawing.Size(226, 22);
+            this.generateNotesToolStripMenuItem.Text = "Gather ToC without applying";
+            this.generateNotesToolStripMenuItem.Click += new System.EventHandler(this.generateNotesToolStripMenuItem_Click);
+            // 
+            // gatherAndApplyToCToolStripMenuItem
+            // 
+            this.gatherAndApplyToCToolStripMenuItem.Name = "gatherAndApplyToCToolStripMenuItem";
+            this.gatherAndApplyToCToolStripMenuItem.Size = new System.Drawing.Size(226, 22);
+            this.gatherAndApplyToCToolStripMenuItem.Text = "Gather and apply ToC";
+            this.gatherAndApplyToCToolStripMenuItem.Click += new System.EventHandler(this.gatherAndApplyToCToolStripMenuItem_Click);
+            // 
+            // toolStripSeparator5
+            // 
+            this.toolStripSeparator5.Name = "toolStripSeparator5";
+            this.toolStripSeparator5.Size = new System.Drawing.Size(223, 6);
+            // 
+            // gatherListsToolStripMenuItem
+            // 
+            this.gatherListsToolStripMenuItem.Name = "gatherListsToolStripMenuItem";
+            this.gatherListsToolStripMenuItem.Size = new System.Drawing.Size(226, 22);
+            this.gatherListsToolStripMenuItem.Text = "Gather Lists";
+            // 
+            // applyListsToolStripMenuItem
+            // 
+            this.applyListsToolStripMenuItem.Name = "applyListsToolStripMenuItem";
+            this.applyListsToolStripMenuItem.Size = new System.Drawing.Size(226, 22);
+            this.applyListsToolStripMenuItem.Text = "Apply Lists";
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -869,15 +838,7 @@
         private System.Windows.Forms.ToolStripMenuItem basicToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem tidyUpToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem sortEntriesToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem generateNotesToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem advancedToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem settingsToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem subversionConfigToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem generateSubversionsToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem uploadToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem addChangelogToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem updateThreadToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem announceOnTwitterToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem aboutToolStripMenuItem;
         private System.Windows.Forms.ToolStripStatusLabel ts_label1;
         private System.Windows.Forms.ToolStripStatusLabel ts_label2;
@@ -922,7 +883,6 @@
         private System.Windows.Forms.Button SetValue;
         private System.Windows.Forms.TabPage tabPage5;
         private System.Windows.Forms.RichTextBox ToCText;
-        private System.Windows.Forms.ToolStripMenuItem gatherAndApplyToCToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem applyCommentsFromStyleToolStripMenuItem;
         private System.Windows.Forms.TabPage tabPage6;
         private System.Windows.Forms.TabPage tabPage7;
@@ -933,6 +893,12 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn Key;
         private System.Windows.Forms.DataGridViewTextBoxColumn Value;
         private System.Windows.Forms.DataGridViewButtonColumn ActionCol;
+        private System.Windows.Forms.ToolStripMenuItem structureToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem generateNotesToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem gatherAndApplyToCToolStripMenuItem;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator5;
+        private System.Windows.Forms.ToolStripMenuItem gatherListsToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem applyListsToolStripMenuItem;
     }
 }
 

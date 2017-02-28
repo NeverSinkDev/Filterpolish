@@ -201,6 +201,7 @@ namespace FilterPolish
 
                 foreach (Filter f in FilterArray)
                     {
+                        AddTextToLogBox("GENERATING SUBVERSION: " + f.settings.subVersionName);
                         f.ReadLines(this);
                         f.GenerateEntries();
                         f.GenerateTOC(true);
@@ -211,10 +212,11 @@ namespace FilterPolish
 
                         foreach (StyleSheet s in StyleSheetArray)
                         {
-                            if (s.Name!="default")
+                        AddTextToLogBox("APPLYING STYLE: " + s.Name);
+                        if (s.Name!="default")
                             {
                                 s.Init();
-                                s.LoadStyle(true, Util.GetOutputPath() + @"ADDITIONAL -FILES\StyleSheets\" + s.Name + ".fsty");
+                                s.LoadStyle(true, Util.GetOutputPath() + @"ADDITIONAL-FILES\StyleSheets\" + s.Name + ".fsty");
                                 f.AdjustStyleName(0, 5, s.Name.ToUpper());
                                 s.AppliedFilter = f;
                                 s.ApplyStyleSheetDataToAttributes();
@@ -232,7 +234,7 @@ namespace FilterPolish
                             }
                         }
 
-
+                    AddTextToLogBox("STRICTNESS SUBVERSION COMPLETE: " + f.settings.subVersionName);
                 }
 
                 OutputTransform.Text = Fregular.RawFilterRebuilt;
@@ -250,6 +252,13 @@ namespace FilterPolish
         {
             logBox.Text += line;
             logBox.Text += System.Environment.NewLine;
+            logBox.Invalidate();
+            logBox.Update();
+            logBox.Refresh();
+            logBox.SelectionStart = logBox.Text.Length;
+            logBox.ScrollToCaret();
+            
+
         }
 
         /// <summary>
