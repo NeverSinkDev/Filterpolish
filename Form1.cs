@@ -684,7 +684,7 @@ namespace FilterPolish
                     {
                         if (e.KeyCode == Keys.Down)
                         {
-                            TierListView.Rows[index + 1].Selected = true;
+                            TierListView.Rows[index + 1].Selected = true; 
                             ChangeTierListSelection(index - 1);
                         }
                     }
