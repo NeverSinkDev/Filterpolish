@@ -20,28 +20,43 @@ namespace FilterPolish
 
         public void init()
         {
-            for(int i = 0; i<filter.LineList.Count; i++)
+            for(int i = 0; i<filter.EntryList.Count; i++)
             {
                 Entry currentEntry = this.filter.EntryList[i];
-                bool LT = currentEntry.BuildTags.Contains("LT-");
-                bool CT = currentEntry.BuildTags.Contains("CT-");
-                bool BT = currentEntry.BuildTags.Contains("BT-");
-                if (LT || CT || BT)
+                currentEntry.BuildTags.Clear();
+                currentEntry.FindAllVersionTag();
+
+                if (currentEntry.BuildTags.Count > 0)
+                {
+                 
+                }
+
+                foreach (string s in currentEntry.BuildTags)
+                { 
+                bool TB = s.Contains("TB-");
+                bool TC = s.Contains("TC-");
+                bool TI = s.Contains("TI-");
+                bool TD = s.Contains("TD-");
+                if (TI || TC || TB || TD)
                 {
 
-                    string groupName = "";
+                    string groupName = s;
                     string coreIdent = "";
                     if (this.tierList.Any(fe => fe.GroupName == groupName))
                     {
                         this.tierList.Where(fe => fe.GroupName == groupName).Single().FilterEntries.Add(currentEntry);
+                        filter.AddFilterProgressToLogBox("adding entry: " + i + " " + coreIdent);
                     }
                     else
                     {
-                        coreIdent = LT ? "DropLevel" : coreIdent;
-                        coreIdent = CT ? "Class" : coreIdent;
-                        coreIdent = BT ? "BaseType" : coreIdent;
+                        coreIdent = TD ? "DropLevel" : coreIdent;
+                        coreIdent = TC ? "Class" : coreIdent;
+                        coreIdent = TB ? "BaseType" : coreIdent;
+                        coreIdent = TI ? "ItemLevel" : coreIdent;
                         this.createTier(currentEntry, coreIdent, groupName);
+                        filter.AddFilterProgressToLogBox("creating entry: " + i + " "+ coreIdent);
                     }
+                }
                 }
             }
         }
@@ -50,8 +65,10 @@ namespace FilterPolish
         {
             Tier t = new Tier();
             t.FilterEntries.Add(e);
-            t.TierRows.Add(coreIdent);
+            t.TierRows = coreIdent;
             t.GroupName = groupName;
+            t.Value = e.GetLines(coreIdent).FirstOrDefault().Value;
+            this.tierList.Add(t);
         }
 
     }

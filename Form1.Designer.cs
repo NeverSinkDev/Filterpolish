@@ -28,10 +28,10 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.ListViewGroup listViewGroup9 = new System.Windows.Forms.ListViewGroup("ListViewGroup", System.Windows.Forms.HorizontalAlignment.Left);
-            System.Windows.Forms.ListViewGroup listViewGroup10 = new System.Windows.Forms.ListViewGroup("ListViewGroup", System.Windows.Forms.HorizontalAlignment.Left);
-            System.Windows.Forms.ListViewGroup listViewGroup11 = new System.Windows.Forms.ListViewGroup("ListViewGroup", System.Windows.Forms.HorizontalAlignment.Left);
-            System.Windows.Forms.ListViewGroup listViewGroup12 = new System.Windows.Forms.ListViewGroup("ListViewGroup", System.Windows.Forms.HorizontalAlignment.Left);
+            System.Windows.Forms.ListViewGroup listViewGroup17 = new System.Windows.Forms.ListViewGroup("ListViewGroup", System.Windows.Forms.HorizontalAlignment.Left);
+            System.Windows.Forms.ListViewGroup listViewGroup18 = new System.Windows.Forms.ListViewGroup("ListViewGroup", System.Windows.Forms.HorizontalAlignment.Left);
+            System.Windows.Forms.ListViewGroup listViewGroup19 = new System.Windows.Forms.ListViewGroup("ListViewGroup", System.Windows.Forms.HorizontalAlignment.Left);
+            System.Windows.Forms.ListViewGroup listViewGroup20 = new System.Windows.Forms.ListViewGroup("ListViewGroup", System.Windows.Forms.HorizontalAlignment.Left);
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
@@ -45,6 +45,11 @@
             this.tidyUpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.sortEntriesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.structureToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.generateNotesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.gatherAndApplyToCToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator5 = new System.Windows.Forms.ToolStripSeparator();
+            this.gatherListsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.applyListsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.stylesheetToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.openStylesheetToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.applyCommentsFromStyleToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -96,13 +101,25 @@
             this.tabPage5 = new System.Windows.Forms.TabPage();
             this.ToCText = new System.Windows.Forms.RichTextBox();
             this.tabPage6 = new System.Windows.Forms.TabPage();
-            this.tabPage7 = new System.Windows.Forms.TabPage();
             this.tabPage8 = new System.Windows.Forms.TabPage();
-            this.generateNotesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.gatherAndApplyToCToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripSeparator5 = new System.Windows.Forms.ToolStripSeparator();
-            this.gatherListsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.applyListsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.tableLayoutPanel5 = new System.Windows.Forms.TableLayoutPanel();
+            this.TierListLines = new System.Windows.Forms.RichTextBox();
+            this.tableLayoutPanel6 = new System.Windows.Forms.TableLayoutPanel();
+            this.TierListView = new System.Windows.Forms.DataGridView();
+            this.ID = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.TierName = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Count = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.GroupElement = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Stable = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.TierValue = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.tableLayoutPanel7 = new System.Windows.Forms.TableLayoutPanel();
+            this.TierListValueBox = new System.Windows.Forms.RichTextBox();
+            this.tableLayoutPanel8 = new System.Windows.Forms.TableLayoutPanel();
+            this.button5 = new System.Windows.Forms.Button();
+            this.button4 = new System.Windows.Forms.Button();
+            this.button3 = new System.Windows.Forms.Button();
+            this.button2 = new System.Windows.Forms.Button();
+            this.SetTierListButton = new System.Windows.Forms.Button();
             this.menuStrip1.SuspendLayout();
             this.statusStrip1.SuspendLayout();
             this.tabControl.SuspendLayout();
@@ -117,6 +134,12 @@
             this.tableLayoutPanel3.SuspendLayout();
             this.panel1.SuspendLayout();
             this.tabPage5.SuspendLayout();
+            this.tabPage8.SuspendLayout();
+            this.tableLayoutPanel5.SuspendLayout();
+            this.tableLayoutPanel6.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.TierListView)).BeginInit();
+            this.tableLayoutPanel7.SuspendLayout();
+            this.tableLayoutPanel8.SuspendLayout();
             this.SuspendLayout();
             // 
             // menuStrip1
@@ -230,6 +253,38 @@
             this.structureToolStripMenuItem.Size = new System.Drawing.Size(67, 20);
             this.structureToolStripMenuItem.Text = "Structure";
             // 
+            // generateNotesToolStripMenuItem
+            // 
+            this.generateNotesToolStripMenuItem.Name = "generateNotesToolStripMenuItem";
+            this.generateNotesToolStripMenuItem.Size = new System.Drawing.Size(226, 22);
+            this.generateNotesToolStripMenuItem.Text = "Gather ToC without applying";
+            this.generateNotesToolStripMenuItem.Click += new System.EventHandler(this.generateNotesToolStripMenuItem_Click);
+            // 
+            // gatherAndApplyToCToolStripMenuItem
+            // 
+            this.gatherAndApplyToCToolStripMenuItem.Name = "gatherAndApplyToCToolStripMenuItem";
+            this.gatherAndApplyToCToolStripMenuItem.Size = new System.Drawing.Size(226, 22);
+            this.gatherAndApplyToCToolStripMenuItem.Text = "Gather and apply ToC";
+            this.gatherAndApplyToCToolStripMenuItem.Click += new System.EventHandler(this.gatherAndApplyToCToolStripMenuItem_Click);
+            // 
+            // toolStripSeparator5
+            // 
+            this.toolStripSeparator5.Name = "toolStripSeparator5";
+            this.toolStripSeparator5.Size = new System.Drawing.Size(223, 6);
+            // 
+            // gatherListsToolStripMenuItem
+            // 
+            this.gatherListsToolStripMenuItem.Name = "gatherListsToolStripMenuItem";
+            this.gatherListsToolStripMenuItem.Size = new System.Drawing.Size(226, 22);
+            this.gatherListsToolStripMenuItem.Text = "Gather Lists";
+            this.gatherListsToolStripMenuItem.Click += new System.EventHandler(this.gatherListsToolStripMenuItem_Click);
+            // 
+            // applyListsToolStripMenuItem
+            // 
+            this.applyListsToolStripMenuItem.Name = "applyListsToolStripMenuItem";
+            this.applyListsToolStripMenuItem.Size = new System.Drawing.Size(226, 22);
+            this.applyListsToolStripMenuItem.Text = "Apply Lists";
+            // 
             // stylesheetToolStripMenuItem
             // 
             this.stylesheetToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
@@ -318,7 +373,7 @@
             this.debugAndTestingToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.generateDebugVersionToolStripMenuItem});
             this.debugAndTestingToolStripMenuItem.Name = "debugAndTestingToolStripMenuItem";
-            this.debugAndTestingToolStripMenuItem.Size = new System.Drawing.Size(187, 22);
+            this.debugAndTestingToolStripMenuItem.Size = new System.Drawing.Size(173, 22);
             this.debugAndTestingToolStripMenuItem.Text = "Debug and Testing";
             // 
             // generateDebugVersionToolStripMenuItem
@@ -375,9 +430,8 @@
             this.tabControl.Controls.Add(this.tabPage1);
             this.tabControl.Controls.Add(this.tabPage4);
             this.tabControl.Controls.Add(this.tabPage5);
-            this.tabControl.Controls.Add(this.tabPage6);
-            this.tabControl.Controls.Add(this.tabPage7);
             this.tabControl.Controls.Add(this.tabPage8);
+            this.tabControl.Controls.Add(this.tabPage6);
             this.tabControl.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tabControl.Location = new System.Drawing.Point(0, 24);
             this.tabControl.Name = "tabControl";
@@ -569,19 +623,19 @@
             this.columnHeader2});
             this.StyleListView.Dock = System.Windows.Forms.DockStyle.Fill;
             this.StyleListView.Font = new System.Drawing.Font("Lucida Console", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            listViewGroup9.Header = "ListViewGroup";
-            listViewGroup9.Name = "listViewGroup1";
-            listViewGroup10.Header = "ListViewGroup";
-            listViewGroup10.Name = "listViewGroup2";
-            listViewGroup11.Header = "ListViewGroup";
-            listViewGroup11.Name = "listViewGroup3";
-            listViewGroup12.Header = "ListViewGroup";
-            listViewGroup12.Name = "listViewGroup4";
+            listViewGroup17.Header = "ListViewGroup";
+            listViewGroup17.Name = "listViewGroup1";
+            listViewGroup18.Header = "ListViewGroup";
+            listViewGroup18.Name = "listViewGroup2";
+            listViewGroup19.Header = "ListViewGroup";
+            listViewGroup19.Name = "listViewGroup3";
+            listViewGroup20.Header = "ListViewGroup";
+            listViewGroup20.Name = "listViewGroup4";
             this.StyleListView.Groups.AddRange(new System.Windows.Forms.ListViewGroup[] {
-            listViewGroup9,
-            listViewGroup10,
-            listViewGroup11,
-            listViewGroup12});
+            listViewGroup17,
+            listViewGroup18,
+            listViewGroup19,
+            listViewGroup20});
             this.StyleListView.HideSelection = false;
             this.StyleListView.Location = new System.Drawing.Point(3, 3);
             this.StyleListView.MultiSelect = false;
@@ -741,54 +795,205 @@
             this.tabPage6.Text = "Ninja Json";
             this.tabPage6.UseVisualStyleBackColor = true;
             // 
-            // tabPage7
-            // 
-            this.tabPage7.Location = new System.Drawing.Point(4, 25);
-            this.tabPage7.Name = "tabPage7";
-            this.tabPage7.Size = new System.Drawing.Size(1165, 564);
-            this.tabPage7.TabIndex = 6;
-            this.tabPage7.Text = "Tier List Editor";
-            this.tabPage7.UseVisualStyleBackColor = true;
-            // 
             // tabPage8
             // 
+            this.tabPage8.Controls.Add(this.tableLayoutPanel5);
             this.tabPage8.Location = new System.Drawing.Point(4, 25);
             this.tabPage8.Name = "tabPage8";
             this.tabPage8.Size = new System.Drawing.Size(1165, 564);
             this.tabPage8.TabIndex = 7;
-            this.tabPage8.Text = "Rares";
+            this.tabPage8.Text = "Tier List Manager";
             this.tabPage8.UseVisualStyleBackColor = true;
             // 
-            // generateNotesToolStripMenuItem
+            // tableLayoutPanel5
             // 
-            this.generateNotesToolStripMenuItem.Name = "generateNotesToolStripMenuItem";
-            this.generateNotesToolStripMenuItem.Size = new System.Drawing.Size(226, 22);
-            this.generateNotesToolStripMenuItem.Text = "Gather ToC without applying";
-            this.generateNotesToolStripMenuItem.Click += new System.EventHandler(this.generateNotesToolStripMenuItem_Click);
+            this.tableLayoutPanel5.ColumnCount = 2;
+            this.tableLayoutPanel5.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 70F));
+            this.tableLayoutPanel5.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 30F));
+            this.tableLayoutPanel5.Controls.Add(this.TierListLines, 1, 0);
+            this.tableLayoutPanel5.Controls.Add(this.tableLayoutPanel6, 0, 0);
+            this.tableLayoutPanel5.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tableLayoutPanel5.Location = new System.Drawing.Point(0, 0);
+            this.tableLayoutPanel5.Name = "tableLayoutPanel5";
+            this.tableLayoutPanel5.RowCount = 1;
+            this.tableLayoutPanel5.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableLayoutPanel5.Size = new System.Drawing.Size(1165, 564);
+            this.tableLayoutPanel5.TabIndex = 0;
             // 
-            // gatherAndApplyToCToolStripMenuItem
+            // TierListLines
             // 
-            this.gatherAndApplyToCToolStripMenuItem.Name = "gatherAndApplyToCToolStripMenuItem";
-            this.gatherAndApplyToCToolStripMenuItem.Size = new System.Drawing.Size(226, 22);
-            this.gatherAndApplyToCToolStripMenuItem.Text = "Gather and apply ToC";
-            this.gatherAndApplyToCToolStripMenuItem.Click += new System.EventHandler(this.gatherAndApplyToCToolStripMenuItem_Click);
+            this.TierListLines.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.TierListLines.Font = new System.Drawing.Font("Lucida Console", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.TierListLines.Location = new System.Drawing.Point(818, 3);
+            this.TierListLines.Name = "TierListLines";
+            this.TierListLines.Size = new System.Drawing.Size(344, 558);
+            this.TierListLines.TabIndex = 2;
+            this.TierListLines.Text = "";
             // 
-            // toolStripSeparator5
+            // tableLayoutPanel6
             // 
-            this.toolStripSeparator5.Name = "toolStripSeparator5";
-            this.toolStripSeparator5.Size = new System.Drawing.Size(223, 6);
+            this.tableLayoutPanel6.ColumnCount = 1;
+            this.tableLayoutPanel6.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableLayoutPanel6.Controls.Add(this.TierListView, 0, 0);
+            this.tableLayoutPanel6.Controls.Add(this.tableLayoutPanel7, 0, 1);
+            this.tableLayoutPanel6.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tableLayoutPanel6.Location = new System.Drawing.Point(3, 3);
+            this.tableLayoutPanel6.Name = "tableLayoutPanel6";
+            this.tableLayoutPanel6.RowCount = 2;
+            this.tableLayoutPanel6.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 70F));
+            this.tableLayoutPanel6.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 30F));
+            this.tableLayoutPanel6.Size = new System.Drawing.Size(809, 558);
+            this.tableLayoutPanel6.TabIndex = 0;
             // 
-            // gatherListsToolStripMenuItem
+            // TierListView
             // 
-            this.gatherListsToolStripMenuItem.Name = "gatherListsToolStripMenuItem";
-            this.gatherListsToolStripMenuItem.Size = new System.Drawing.Size(226, 22);
-            this.gatherListsToolStripMenuItem.Text = "Gather Lists";
+            this.TierListView.AllowUserToDeleteRows = false;
+            this.TierListView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.TierListView.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.ID,
+            this.TierName,
+            this.Count,
+            this.GroupElement,
+            this.Stable,
+            this.TierValue});
+            this.TierListView.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.TierListView.Location = new System.Drawing.Point(3, 3);
+            this.TierListView.MultiSelect = false;
+            this.TierListView.Name = "TierListView";
+            this.TierListView.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
+            this.TierListView.Size = new System.Drawing.Size(803, 384);
+            this.TierListView.TabIndex = 0;
+            this.TierListView.CellEnter += new System.Windows.Forms.DataGridViewCellEventHandler(this.TierListView_CellEnter);
             // 
-            // applyListsToolStripMenuItem
+            // ID
             // 
-            this.applyListsToolStripMenuItem.Name = "applyListsToolStripMenuItem";
-            this.applyListsToolStripMenuItem.Size = new System.Drawing.Size(226, 22);
-            this.applyListsToolStripMenuItem.Text = "Apply Lists";
+            this.ID.HeaderText = "ID";
+            this.ID.Name = "ID";
+            // 
+            // TierName
+            // 
+            this.TierName.HeaderText = "TierName";
+            this.TierName.Name = "TierName";
+            // 
+            // Count
+            // 
+            this.Count.HeaderText = "Count";
+            this.Count.Name = "Count";
+            // 
+            // GroupElement
+            // 
+            this.GroupElement.HeaderText = "GroupElement";
+            this.GroupElement.Name = "GroupElement";
+            // 
+            // Stable
+            // 
+            this.Stable.HeaderText = "Stable";
+            this.Stable.Name = "Stable";
+            // 
+            // TierValue
+            // 
+            this.TierValue.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.TierValue.HeaderText = "TierValue";
+            this.TierValue.Name = "TierValue";
+            // 
+            // tableLayoutPanel7
+            // 
+            this.tableLayoutPanel7.ColumnCount = 2;
+            this.tableLayoutPanel7.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 80F));
+            this.tableLayoutPanel7.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 20F));
+            this.tableLayoutPanel7.Controls.Add(this.TierListValueBox, 0, 0);
+            this.tableLayoutPanel7.Controls.Add(this.tableLayoutPanel8, 1, 0);
+            this.tableLayoutPanel7.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tableLayoutPanel7.Location = new System.Drawing.Point(3, 393);
+            this.tableLayoutPanel7.Name = "tableLayoutPanel7";
+            this.tableLayoutPanel7.RowCount = 1;
+            this.tableLayoutPanel7.RowStyles.Add(new System.Windows.Forms.RowStyle());
+            this.tableLayoutPanel7.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+            this.tableLayoutPanel7.Size = new System.Drawing.Size(803, 162);
+            this.tableLayoutPanel7.TabIndex = 1;
+            // 
+            // TierListValueBox
+            // 
+            this.TierListValueBox.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.TierListValueBox.Location = new System.Drawing.Point(3, 3);
+            this.TierListValueBox.Name = "TierListValueBox";
+            this.TierListValueBox.Size = new System.Drawing.Size(636, 156);
+            this.TierListValueBox.TabIndex = 0;
+            this.TierListValueBox.Text = "";
+            this.TierListValueBox.KeyDown += new System.Windows.Forms.KeyEventHandler(this.TierList_KeyUp);
+            // 
+            // tableLayoutPanel8
+            // 
+            this.tableLayoutPanel8.ColumnCount = 1;
+            this.tableLayoutPanel8.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableLayoutPanel8.Controls.Add(this.button5, 0, 4);
+            this.tableLayoutPanel8.Controls.Add(this.button4, 0, 3);
+            this.tableLayoutPanel8.Controls.Add(this.button3, 0, 2);
+            this.tableLayoutPanel8.Controls.Add(this.button2, 0, 1);
+            this.tableLayoutPanel8.Controls.Add(this.SetTierListButton, 0, 0);
+            this.tableLayoutPanel8.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tableLayoutPanel8.Location = new System.Drawing.Point(645, 3);
+            this.tableLayoutPanel8.Name = "tableLayoutPanel8";
+            this.tableLayoutPanel8.RowCount = 5;
+            this.tableLayoutPanel8.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 20F));
+            this.tableLayoutPanel8.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 20F));
+            this.tableLayoutPanel8.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 20F));
+            this.tableLayoutPanel8.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 20F));
+            this.tableLayoutPanel8.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 20F));
+            this.tableLayoutPanel8.Size = new System.Drawing.Size(155, 156);
+            this.tableLayoutPanel8.TabIndex = 1;
+            // 
+            // button5
+            // 
+            this.button5.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.button5.Location = new System.Drawing.Point(3, 127);
+            this.button5.Name = "button5";
+            this.button5.Size = new System.Drawing.Size(149, 26);
+            this.button5.TabIndex = 4;
+            this.button5.Text = "button5";
+            this.button5.UseVisualStyleBackColor = true;
+            // 
+            // button4
+            // 
+            this.button4.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.button4.Location = new System.Drawing.Point(3, 96);
+            this.button4.Name = "button4";
+            this.button4.Size = new System.Drawing.Size(149, 25);
+            this.button4.TabIndex = 3;
+            this.button4.Text = "button4";
+            this.button4.UseVisualStyleBackColor = true;
+            // 
+            // button3
+            // 
+            this.button3.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.button3.Location = new System.Drawing.Point(3, 65);
+            this.button3.Name = "button3";
+            this.button3.Size = new System.Drawing.Size(149, 25);
+            this.button3.TabIndex = 2;
+            this.button3.Text = "button3";
+            this.button3.UseVisualStyleBackColor = true;
+            // 
+            // button2
+            // 
+            this.button2.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.button2.Location = new System.Drawing.Point(3, 34);
+            this.button2.Name = "button2";
+            this.button2.Size = new System.Drawing.Size(149, 25);
+            this.button2.TabIndex = 1;
+            this.button2.Text = "Reset Tier List";
+            this.button2.UseMnemonic = false;
+            this.button2.UseVisualStyleBackColor = true;
+            // 
+            // SetTierListButton
+            // 
+            this.SetTierListButton.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.SetTierListButton.Location = new System.Drawing.Point(3, 3);
+            this.SetTierListButton.Name = "SetTierListButton";
+            this.SetTierListButton.Size = new System.Drawing.Size(149, 25);
+            this.SetTierListButton.TabIndex = 0;
+            this.SetTierListButton.Text = "Set Tier List";
+            this.SetTierListButton.UseVisualStyleBackColor = true;
+            this.SetTierListButton.Click += new System.EventHandler(this.SetTierListButton_Click);
             // 
             // Form1
             // 
@@ -821,6 +1026,12 @@
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
             this.tabPage5.ResumeLayout(false);
+            this.tabPage8.ResumeLayout(false);
+            this.tableLayoutPanel5.ResumeLayout(false);
+            this.tableLayoutPanel6.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.TierListView)).EndInit();
+            this.tableLayoutPanel7.ResumeLayout(false);
+            this.tableLayoutPanel8.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -845,7 +1056,6 @@
         private System.Windows.Forms.ToolStripStatusLabel ts_label3;
         private System.Windows.Forms.ToolStripMenuItem debugAndTestingToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem generateDebugVersionToolStripMenuItem;
-        private System.Windows.Forms.TabControl tabControl;
         private System.Windows.Forms.TabPage tabPage2;
         private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem1;
         private System.Windows.Forms.TextBox logBox;
@@ -885,7 +1095,6 @@
         private System.Windows.Forms.RichTextBox ToCText;
         private System.Windows.Forms.ToolStripMenuItem applyCommentsFromStyleToolStripMenuItem;
         private System.Windows.Forms.TabPage tabPage6;
-        private System.Windows.Forms.TabPage tabPage7;
         private System.Windows.Forms.TabPage tabPage8;
         private System.Windows.Forms.TabPage tabPage3;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel4;
@@ -899,6 +1108,25 @@
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator5;
         private System.Windows.Forms.ToolStripMenuItem gatherListsToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem applyListsToolStripMenuItem;
+        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel5;
+        private System.Windows.Forms.RichTextBox TierListLines;
+        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel6;
+        private System.Windows.Forms.DataGridView TierListView;
+        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel7;
+        private System.Windows.Forms.RichTextBox TierListValueBox;
+        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel8;
+        private System.Windows.Forms.Button button5;
+        private System.Windows.Forms.Button button4;
+        private System.Windows.Forms.Button button3;
+        private System.Windows.Forms.Button button2;
+        private System.Windows.Forms.Button SetTierListButton;
+        private System.Windows.Forms.DataGridViewTextBoxColumn ID;
+        private System.Windows.Forms.DataGridViewTextBoxColumn TierName;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Count;
+        private System.Windows.Forms.DataGridViewTextBoxColumn GroupElement;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Stable;
+        private System.Windows.Forms.DataGridViewTextBoxColumn TierValue;
+        private System.Windows.Forms.TabControl tabControl;
     }
 }
 

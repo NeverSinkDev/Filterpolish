@@ -22,6 +22,7 @@ namespace FilterPolish
         Filter Fstrict;
         Filter Fuberstrict;
         Configuration config;
+        TierListManager TLM;
 
         public Form1()
         {
@@ -38,7 +39,7 @@ namespace FilterPolish
 
                 this.ConfigView.Rows.Add(key, appSettings[key], "Set");
             }
-                return;
+            return;
         }
 
         public void control_ts_label1(string s)
@@ -200,39 +201,39 @@ namespace FilterPolish
                 StyleSheetArray.Add(SSStreamer);
 
                 foreach (Filter f in FilterArray)
-                    {
-                        AddTextToLogBox("GENERATING SUBVERSION: " + f.settings.subVersionName);
-                        f.ReadLines(this);
-                        f.GenerateEntries();
-                        f.GenerateTOC(true);
-                        f.AdjustVersionName(0, 4);
-                        f.AdjustVersionNumber(0, 3);
-                        f.FindAndHandleVersionTags();
-                        f.SortEntries();
+                {
+                    AddTextToLogBox("GENERATING SUBVERSION: " + f.settings.subVersionName);
+                    f.ReadLines(this);
+                    f.GenerateEntries();
+                    f.GenerateTOC(true);
+                    f.AdjustVersionName(0, 4);
+                    f.AdjustVersionNumber(0, 3);
+                    f.FindAndHandleVersionTags();
+                    f.SortEntries();
 
-                        foreach (StyleSheet s in StyleSheetArray)
-                        {
+                    foreach (StyleSheet s in StyleSheetArray)
+                    {
                         AddTextToLogBox("APPLYING STYLE: " + s.Name);
-                        if (s.Name!="default")
-                            {
-                                s.Init();
-                                s.LoadStyle(true, Util.GetOutputPath() + @"ADDITIONAL-FILES\StyleSheets\" + s.Name + ".fsty");
-                                f.AdjustStyleName(0, 5, s.Name.ToUpper());
-                                s.AppliedFilter = f;
-                                s.ApplyStyleSheetDataToAttributes();
-                            }
+                        if (s.Name != "default")
+                        {
+                            s.Init();
+                            s.LoadStyle(true, Util.GetOutputPath() + @"ADDITIONAL-FILES\StyleSheets\" + s.Name + ".fsty");
+                            f.AdjustStyleName(0, 5, s.Name.ToUpper());
+                            s.AppliedFilter = f;
+                            s.ApplyStyleSheetDataToAttributes();
+                        }
 
                         f.RebuildFilterFromEntries();
 
-                            if (s.Name != "default")
-                            {
-                                f.SaveToFile("(STYLE) " + s.Name.ToUpper().ToString(), s.Name);
-                            }
-                            else
-                            {
-                                f.SaveToFile();
-                            }
+                        if (s.Name != "default")
+                        {
+                            f.SaveToFile("(STYLE) " + s.Name.ToUpper().ToString(), s.Name);
                         }
+                        else
+                        {
+                            f.SaveToFile();
+                        }
+                    }
 
                     AddTextToLogBox("STRICTNESS SUBVERSION COMPLETE: " + f.settings.subVersionName);
                 }
@@ -257,7 +258,7 @@ namespace FilterPolish
             logBox.Refresh();
             logBox.SelectionStart = logBox.Text.Length;
             logBox.ScrollToCaret();
-            
+
 
         }
 
@@ -344,7 +345,7 @@ namespace FilterPolish
                 ListViewGroup CloneGroup = Util.DeepCopy(lvg);
                 StyleListView.Groups.Add(CloneGroup);
             }
-                                    
+
             foreach (ListViewItem lv in list.Items)
             {
                 ListViewItem toclone = new ListViewItem();
@@ -435,14 +436,14 @@ namespace FilterPolish
         private void OnItemClicked(object sender, EventArgs e)
         {
             ListView item = sender as ListView;
-            if (item!=null)
+            if (item != null)
             {
                 if (item.SelectedItems.Count >= 1)
                 {
                     ListViewItem LastItem = item.SelectedItems[item.SelectedItems.Count - 1];
                     this.UpdateStylePreview(LastItem);
                 }
-            } 
+            }
         }
 
         /// <summary>
@@ -531,7 +532,7 @@ namespace FilterPolish
                 int LastItemIndex = LastItem.Index;
 
                 string commenttext = !C1.Text.Contains("#") ? ("# " + Fregular.CurrentStyle.Styles.Where(c => c.identifier == LastItem.Group.Name.ToString()).First().commentIdentifierDescription + " " + C1.Text) : C1.Text;
-                Fregular.CurrentStyle.Styles.Where(i => i.identifier == LastItem.Group.Name).First().GetLineByFullString(LastItem.SubItems[0].Text).Comment = commenttext ;
+                Fregular.CurrentStyle.Styles.Where(i => i.identifier == LastItem.Group.Name).First().GetLineByFullString(LastItem.SubItems[0].Text).Comment = commenttext;
                 StyleListView.Items[LastItemIndex].SubItems[1].Text = commenttext;
                 C1.Focus();
                 C1.SelectAll();
@@ -543,7 +544,7 @@ namespace FilterPolish
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void C1_KeyUp (object sender, System.Windows.Forms.KeyEventArgs e)
+        private void C1_KeyUp(object sender, System.Windows.Forms.KeyEventArgs e)
         {
             if (StyleListView.SelectedItems.Count >= 1)
             {
@@ -575,7 +576,7 @@ namespace FilterPolish
                 }
 
                 C1.Focus();
-                
+
 
                 if (e.KeyCode == Keys.Enter || e.KeyCode == Keys.Up || e.KeyCode == Keys.Down)
                 {
@@ -604,10 +605,10 @@ namespace FilterPolish
 
         private void ConfigView_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
-            if (e.ColumnIndex == 2 && (this.ConfigView[0, e.RowIndex].Value != null && 
+            if (e.ColumnIndex == 2 && (this.ConfigView[0, e.RowIndex].Value != null &&
                 this.ConfigView[1, e.RowIndex].Value != null))
             {
-                
+
                 config.AppSettings.Settings[this.ConfigView[0, e.RowIndex].Value.ToString()].Value = this.ConfigView[1, e.RowIndex].Value.ToString();
                 config.Save(ConfigurationSaveMode.Full);
                 ConfigurationManager.RefreshSection("appSettings");
@@ -616,6 +617,100 @@ namespace FilterPolish
 
             }
         }
+
+        private void gatherListsToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            TLM = new TierListManager(this.Fregular);
+            //this.TierListView.DataSource = TLM.tierList;
+
+            int n = 0;
+            foreach (Tier t in TLM.tierList)
+            {
+                this.TierListView.Rows.Add(n, t.GroupName, t.FilterEntries.Count, t.TierRows, !t.MissMatch, t.Value);
+                n++;
+                //this.ConfigView.Rows.Add(key, appSettings[key], "Set");
+            }
+        }
+
+        private void TierListView_CellEnter(object sender, DataGridViewCellEventArgs e)
+        {
+            this.ChangeTierListSelection(e.RowIndex);
+        }
+
+        public void ChangeTierListSelection(int index)
+        {
+            string preview = "";
+
+            if (TLM == null || index < 0)
+            {
+                return;
+            }
+
+            if (index >= TLM.tierList.Count)
+            {
+                return;
+            }
+
+            foreach (Entry entry in TLM.tierList[index].FilterEntries)
+            {
+                foreach (Line l in entry.Lines)
+                {
+                    preview += l.RebuildLine() + "\r\n"; ;
+                }
+                preview += "\r\n";
+            }
+
+            TierListValueBox.Text = TLM.tierList[index].Value;
+            this.TierListLines.Text = preview;
+        }
+
+        private void SetTierListButton_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void TierList_KeyUp(object sender, KeyEventArgs e)
+        {
+            if (TierListView.Rows.Count >= 1 && TierListView.SelectedCells.Count >= 1)
+            {
+                e.Handled = true;
+                e.SuppressKeyPress = true;
+
+                if (TierListView.Rows.Count >= 1 && TierListView.SelectedCells.Count >= 1)
+                {
+                    int index = TierListView.SelectedCells[0].RowIndex;
+
+                    if (index < TierListView.Rows.Count - 1)
+                    {
+                        if (e.KeyCode == Keys.Down)
+                        {
+                            TierListView.Rows[index + 1].Selected = true;
+                            ChangeTierListSelection(index - 1);
+                        }
+                    }
+
+                    if (index > 0)
+                    {
+                        if (e.KeyCode == Keys.Up)
+                        {
+                            TierListView.Rows[index - 1].Selected = true;
+                            ChangeTierListSelection(index - 1);
+                        }
+                    }
+
+                    if (e.KeyCode == Keys.Enter)
+                    {
+                        this.SetComment_Click(null, null);
+                        TierListView.Select();
+                    }
+
+                    if (e.KeyCode == Keys.Enter || e.KeyCode == Keys.Up || e.KeyCode == Keys.Down)
+                    {
+                        TierListValueBox.Select();
+                        TierListValueBox.SelectionStart = TierListValueBox.Text.Length;
+                    }
+                }
+            }
+        }
     }
 }
-

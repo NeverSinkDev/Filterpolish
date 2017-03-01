@@ -8,11 +8,11 @@ namespace FilterPolish
 {
     public class Tier
     {
-        public int t0lvl;
         public string GroupName = "";
         public List<Entry> FilterEntries = new List<Entry>();
-        public List<string> DisplayRows;
-        public List<string> TierRows;
+        public string TierRows = "";
+        public string Value = "";
+        public bool MissMatch = false;
 
         public Tier()
         {

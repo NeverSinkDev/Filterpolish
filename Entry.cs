@@ -12,6 +12,7 @@ namespace FilterPolish
         public List<Line> Lines;
         public int Type = 0;
         public int N = 0;
+        public int id = 0;
         public List<string> BuildTags = new List<string>();
 
         /// <summary>
@@ -98,6 +99,23 @@ namespace FilterPolish
                 if (this.Lines[0].BuildTags.Count > 0)
                 { 
                 BuildTags.Add(this.Lines[0].BuildTags.First());
+                }
+            }
+        }
+
+        /// <summary>
+        /// Get the first version tag of an entry
+        /// </summary>
+        public void FindAllVersionTag()
+        {
+            if (this.Type == 1 || this.Type == 2)
+            {
+                if (this.Lines[0].BuildTags.Count > 0)
+                {
+                    foreach (string s in this.Lines[0].BuildTags)
+                    {
+                        BuildTags.Add(s);
+                    }
                 }
             }
         }

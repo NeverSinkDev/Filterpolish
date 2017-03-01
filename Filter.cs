@@ -61,6 +61,7 @@ namespace FilterPolish
         /// </summary>
         public void GenerateEntries()
         {
+            int n = 0;
             string lastEntry = "";
             string lastLine = "";
             foreach (Line l in LineList)
@@ -102,6 +103,8 @@ namespace FilterPolish
                 if (l.TypeLine == "Show" || l.TypeLine == "Hide")
                 {
                     this.EntryList.Add(new Entry());
+                    this.EntryList.Last().id = n;
+                    n++;
                     this.EntryList.Last().SetType(l.TypeLine);
                     this.EntryList.Last().Lines.Add(l);
                 }
