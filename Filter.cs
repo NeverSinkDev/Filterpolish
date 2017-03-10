@@ -61,6 +61,7 @@ namespace FilterPolish
         /// </summary>
         public void GenerateEntries()
         {
+            this.EntryList.Clear();
             int n = 0;
             string lastEntry = "";
             string lastLine = "";
@@ -141,6 +142,7 @@ namespace FilterPolish
             using (StringReader reader = new StringReader(RawFilter))
             {
                 string stringLine = "";
+                this.LineList.Clear();
                 while ((stringLine = reader.ReadLine()) != null)
                 {
                     Line line = new Line(stringLine);

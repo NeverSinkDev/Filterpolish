@@ -123,9 +123,28 @@ namespace FilterPolish
             Fregular.GenerateEntries();
             this.GenerateStyleSheetFromFilter(false);
 
-            Item i = new Item("Empower", "Gems");
+        }
 
-            //Fregular.MatchItem(i);
+        /// <summary>
+        /// Open the filter, generate lines, entries and the Stylesheet
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void OpenFilterAndPerformQuickOperations(object sender, EventArgs e)
+        {
+
+            FilterSettings f = new FilterSettings();
+            Fregular = new Filter(OpenFilterFileAndGetText("unnamed"), f);
+            Fregular.ReadLines(this);
+            Fregular.GenerateEntries();
+            Fregular.SortEntries();
+            Fregular.RebuildFilterFromEntries();
+            OutputTransform.Text = Fregular.RawFilterRebuilt;
+            this.GenerateStyleSheetFromFilter(false);
+            this.GenerateToC(false);
+            this.generateTierList();
+            Fregular.RebuildFilterFromEntries();
+            OutputTransform.Text = Fregular.RawFilterRebuilt;
         }
 
         /// <summary>
@@ -166,7 +185,7 @@ namespace FilterPolish
                 AddTextToLogBox("GENERATING FILTER SETTINGS...");
                 ts_label1.Text = "Loading";
 
-                string version = "4.5";
+                string version = Util.getConfigValue("Version Number");
 
                 FilterSettings Sregular = new FilterSettings("1-REGULAR", version, 0);
                 FilterSettings Ssemistrict = new FilterSettings("2-SEMI-STRICT", version, 1);
@@ -202,18 +221,19 @@ namespace FilterPolish
 
                 foreach (Filter f in FilterArray)
                 {
-                    AddTextToLogBox("GENERATING SUBVERSION: " + f.settings.subVersionName);
-                    f.ReadLines(this);
-                    f.GenerateEntries();
-                    f.GenerateTOC(true);
-                    f.AdjustVersionName(0, 4);
-                    f.AdjustVersionNumber(0, 3);
-                    f.FindAndHandleVersionTags();
-                    f.SortEntries();
-
                     foreach (StyleSheet s in StyleSheetArray)
                     {
+                        AddTextToLogBox("GENERATING SUBVERSION: " + f.settings.subVersionName);
                         AddTextToLogBox("APPLYING STYLE: " + s.Name);
+
+                        f.ReadLines(this);
+                        f.GenerateEntries();
+                        f.GenerateTOC(true);
+                        f.AdjustVersionName(0, 4);
+                        f.AdjustVersionNumber(0, 3);
+                        f.FindAndHandleVersionTags();
+                        f.SortEntries();
+
                         if (s.Name != "default")
                         {
                             s.Init();
@@ -233,10 +253,14 @@ namespace FilterPolish
                         {
                             f.SaveToFile();
                         }
+                        AddTextToLogBox("---------------------------------");
                     }
 
                     AddTextToLogBox("STRICTNESS SUBVERSION COMPLETE: " + f.settings.subVersionName);
+                    AddTextToLogBox("---------------------------------");
                 }
+                AddTextToLogBox("---------------------------------");
+                AddTextToLogBox("All Operations Completed!!! Generated " + StyleSheetArray.Count * FilterArray.Count + " Filterfiles.");
 
                 OutputTransform.Text = Fregular.RawFilterRebuilt;
                 ts_label1.Text = "Ready";
@@ -620,15 +644,18 @@ namespace FilterPolish
 
         private void gatherListsToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            TLM = new TierListManager(this.Fregular);
-            //this.TierListView.DataSource = TLM.tierList;
+            this.generateTierList();
+        }
 
+        private void generateTierList()
+        {
+            TLM = new TierListManager(this.Fregular);   
             int n = 0;
+
             foreach (Tier t in TLM.tierList)
             {
                 this.TierListView.Rows.Add(n, t.GroupName, t.FilterEntries.Count, t.TierRows, !t.MissMatch, t.Value);
                 n++;
-                //this.ConfigView.Rows.Add(key, appSettings[key], "Set");
             }
         }
 
@@ -711,6 +738,20 @@ namespace FilterPolish
                     }
                 }
             }
+        }
+
+        private void openAndFillFieldsToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            FilterSettings f = new FilterSettings();
+            Fregular = new Filter(OpenFilterFileAndGetText("unnamed"), f);
+            Fregular.ReadLines(this);
+            Fregular.GenerateEntries();
+            Fregular.SortEntries();
+            this.GenerateStyleSheetFromFilter(false);
+            this.GenerateToC(false);
+            this.generateTierList();
+            Fregular.RebuildFilterFromEntries();
+            OutputTransform.Text = Fregular.RawFilterRebuilt;
         }
     }
 }

@@ -33,10 +33,10 @@ namespace FilterPolish
 
                 foreach (string s in currentEntry.BuildTags)
                 { 
-                bool TB = s.Contains("TB-");
-                bool TC = s.Contains("TC-");
-                bool TI = s.Contains("TI-");
-                bool TD = s.Contains("TD-");
+                bool TB = s.Contains("%TB-");
+                bool TC = s.Contains("%TC-");
+                bool TI = s.Contains("%TI-");
+                bool TD = s.Contains("%TD-");
                 if (TI || TC || TB || TD)
                 {
 
@@ -45,7 +45,6 @@ namespace FilterPolish
                     if (this.tierList.Any(fe => fe.GroupName == groupName))
                     {
                         this.tierList.Where(fe => fe.GroupName == groupName).Single().FilterEntries.Add(currentEntry);
-                        filter.AddFilterProgressToLogBox("adding entry: " + i + " " + coreIdent);
                     }
                     else
                     {
@@ -54,11 +53,11 @@ namespace FilterPolish
                         coreIdent = TB ? "BaseType" : coreIdent;
                         coreIdent = TI ? "ItemLevel" : coreIdent;
                         this.createTier(currentEntry, coreIdent, groupName);
-                        filter.AddFilterProgressToLogBox("creating entry: " + i + " "+ coreIdent);
                     }
                 }
                 }
             }
+            filter.AddFilterProgressToLogBox("Tierlist Generated with: " + this.tierList.Count + " " + "tags!");
         }
 
         public void createTier(Entry e, string coreIdent, string groupName)

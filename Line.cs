@@ -154,13 +154,13 @@ namespace FilterPolish
                     int founddolla = this.Comment.IndexOf("$");
                     if (founddolla >= 1)
                     {
-                        string[] tags = Comment.Substring(founddolla + 1).Split(',');
+                        string[] tags = Comment.Substring(founddolla + 1).Split(' ');
                         foreach (string s in tags)
                         {
                             s.Trim();
                             if (s.Contains("%"))
                             {
-                                this.BuildTags.Add(Comment.Substring(Comment.IndexOf("%") + 1));
+                                this.BuildTags.Add(s);
                             }
                             else
                             {
@@ -170,7 +170,21 @@ namespace FilterPolish
                     }
                     else if (Comment.Contains("%"))
                     {
-                        this.BuildTags.Add(Comment.Substring(Comment.IndexOf("%") + 1));
+                        string[] tags = Comment.Split(' ');
+                        {
+                            foreach (string s in tags)
+                            {
+                                s.Trim();
+                                if (s.Contains("%"))
+                                {
+                                    this.BuildTags.Add(s);
+                                }
+                                else
+                                {
+                                    this.Tags.Add(s);
+                                }
+                            }
+                        }
                     }
                 }
             }
@@ -202,7 +216,7 @@ namespace FilterPolish
                 Commentfound = true;
                 string[] splitresult = s.Split('#');
                 int n = s.IndexOf("#", StringComparison.Ordinal);
-                Comment = s.Substring(n);
+                Comment = s.Substring(n).Trim();
                 s = s.Substring(0, n);
             }
 

@@ -97,8 +97,11 @@ namespace FilterPolish
             if (this.Type == 1 || this.Type == 2)
             {
                 if (this.Lines[0].BuildTags.Count > 0)
-                { 
-                BuildTags.Add(this.Lines[0].BuildTags.First());
+                {
+                    foreach (string s in this.Lines[0].BuildTags)
+                    {
+                        BuildTags.Add(s);
+                    }
                 }
             }
         }
@@ -159,11 +162,11 @@ namespace FilterPolish
         /// <param name="tag"></param>
         public void HandleInnerTag(string tag)
         {
-            if (tag=="D")
+            if (tag=="%D")
             {
                 this.DisableEntry();
             }
-            else if (tag=="H")
+            else if (tag=="%H")
             {
                 this.SwitchToHide();
                 if (this.Lines.Any(i => i.Identifier == "PlayAlertSound"))
@@ -171,11 +174,11 @@ namespace FilterPolish
                     this.Lines.Remove(Lines.Single(s => s.Identifier == "PlayAlertSound"));
                 }
             }
-            else if (tag=="HB")
+            else if (tag=="%HB")
             {
                 this.Lines.Remove(Lines.Single(s => s.Identifier == "SetBackgroundColor"));
             }
-            else if (tag=="HBR")
+            else if (tag=="%HBR")
             {
                 this.Lines.Where(l => l.Identifier == "SetBackgroundColor").ToList().ForEach(l => l.ChangeValueAndApplyToRaw(4,"200"));
             }
@@ -197,9 +200,9 @@ namespace FilterPolish
                 {
                     if (strictness > m)
                     {
-                        if (tag.Substring(0, index) == "HB")
+                        if (tag.Substring(0, index) == "%HB")
                         {
-                            return ("D");
+                            return ("%D");
                         }
                     }
                     return tag.Substring(0, index);

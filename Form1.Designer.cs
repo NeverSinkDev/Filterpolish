@@ -28,10 +28,10 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.ListViewGroup listViewGroup17 = new System.Windows.Forms.ListViewGroup("ListViewGroup", System.Windows.Forms.HorizontalAlignment.Left);
-            System.Windows.Forms.ListViewGroup listViewGroup18 = new System.Windows.Forms.ListViewGroup("ListViewGroup", System.Windows.Forms.HorizontalAlignment.Left);
-            System.Windows.Forms.ListViewGroup listViewGroup19 = new System.Windows.Forms.ListViewGroup("ListViewGroup", System.Windows.Forms.HorizontalAlignment.Left);
-            System.Windows.Forms.ListViewGroup listViewGroup20 = new System.Windows.Forms.ListViewGroup("ListViewGroup", System.Windows.Forms.HorizontalAlignment.Left);
+            System.Windows.Forms.ListViewGroup listViewGroup13 = new System.Windows.Forms.ListViewGroup("ListViewGroup", System.Windows.Forms.HorizontalAlignment.Left);
+            System.Windows.Forms.ListViewGroup listViewGroup14 = new System.Windows.Forms.ListViewGroup("ListViewGroup", System.Windows.Forms.HorizontalAlignment.Left);
+            System.Windows.Forms.ListViewGroup listViewGroup15 = new System.Windows.Forms.ListViewGroup("ListViewGroup", System.Windows.Forms.HorizontalAlignment.Left);
+            System.Windows.Forms.ListViewGroup listViewGroup16 = new System.Windows.Forms.ListViewGroup("ListViewGroup", System.Windows.Forms.HorizontalAlignment.Left);
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
@@ -100,7 +100,6 @@
             this.T1 = new System.Windows.Forms.TextBox();
             this.tabPage5 = new System.Windows.Forms.TabPage();
             this.ToCText = new System.Windows.Forms.RichTextBox();
-            this.tabPage6 = new System.Windows.Forms.TabPage();
             this.tabPage8 = new System.Windows.Forms.TabPage();
             this.tableLayoutPanel5 = new System.Windows.Forms.TableLayoutPanel();
             this.TierListLines = new System.Windows.Forms.RichTextBox();
@@ -120,6 +119,8 @@
             this.button3 = new System.Windows.Forms.Button();
             this.button2 = new System.Windows.Forms.Button();
             this.SetTierListButton = new System.Windows.Forms.Button();
+            this.tabPage6 = new System.Windows.Forms.TabPage();
+            this.openAndFillFieldsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.statusStrip1.SuspendLayout();
             this.tabControl.SuspendLayout();
@@ -165,6 +166,7 @@
             this.toolStripMenuItem1,
             this.toolStripSeparator1,
             this.openFilterToolStripMenuItem,
+            this.openAndFillFieldsToolStripMenuItem,
             this.saveToolStripMenuItem,
             this.saveAsToolStripMenuItem,
             this.toolStripSeparator2,
@@ -275,15 +277,15 @@
             // gatherListsToolStripMenuItem
             // 
             this.gatherListsToolStripMenuItem.Name = "gatherListsToolStripMenuItem";
-            this.gatherListsToolStripMenuItem.Size = new System.Drawing.Size(226, 22);
-            this.gatherListsToolStripMenuItem.Text = "Gather Lists";
+            this.gatherListsToolStripMenuItem.Size = new System.Drawing.Size(233, 22);
+            this.gatherListsToolStripMenuItem.Text = "Gather Tierlist-Tag Parameters";
             this.gatherListsToolStripMenuItem.Click += new System.EventHandler(this.gatherListsToolStripMenuItem_Click);
             // 
             // applyListsToolStripMenuItem
             // 
             this.applyListsToolStripMenuItem.Name = "applyListsToolStripMenuItem";
-            this.applyListsToolStripMenuItem.Size = new System.Drawing.Size(226, 22);
-            this.applyListsToolStripMenuItem.Text = "Apply Lists";
+            this.applyListsToolStripMenuItem.Size = new System.Drawing.Size(233, 22);
+            this.applyListsToolStripMenuItem.Text = "Apply all Tierlist changes";
             // 
             // stylesheetToolStripMenuItem
             // 
@@ -623,19 +625,19 @@
             this.columnHeader2});
             this.StyleListView.Dock = System.Windows.Forms.DockStyle.Fill;
             this.StyleListView.Font = new System.Drawing.Font("Lucida Console", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            listViewGroup17.Header = "ListViewGroup";
-            listViewGroup17.Name = "listViewGroup1";
-            listViewGroup18.Header = "ListViewGroup";
-            listViewGroup18.Name = "listViewGroup2";
-            listViewGroup19.Header = "ListViewGroup";
-            listViewGroup19.Name = "listViewGroup3";
-            listViewGroup20.Header = "ListViewGroup";
-            listViewGroup20.Name = "listViewGroup4";
+            listViewGroup13.Header = "ListViewGroup";
+            listViewGroup13.Name = "listViewGroup1";
+            listViewGroup14.Header = "ListViewGroup";
+            listViewGroup14.Name = "listViewGroup2";
+            listViewGroup15.Header = "ListViewGroup";
+            listViewGroup15.Name = "listViewGroup3";
+            listViewGroup16.Header = "ListViewGroup";
+            listViewGroup16.Name = "listViewGroup4";
             this.StyleListView.Groups.AddRange(new System.Windows.Forms.ListViewGroup[] {
-            listViewGroup17,
-            listViewGroup18,
-            listViewGroup19,
-            listViewGroup20});
+            listViewGroup13,
+            listViewGroup14,
+            listViewGroup15,
+            listViewGroup16});
             this.StyleListView.HideSelection = false;
             this.StyleListView.Location = new System.Drawing.Point(3, 3);
             this.StyleListView.MultiSelect = false;
@@ -785,16 +787,6 @@
             this.ToCText.TabIndex = 0;
             this.ToCText.Text = "";
             // 
-            // tabPage6
-            // 
-            this.tabPage6.Location = new System.Drawing.Point(4, 25);
-            this.tabPage6.Name = "tabPage6";
-            this.tabPage6.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage6.Size = new System.Drawing.Size(1165, 564);
-            this.tabPage6.TabIndex = 5;
-            this.tabPage6.Text = "Ninja Json";
-            this.tabPage6.UseVisualStyleBackColor = true;
-            // 
             // tabPage8
             // 
             this.tabPage8.Controls.Add(this.tableLayoutPanel5);
@@ -908,7 +900,7 @@
             this.tableLayoutPanel7.Name = "tableLayoutPanel7";
             this.tableLayoutPanel7.RowCount = 1;
             this.tableLayoutPanel7.RowStyles.Add(new System.Windows.Forms.RowStyle());
-            this.tableLayoutPanel7.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+            this.tableLayoutPanel7.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 162F));
             this.tableLayoutPanel7.Size = new System.Drawing.Size(803, 162);
             this.tableLayoutPanel7.TabIndex = 1;
             // 
@@ -994,6 +986,23 @@
             this.SetTierListButton.Text = "Set Tier List";
             this.SetTierListButton.UseVisualStyleBackColor = true;
             this.SetTierListButton.Click += new System.EventHandler(this.SetTierListButton_Click);
+            // 
+            // tabPage6
+            // 
+            this.tabPage6.Location = new System.Drawing.Point(4, 25);
+            this.tabPage6.Name = "tabPage6";
+            this.tabPage6.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage6.Size = new System.Drawing.Size(1165, 564);
+            this.tabPage6.TabIndex = 5;
+            this.tabPage6.Text = "(WIP)NinjaExtractor";
+            this.tabPage6.UseVisualStyleBackColor = true;
+            // 
+            // openAndFillFieldsToolStripMenuItem
+            // 
+            this.openAndFillFieldsToolStripMenuItem.Name = "openAndFillFieldsToolStripMenuItem";
+            this.openAndFillFieldsToolStripMenuItem.Size = new System.Drawing.Size(200, 22);
+            this.openAndFillFieldsToolStripMenuItem.Text = "Open and Fill Fields";
+            this.openAndFillFieldsToolStripMenuItem.Click += new System.EventHandler(this.openAndFillFieldsToolStripMenuItem_Click);
             // 
             // Form1
             // 
@@ -1127,6 +1136,7 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn Stable;
         private System.Windows.Forms.DataGridViewTextBoxColumn TierValue;
         private System.Windows.Forms.TabControl tabControl;
+        private System.Windows.Forms.ToolStripMenuItem openAndFillFieldsToolStripMenuItem;
     }
 }
 
