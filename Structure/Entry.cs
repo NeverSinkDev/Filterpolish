@@ -364,7 +364,7 @@ namespace FilterPolish
         }
 
         /// <summary>
-        /// Returns the first Line with the requested identifier and params
+        /// Returns the first Line number with the requested identifier and params
         /// </summary>
         /// <param name="mod"></param>
         /// <param name="op"></param>
@@ -461,15 +461,6 @@ namespace FilterPolish
                 this.Lines[0].RebuildLine(true);
                 this.Type = 2;
             }
-        }
-
-        public bool CheckItemMatch(Item i)
-        {
-            foreach (Line l in this.Lines)
-            { 
-
-            }
-            return false;
         }
 
         /// <summary>

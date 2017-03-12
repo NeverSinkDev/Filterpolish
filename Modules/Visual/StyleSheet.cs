@@ -8,6 +8,7 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using Newtonsoft.Json;
 
 namespace FilterPolish
 {
@@ -66,6 +67,7 @@ namespace FilterPolish
                     v.AddStylesFromEntryToList(e);
                 }
 
+                // Actually this sorts by hue first and by brightness afterwards
                 v.SortByRGB();
 
                 if (labelNewStyles)
@@ -175,12 +177,11 @@ namespace FilterPolish
         }
 
         /// <summary>
-        /// Saves the stylesheet in a JSON file. Not very effective
+        /// Saves the stylesheet in a JSON file. Not very effective, since it makes editing by hand a nightmare
         /// </summary>
         public void SaveStyleAsJson()
         {
-            string json = "";
-            //string json = JsonConvert.SerializeObject(this.Styles);
+            string json = JsonConvert.SerializeObject(this.Styles);
             SaveFileDialog dlg = new SaveFileDialog();
             dlg.Filter = "JSON|*.json";
             dlg.Title = "Save the JSON";
@@ -251,7 +252,7 @@ namespace FilterPolish
                 }
 
                 this.Styles = null;
-                //this.Styles = JsonConvert.DeserializeObject<List<VisualEntry>>(text);
+                this.Styles = JsonConvert.DeserializeObject<List<VisualEntry>>(text);
 
                 if (this.Styles!=null)
                 { return true; }
@@ -320,7 +321,7 @@ namespace FilterPolish
         }
 
         /// <summary>
-        /// Generates the a datacollection in ListViewForm from the current stylesheet.
+        /// Generates the datacollection in ListViewForm from the current stylesheet.
         /// </summary>
         /// <returns></returns>
         public ListView GenerateListViewFromStyleSheet()

@@ -17,7 +17,7 @@ namespace FilterPolish
         public string RawFilterRebuilt = "";
         public List<Entry> EntryList = new List<Entry>();
         public List<Line> LineList = new List<Line>();
-        public Form1 form1;
+        public FilterPolish form1;
         public FilterSettings settings;
         public StyleSheet CurrentStyle;
         public StyleSheet ImportedStyle;
@@ -135,7 +135,7 @@ namespace FilterPolish
         /// </summary>
         /// <param name="form"></param>
         /// <returns></returns>
-        public bool ReadLines(Form1 form)
+        public bool ReadLines(FilterPolish form)
         {
             this.form1 = form;
             int parsed = 0;
@@ -170,7 +170,7 @@ namespace FilterPolish
         /// </summary>
         /// <param name="form"></param>
         /// <returns></returns>
-        public bool ReadLinesWithoutOutput(Form1 form)
+        public bool ReadLinesWithoutOutput(FilterPolish form)
         {
             this.form1 = form;
             int parsed = 0;
@@ -383,7 +383,7 @@ namespace FilterPolish
         /// <param name="lineNumber"></param>
         public void AdjustStyleName(int entryNumber, int lineNumber, string Text)
         {
-            AddFilterProgressToLogBox("Adjusting version name...");
+            AddFilterProgressToLogBox("Adjusting style name...");
             if (this.EntryList[entryNumber].getType() == "Comment")
             {
                 this.EntryList[entryNumber].Lines[lineNumber].Raw = "# STYLE:\t\t\t" + Text;

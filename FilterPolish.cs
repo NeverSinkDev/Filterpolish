@@ -11,10 +11,16 @@ using System.Threading.Tasks;
 using System.Configuration;
 using System.Windows.Forms;
 using static System.Windows.Forms.ListView;
+using FilterPolish.Extract;
+using Newtonsoft.Json;
 
 namespace FilterPolish
 {
-    public partial class Form1 : Form
+    /// <summary>
+    /// This is the main class of the application and also the execution base for most modules
+    /// I've underestimated the scope of the project, so it has become a tiny bit cluttered
+    /// </summary>
+    public partial class FilterPolish : Form
     {
         Filter Fregular;
         Filter Fsemistrict;
@@ -24,7 +30,10 @@ namespace FilterPolish
         Configuration config;
         TierListManager TLM;
 
-        public Form1()
+        /// <summary>
+        /// Ye' generic on load configuration
+        /// </summary>
+        public FilterPolish()
         {
             InitializeComponent();
             ts_label1.Text = "Ready";
@@ -99,7 +108,7 @@ namespace FilterPolish
         }
 
         /// <summary>
-        /// Rebuild the filter from Entries.
+        /// Rebuild the filter from Entries. This routine also removes redundant whitespaces and cleans up the layout a tiny bit.
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -116,7 +125,6 @@ namespace FilterPolish
         /// <param name="e"></param>
         private void OpenFilter(object sender, EventArgs e)
         {
-
             FilterSettings f = new FilterSettings();
             Fregular = new Filter(OpenFilterFileAndGetText("unnamed"), f);
             Fregular.ReadLines(this);
@@ -126,13 +134,12 @@ namespace FilterPolish
         }
 
         /// <summary>
-        /// Open the filter, generate lines, entries and the Stylesheet
+        /// Open the filter, generate lines, entries and the Stylesheet, ToC and Tierlists
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
         private void OpenFilterAndPerformQuickOperations(object sender, EventArgs e)
         {
-
             FilterSettings f = new FilterSettings();
             Fregular = new Filter(OpenFilterFileAndGetText("unnamed"), f);
             Fregular.ReadLines(this);
@@ -160,7 +167,7 @@ namespace FilterPolish
         }
 
         /// <summary>
-        /// Perform 
+        /// Perform the filter Entry generation, while crating debug information
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -187,12 +194,12 @@ namespace FilterPolish
 
                 string version = Util.getConfigValue("Version Number");
 
+                // Generates the filter-strictness subversions. I'Ll move this to a file-based system if it becomes more complex
                 FilterSettings Sregular = new FilterSettings("1-REGULAR", version, 0);
                 FilterSettings Ssemistrict = new FilterSettings("2-SEMI-STRICT", version, 1);
                 FilterSettings Sstrict = new FilterSettings("3-STRICT", version, 2);
                 FilterSettings Sverystrict = new FilterSettings("4-VERY-STRICT", version, 3);
                 FilterSettings Suberstrict = new FilterSettings("5-UBER-STRICT", version, 4);
-                FilterSettings Sslick = new FilterSettings("SLICK", version, 0);
 
                 Fregular = new Filter(text, Sregular);
                 Fstrict = new Filter(text, Sstrict);
@@ -200,11 +207,14 @@ namespace FilterPolish
                 Fverystrict = new Filter(text, Sverystrict);
                 Fuberstrict = new Filter(text, Suberstrict);
 
+                // Initializes the stylesheets
                 StyleSheet SSdef = new StyleSheet("default");
                 StyleSheet SSBlue = new StyleSheet("Blue");
                 StyleSheet SSSlick = new StyleSheet("Slick");
+                // StyleSheet SSPurple = new StyleSheet("Purple");
                 StyleSheet SSStreamer = new StyleSheet("StreamSound");
 
+                // Adds filters and stylesheets to their relevant arrays
                 List<Filter> FilterArray = new List<Filter>();
                 List<StyleSheet> StyleSheetArray = new List<StyleSheet>();
 
@@ -218,7 +228,9 @@ namespace FilterPolish
                 StyleSheetArray.Add(SSBlue);
                 StyleSheetArray.Add(SSSlick);
                 StyleSheetArray.Add(SSStreamer);
+                // StyleSheetArray.Add(SSPurple);
 
+                // For every strictness and stylesheet...
                 foreach (Filter f in FilterArray)
                 {
                     foreach (StyleSheet s in StyleSheetArray)
@@ -226,7 +238,10 @@ namespace FilterPolish
                         AddTextToLogBox("GENERATING SUBVERSION: " + f.settings.subVersionName);
                         AddTextToLogBox("APPLYING STYLE: " + s.Name);
 
+                        // First read the file again (to prevent problems)
                         f.ReadLines(this);
+
+                        // Perform all non-style based operations
                         f.GenerateEntries();
                         f.GenerateTOC(true);
                         f.AdjustVersionName(0, 4);
@@ -234,6 +249,7 @@ namespace FilterPolish
                         f.FindAndHandleVersionTags();
                         f.SortEntries();
 
+                        // Adjust the style for all non-default stylesheets
                         if (s.Name != "default")
                         {
                             s.Init();
@@ -243,8 +259,10 @@ namespace FilterPolish
                             s.ApplyStyleSheetDataToAttributes();
                         }
 
+                        // Generate the filter
                         f.RebuildFilterFromEntries();
 
+                        // Perform file and logging operations
                         if (s.Name != "default")
                         {
                             f.SaveToFile("(STYLE) " + s.Name.ToUpper().ToString(), s.Name);
@@ -264,13 +282,15 @@ namespace FilterPolish
 
                 OutputTransform.Text = Fregular.RawFilterRebuilt;
                 ts_label1.Text = "Ready";
+
+                // Open the folder. QOL confirmed.
                 Process.Start(Util.GetOutputPath());
             }
 
         }
 
         /// <summary>
-        /// Add logtext
+        /// Add logtext and update the view
         /// </summary>
         /// <param name="line"></param>
         public void AddTextToLogBox(string line)
@@ -282,12 +302,10 @@ namespace FilterPolish
             logBox.Refresh();
             logBox.SelectionStart = logBox.Text.Length;
             logBox.ScrollToCaret();
-
-
         }
 
         /// <summary>
-        /// Generate comments
+        /// Generates the TOC (table of contents), without applying it to the filter
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -297,12 +315,22 @@ namespace FilterPolish
             tabControl.SelectTab(4);
         }
 
+        /// <summary>
+        /// Generates the TOC and applies it to the filter
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void gatherAndApplyToCToolStripMenuItem_Click(object sender, EventArgs e)
         {
             this.GenerateToC(true, true);
             tabControl.SelectTab(4);
         }
 
+        /// <summary>
+        /// Initiatates the TOC routine and displays the output
+        /// </summary>
+        /// <param name="ApplyToC"></param>
+        /// <param name="GenerateLines"></param>
         private void GenerateToC(bool ApplyToC = true, bool GenerateLines = true)
         {
             Fregular.GenerateTOC(ApplyToC);
@@ -544,7 +572,7 @@ namespace FilterPolish
         }
 
         /// <summary>
-        /// Applies the comment to the entry.
+        /// Applies the comment to all entries of the applied style
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -611,6 +639,11 @@ namespace FilterPolish
             }
         }
 
+        /// <summary>
+        /// This method is supposed to adjust the comments in the filter in order to utilize a certain stylesheet. I didn't get to test it very much.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void applyCommentsFromStyleToolStripMenuItem_Click(object sender, EventArgs e)
         {
             StyleSheet s = new StyleSheet(Fregular);
@@ -622,11 +655,21 @@ namespace FilterPolish
             this.GenerateStyleSheetFromFilter(false);
         }
 
+        /// <summary>
+        /// Potentially the most horrible about dialog in the world.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void aboutToolStripMenuItem_Click(object sender, EventArgs e)
         {
             MessageBox.Show("Uh. Oh. This is one poor dialog box. Anyway, app created by NeverSink - that's me. I'm sorry for all the bugs and the messy code, I'll promise I'll clean it up soon O.O. For now, you can open your filter, clean and sort it (cleaning tab) and observe it's glory in the StyleSheets tab. I'm also going to add a small instruction and make the whole app a tiiiiny bit more userfriendly. \n https://github.com/NeverSinkDev ");
         }
 
+        /// <summary>
+        /// Saves the changes done to the config file, through the use of the config data grid
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void ConfigView_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
             if (e.ColumnIndex == 2 && (this.ConfigView[0, e.RowIndex].Value != null &&
@@ -642,11 +685,20 @@ namespace FilterPolish
             }
         }
 
+        /// <summary>
+        /// Gathers the tierlists in the filter, based upon the comment tags
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void gatherListsToolStripMenuItem_Click(object sender, EventArgs e)
         {
             this.generateTierList();
+            tabControl.SelectTab(5);
         }
 
+        /// <summary>
+        /// Executes the actual tier list generation logic and updates the datagrid
+        /// </summary>
         private void generateTierList()
         {
             TLM = new TierListManager(this.Fregular);   
@@ -659,11 +711,20 @@ namespace FilterPolish
             }
         }
 
+        /// <summary>
+        /// Triggers upon focus change in the tierlist datagrid
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void TierListView_CellEnter(object sender, DataGridViewCellEventArgs e)
         {
             this.ChangeTierListSelection(e.RowIndex);
         }
 
+        /// <summary>
+        /// Adjusts the relevant entries to the currently selected tierlist
+        /// </summary>
+        /// <param name="index"></param>
         public void ChangeTierListSelection(int index)
         {
             string preview = "";
@@ -691,11 +752,21 @@ namespace FilterPolish
             this.TierListLines.Text = preview;
         }
 
+        /// <summary>
+        /// Adjusts the parameters of all entries of the currently selected tier
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void SetTierListButton_Click(object sender, EventArgs e)
         {
 
         }
 
+        /// <summary>
+        /// Handles keyboard clicks in the tierlist datagrid
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void TierList_KeyUp(object sender, KeyEventArgs e)
         {
             if (TierListView.Rows.Count >= 1 && TierListView.SelectedCells.Count >= 1)
@@ -740,6 +811,11 @@ namespace FilterPolish
             }
         }
 
+        /// <summary>
+        /// Opens a file and executes all modules
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void openAndFillFieldsToolStripMenuItem_Click(object sender, EventArgs e)
         {
             FilterSettings f = new FilterSettings();
@@ -752,6 +828,31 @@ namespace FilterPolish
             this.generateTierList();
             Fregular.RebuildFilterFromEntries();
             OutputTransform.Text = Fregular.RawFilterRebuilt;
+        }
+
+        /// <summary>
+        /// Initiates a HTTP request to poe.ninja.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void getNinjaJSONDataToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            List<string> urlSuffix1 = new List<string>
+            {
+                //"GetUniqueMapOverview",
+                //"GetDivinationCardsOverview",
+                //"GetEssenceOverview",
+                //"GetUniqueJewelOverview",
+                //"GetUniqueFlaskOverview",
+                //"GetUniqueWeaponOverview",
+                //"GetUniqueArmourOverview",
+                "GetUniqueAccessoryOverview"
+            };
+
+            RequestManager rm = new RequestManager(urlSuffix1);
+            rm.ExecuteAll();
+
+            return;
         }
     }
 }
