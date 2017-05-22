@@ -69,9 +69,16 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Extract\Item\EconomyItem.cs" />
+    <Compile Include="Extract\Item\NinjaItem.cs" />
     <Compile Include="Extract\NinjaRequest.cs" />
     <Compile Include="Extract\RequestManager.cs" />
-    <Compile Include="Modules\Economy\EcoTier.cs" />
+    <Compile Include="Modules\Change.cs" />
+    <Compile Include="Modules\ChangeCollection.cs" />
+    <Compile Include="Modules\ChangeGroup.cs" />
+    <Compile Include="Modules\Economy\FilterPricedItemCollection.cs" />
+    <Compile Include="Modules\Economy\PricedItemCollection.cs" />
+    <Compile Include="Modules\TierLists\ConnectedTiers.cs" />
     <Compile Include="Modules\TierLists\Tier.cs" />
     <Compile Include="Prototype\Comparison Delegates.cs" />
     <Compile Include="Prototype\Item.cs" />

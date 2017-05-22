@@ -13,6 +13,9 @@ using System.Windows.Forms;
 using static System.Windows.Forms.ListView;
 using FilterPolish.Extract;
 using Newtonsoft.Json;
+using FilterPolish.Modules.TierLists;
+using FilterPolish.Modules.Economy;
+using FilterPolish.Modules;
 
 namespace FilterPolish
 {
@@ -29,6 +32,10 @@ namespace FilterPolish
         Filter Fuberstrict;
         Configuration config;
         TierListManager TLM;
+        ConnectedTiers ConnectedTiers;
+        FilterPricedItemCollection FPIC;
+        int CurrentPricedTier = 0;
+        ChangeCollection changes = new ChangeCollection();
 
         /// <summary>
         /// Ye' generic on load configuration
@@ -194,7 +201,7 @@ namespace FilterPolish
 
                 string version = Util.getConfigValue("Version Number");
 
-                // Generates the filter-strictness subversions. I'Ll move this to a file-based system if it becomes more complex
+                // Generates the filter-strictness subversions. I'll move this to a file-based system if it becomes more complex
                 FilterSettings Sregular = new FilterSettings("1-REGULAR", version, 0);
                 FilterSettings Ssemistrict = new FilterSettings("2-SEMI-STRICT", version, 1);
                 FilterSettings Sstrict = new FilterSettings("3-STRICT", version, 2);
@@ -211,7 +218,7 @@ namespace FilterPolish
                 StyleSheet SSdef = new StyleSheet("default");
                 StyleSheet SSBlue = new StyleSheet("Blue");
                 StyleSheet SSSlick = new StyleSheet("Slick");
-                // StyleSheet SSPurple = new StyleSheet("Purple");
+                StyleSheet SSPurple = new StyleSheet("Purple");
                 StyleSheet SSStreamer = new StyleSheet("StreamSound");
 
                 // Adds filters and stylesheets to their relevant arrays
@@ -228,7 +235,7 @@ namespace FilterPolish
                 StyleSheetArray.Add(SSBlue);
                 StyleSheetArray.Add(SSSlick);
                 StyleSheetArray.Add(SSStreamer);
-                // StyleSheetArray.Add(SSPurple);
+                StyleSheetArray.Add(SSPurple);
 
                 // For every strictness and stylesheet...
                 foreach (Filter f in FilterArray)
@@ -359,6 +366,9 @@ namespace FilterPolish
             OutputTransform.Text = Fregular.RawFilterRebuilt;
             ts_label1.Text = "Ready";
             Process.Start(Util.GetOutputPath());
+
+            this.gatherChagnesToolStripMenuItem_Click(null, null);
+            this.gatherChangesforumToolStripMenuItem_Click(null, null);
         }
 
         /// <summary>
@@ -680,8 +690,6 @@ namespace FilterPolish
                 config.Save(ConfigurationSaveMode.Full);
                 ConfigurationManager.RefreshSection("appSettings");
                 this.ConfigView.Refresh();
-
-
             }
         }
 
@@ -702,13 +710,7 @@ namespace FilterPolish
         private void generateTierList()
         {
             TLM = new TierListManager(this.Fregular);   
-            int n = 0;
-
-            foreach (Tier t in TLM.tierList)
-            {
-                this.TierListView.Rows.Add(n, t.GroupName, t.FilterEntries.Count, t.TierRows, !t.MissMatch, t.Value);
-                n++;
-            }
+            this.TierListView.DataSource = TLM.tierList;
         }
 
         /// <summary>
@@ -739,6 +741,7 @@ namespace FilterPolish
                 return;
             }
 
+            TLM.CurrentIndex = index;
             foreach (Entry entry in TLM.tierList[index].FilterEntries)
             {
                 foreach (Line l in entry.Lines)
@@ -759,7 +762,32 @@ namespace FilterPolish
         /// <param name="e"></param>
         private void SetTierListButton_Click(object sender, EventArgs e)
         {
+            SetTierListValue();
+        }
 
+        private void SetTierListValue()
+        {
+            var tier = TLM.tierList[TLM.CurrentIndex];
+
+            if (tier.oldValue == TierListValueBox.Text.ToString())
+            {
+                this.TierListView.Rows[TLM.CurrentIndex].DefaultCellStyle.BackColor = Color.White;
+                tier.Changed = false;
+                this.TierListView.InvalidateRow(TLM.CurrentIndex);
+                this.TierListView.Update();
+                return;
+            }
+
+            tier.FilterEntries.ForEach(i => i.ModifyAttributeSimple(tier.TierRows, TierListValueBox.Text.ToString()));
+            TLM.tierList[TLM.CurrentIndex].Value = TierListValueBox.Text.ToString();
+            tier.Changed = true;
+            this.TierListView.Rows[TLM.CurrentIndex].DefaultCellStyle.BackColor = Color.Cyan;
+            this.ChangeTierListSelection(TLM.CurrentIndex);
+            this.TierListView.InvalidateRow(TLM.CurrentIndex);
+            this.TierListView.Update();
+
+            TierListValueBox.Select();
+            TierListValueBox.SelectionStart = TierListValueBox.Text.Length;
         }
 
         /// <summary>
@@ -771,8 +799,7 @@ namespace FilterPolish
         {
             if (TierListView.Rows.Count >= 1 && TierListView.SelectedCells.Count >= 1)
             {
-                e.Handled = true;
-                e.SuppressKeyPress = true;
+                //e.SuppressKeyPress = true;
 
                 if (TierListView.Rows.Count >= 1 && TierListView.SelectedCells.Count >= 1)
                 {
@@ -783,7 +810,7 @@ namespace FilterPolish
                         if (e.KeyCode == Keys.Down)
                         {
                             TierListView.Rows[index + 1].Selected = true; 
-                            ChangeTierListSelection(index - 1);
+                            ChangeTierListSelection(index + 1);
                         }
                     }
 
@@ -798,11 +825,11 @@ namespace FilterPolish
 
                     if (e.KeyCode == Keys.Enter)
                     {
-                        this.SetComment_Click(null, null);
-                        TierListView.Select();
+                        SetTierListValue();
+                        e.Handled = true;
                     }
 
-                    if (e.KeyCode == Keys.Enter || e.KeyCode == Keys.Up || e.KeyCode == Keys.Down)
+                    if (e.KeyCode == Keys.Up || e.KeyCode == Keys.Down)
                     {
                         TierListValueBox.Select();
                         TierListValueBox.SelectionStart = TierListValueBox.Text.Length;
@@ -828,6 +855,10 @@ namespace FilterPolish
             this.generateTierList();
             Fregular.RebuildFilterFromEntries();
             OutputTransform.Text = Fregular.RawFilterRebuilt;
+            this.getNinjaJSONDataToolStripMenuItem_Click(null, null);
+            this.uniquesToolStripMenuItem_Click(null, null);
+            this.ChangeBox.Text = "";
+            this.changes.AllChangeGroups.Clear();
         }
 
         /// <summary>
@@ -839,20 +870,256 @@ namespace FilterPolish
         {
             List<string> urlSuffix1 = new List<string>
             {
-                //"GetUniqueMapOverview",
-                //"GetDivinationCardsOverview",
+                "GetUniqueMapOverview",
+                "GetDivinationCardsOverview",
                 //"GetEssenceOverview",
                 //"GetUniqueJewelOverview",
-                //"GetUniqueFlaskOverview",
-                //"GetUniqueWeaponOverview",
-                //"GetUniqueArmourOverview",
+                "GetUniqueFlaskOverview",
+                "GetUniqueWeaponOverview",
+                "GetUniqueArmourOverview",
                 "GetUniqueAccessoryOverview"
             };
 
             RequestManager rm = new RequestManager(urlSuffix1);
-            rm.ExecuteAll();
+            rm.ExecuteAll(this.TLM);
+
+            this.AddTextToLogBox("DONE: PoE.ninja data crawled.");
+
 
             return;
+        }
+
+        private void ResetTier_Click(object sender, EventArgs e)
+        {
+            var tier = TLM.tierList[TLM.CurrentIndex];
+            tier.FilterEntries.ForEach(i => i.ModifyAttributeSimple(tier.TierRows, tier.oldValue));
+            TLM.tierList[TLM.CurrentIndex].Value = tier.oldValue;
+            tier.Changed = false;
+            this.TierListView.Rows[TLM.CurrentIndex].DefaultCellStyle.BackColor = Color.White;
+            this.ChangeTierListSelection(TLM.CurrentIndex);
+            this.TierListView.InvalidateRow(TLM.CurrentIndex);
+            this.TierListView.Update();
+
+            TierListValueBox.Select();
+            TierListValueBox.SelectionStart = TierListValueBox.Text.Length;
+        }
+
+        private void uniquesToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            this.ConnectedTiers = new ConnectedTiers(this.TLM, this.TLM.pricedUniques, "%TB-Unique");
+
+            FPIC = new FilterPricedItemCollection(this.ConnectedTiers,sortDirection.Checked,sortLegacy.Checked, "Uniques");
+            this.PTL.DataSource = FPIC.TierList;
+            CreateConnectedTierButtons();
+            this.FPIC.CompileAllChanges(this.changes);
+            this.AddTextToLogBox("Generated Priced Tierlist : Unique Items: " + PTL.RowCount);
+        }
+
+        private void divinationCardsToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            this.ConnectedTiers = new ConnectedTiers(this.TLM, this.TLM.pricedDivinationCards, "%TB-Divination");
+
+            FPIC = new FilterPricedItemCollection(this.ConnectedTiers, sortDirection.Checked, sortLegacy.Checked, "Divination Cards");
+            this.PTL.DataSource = FPIC.TierList;
+            CreateConnectedTierButtons();
+            this.FPIC.CompileAllChanges(this.changes);
+            this.AddTextToLogBox("Generated Priced Tierlist : Divination Cards: " + PTL.RowCount);
+        }
+
+        private void mapsToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            this.ConnectedTiers = new ConnectedTiers(this.TLM, this.TLM.pricedMaps, "%TB-UMaps");
+
+            FPIC = new FilterPricedItemCollection(this.ConnectedTiers, sortDirection.Checked, sortLegacy.Checked, "Unique Maps");
+            this.PTL.DataSource = FPIC.TierList;
+            CreateConnectedTierButtons();
+            this.FPIC.CompileAllChanges(this.changes);
+            this.AddTextToLogBox("Generated Priced Tierlist : Maps: " + PTL.RowCount);
+        }
+
+        private void CreateConnectedTierButtons()
+        {
+            this.CurrentPricedTier = 0;
+
+            Button newButton;
+            this.EcoLV.Controls.Clear();
+            for (int i = 0; i < ConnectedTiers.Tiers.Count; i++)
+            {
+                newButton = new Button();
+                newButton.Width = 200;
+                newButton.Click += NewButton_Click;
+                newButton.Text = ConnectedTiers.Tiers[i].GroupName;
+                EcoLV.Controls.Add(newButton);
+            }
+
+            newButton = new Button();
+            newButton.Width = 200;
+            newButton.Click += NewButton_Click;
+            newButton.Text = "REMOVE TIER";
+            EcoLV.Controls.Add(newButton);
+        }
+
+        private void NewButton_Click(object sender, EventArgs e)
+        {
+            (EcoLV.Controls[CurrentPricedTier] as Button).BackColor = Color.AntiqueWhite;
+            var SendingGroup = (sender as Button).Text;
+            this.SetPricedTier(SendingGroup);
+            this.PTL.Focus();
+
+            CurrentPricedTier = EcoLV.Controls.IndexOf(sender as Button);
+            (sender as Button).BackColor = Color.Azure;
+
+        }
+
+        public void SetPricedTier(string SendingGroup)
+        {
+            var index = this.PTL.SelectedCells[0].RowIndex;
+            var row = this.PTL.Rows[index];
+            var BaseType = row.Cells["Name"].Value.ToString();
+
+            // Perform the action
+            string newValue = this.FPIC.UpdateValueInConectedTiers(BaseType, SendingGroup);
+
+            // Update visuals of the priced tierlist
+            this.PTL.Rows[index].DefaultCellStyle.BackColor = Color.LightBlue;
+            this.PTL.InvalidateRow(index);
+            this.PTL.Update();
+
+            this.FPIC.CompileAllChanges(this.changes);
+
+            this.UpdateTierListManager();
+        }
+
+        private void UpdateTierListManager()
+        { 
+
+            for (int i = 0; i < TierListView.RowCount -1; i++)
+            {
+
+                if (TLM.tierList[i].Changed)
+                {
+                    TierListView.Rows[i].DefaultCellStyle.BackColor = Color.LightBlue;
+                }
+                else
+                {
+                    TierListView.Rows[i].DefaultCellStyle.BackColor = Color.White;
+                }
+            }
+
+            this.TierListView.Invalidate();
+            this.TierListView.Update();
+
+        }
+
+        private void PTL_KeyUp(object sender, KeyEventArgs e)
+        {
+
+            if (PTL.Rows.Count >= 1 && PTL.SelectedCells.Count >= 1)
+            {
+                int index = PTL.SelectedCells[0].RowIndex;
+
+                    if (e.KeyCode == Keys.Left)
+                    {
+                        if (CurrentPricedTier > 0)
+                        {
+                            (EcoLV.Controls[CurrentPricedTier] as Button).BackColor = Color.AntiqueWhite;
+                            CurrentPricedTier--;
+                            (EcoLV.Controls[CurrentPricedTier] as Button).BackColor = Color.Azure;
+                        }
+                        e.Handled = true;
+                        e.SuppressKeyPress = true;
+                    }
+
+
+                    if (e.KeyCode == Keys.Right)
+                    {
+                        if (CurrentPricedTier < EcoLV.Controls.Count -1)
+                        {
+                            (EcoLV.Controls[CurrentPricedTier] as Button).BackColor = Color.AntiqueWhite;
+                            CurrentPricedTier++;
+                            (EcoLV.Controls[CurrentPricedTier] as Button).BackColor = Color.Azure;
+                        }
+                        e.Handled = true;
+                        e.SuppressKeyPress = true;
+                    }
+
+                if (e.KeyCode == Keys.Enter)
+                {
+                    e.Handled = true;
+                    e.SuppressKeyPress = true;
+                    this.SetPricedTier(EcoLV.Controls[this.CurrentPricedTier].Text);
+                }
+            }
+        }
+
+        private void PTL_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyData == Keys.Enter)
+            {
+                e.SuppressKeyPress = true;
+                int row = PTL.CurrentRow.Index;
+                int col = PTL.CurrentCell.ColumnIndex;
+            }
+        }
+
+        private void gatherChagnesToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            this.ChangeBox.Text = this.changes.GetAllChanges(true);
+
+            if (this.ChangeBox.Text == null)
+            {
+                return;
+            }
+
+            System.IO.FileInfo file = new FileInfo(Util.GetOutputPath()
+           + "/Changes/" + Util.GetTodayDateTimeExtension() + "/" + Util.getConfigValue("Version Number") + " changes.txt");
+
+            file.Directory.Create();
+            System.IO.File.WriteAllText(file.FullName, this.ChangeBox.Text);
+
+            file = new FileInfo(Util.GetOutputPath()
+             + "/Changes/" + "LatestChanges (reddit).txt");
+            System.IO.File.WriteAllText(file.FullName, this.ChangeBox.Text);
+            System.IO.File.WriteAllText(file.FullName, this.ChangeBox.Text);
+        }
+
+        private void gatherChangesforumToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            this.ChangeBox.Text = this.changes.GetAllChanges(false);
+
+            if (this.ChangeBox.Text == null)
+            {
+                return;
+            }
+
+            System.IO.FileInfo file = new FileInfo(Util.GetOutputPath()
+                       + "/Changes/" + Util.GetTodayDateTimeExtension() + "/" + Util.getConfigValue("Version Number")+ " changes.txt");
+
+            file.Directory.Create();
+            System.IO.File.WriteAllText(file.FullName, this.ChangeBox.Text);
+
+            file = new FileInfo(Util.GetOutputPath()
+             + "/Changes/" + "LatestChanges (forum).txt");
+            System.IO.File.WriteAllText(file.FullName, this.ChangeBox.Text);
+            System.IO.File.WriteAllText(file.FullName, this.ChangeBox.Text);
+        }
+
+        private void tabControl_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            var index = (sender as TabControl).SelectedIndex;
+
+            switch (index)
+            {
+                case 2:
+                    StyleListView.Focus();
+                    break;
+                case 5:
+                    PTL.Focus();
+                    break;
+                case 6:
+                    TierListView.Focus();
+                    break;
+            }
         }
     }
 }

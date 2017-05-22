@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 
 namespace FilterPolish
 {
@@ -87,6 +88,39 @@ namespace FilterPolish
                 }
             }
             return changedLines;
+        }
+
+        public void ModifyAttributeSimple(string mod, string change)
+        {
+            List<Line> changedLines = new List<Line>();
+            for (int n = 0; n < this.Lines.Count; n++)
+            {
+                bool changes = false;
+                if (this.Lines[n].Identifier == mod)
+                {
+                    if (change != "")
+                    {
+                        changes = true;
+                        string comment = this.Lines[n].Comment;
+                        this.Lines[n].Raw = mod + " " + change + comment;
+                        this.Lines[n].Identify();
+                    }
+                    else
+                    {
+                        changes = true;
+                        string comment = this.Lines[n].Comment;
+                        this.Lines[n].Raw = mod + comment;
+                        this.Lines[n].Identify();
+                        MessageBox.Show("WARNING: NO PARAMS!"); 
+                    }
+
+                    if (changes == true)
+                    {
+                        this.Lines[n].UpdateRaw();
+                        changedLines.Add(this.Lines[n]);
+                    };
+                }
+            }
         }
 
         /// <summary>

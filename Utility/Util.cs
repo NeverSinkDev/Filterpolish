@@ -64,5 +64,10 @@ namespace FilterPolish
         {
             return getConfigValue("Output Folder");
         }
+
+        public static string GetTodayDateTimeExtension()
+        {
+            return DateTime.Now.ToString("yyyy-M-d");
+        }
     }
 }

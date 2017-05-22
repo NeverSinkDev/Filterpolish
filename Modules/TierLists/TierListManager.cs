@@ -1,20 +1,33 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.Collections.Specialized;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace FilterPolish
 {
+    /// <summary>
+    /// Contains all filter tiers and provides links to the priced items, without connecting
+    /// them directly
+    /// </summary>
     public class TierListManager
     {
         public Filter filter;
-        public List<Tier> tierList;
+        public BindingList<Tier> tierList;
+        private List<Tier> sortedList;
+        public int CurrentIndex = -1;
+
+        public PricedItemCollection pricedUniques { get; set; }
+        public PricedItemCollection pricedDivinationCards { get; set; }
+        public PricedItemCollection pricedMaps { get; set; }
 
         public TierListManager(Filter filter)
         {
             this.filter = filter;
-            this.tierList = new List<Tier>();
+            this.sortedList = new List<Tier>();
             this.init();
         }
 
@@ -26,25 +39,21 @@ namespace FilterPolish
                 currentEntry.BuildTags.Clear();
                 currentEntry.FindAllVersionTag();
 
-                if (currentEntry.BuildTags.Count > 0)
-                {
-                 
-                }
-
                 foreach (string s in currentEntry.BuildTags)
                 { 
                 bool TB = s.Contains("%TB-");
                 bool TC = s.Contains("%TC-");
                 bool TI = s.Contains("%TI-");
                 bool TD = s.Contains("%TD-");
+
                 if (TI || TC || TB || TD)
                 {
 
                     string groupName = s;
                     string coreIdent = "";
-                    if (this.tierList.Any(fe => fe.GroupName == groupName))
+                    if (this.sortedList.Any(fe => fe.GroupName == groupName))
                     {
-                        this.tierList.Where(fe => fe.GroupName == groupName).Single().FilterEntries.Add(currentEntry);
+                        this.sortedList.Where(fe => fe.GroupName == groupName).Single().FilterEntries.Add(currentEntry);
                     }
                     else
                     {
@@ -57,7 +66,9 @@ namespace FilterPolish
                 }
                 }
             }
-            filter.AddFilterProgressToLogBox("Tierlist Generated with: " + this.tierList.Count + " " + "tags!");
+
+            this.tierList = new BindingList<Tier>(this.sortedList.OrderBy(i => i.GroupName).ThenBy(i => i.TierRows).ToList());
+            filter.AddFilterProgressToLogBox("Tierlist Generated with: " + this.sortedList.Count + " " + "tags!");
         }
 
         public void createTier(Entry e, string coreIdent, string groupName)
@@ -67,7 +78,8 @@ namespace FilterPolish
             t.TierRows = coreIdent;
             t.GroupName = groupName;
             t.Value = e.GetLines(coreIdent).FirstOrDefault().Value;
-            this.tierList.Add(t);
+            t.oldValue = t.Value;
+            this.sortedList.Add(t);
         }
 
     }
