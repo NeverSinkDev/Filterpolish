@@ -16,6 +16,8 @@ What it currently does:
 
 - Auto-creates filter subversions based upon "version tags" ( as seen in https://github.com/NeverSinkDev/NeverSink-Filter )
 
+- Generates style subversions based on style files (still work in progress)
+
 - Creates a table of contents and adjusts the numbering of header-comments in the filter
 
 - Creates and handles Stylesheets, that allows quick generation of filters with different visual styles
@@ -25,5 +27,11 @@ What it currently does:
 - Informs if the parsing failed. Useful for testing versions for upcoming patches. 
 
 - Preserves comments and structure.
+
+- Provides a link to poe.ninja and crawls economy data
+
+- Allows the quick and comfortable resorting of tier-lists
+
+- Creates tier-list based changelogs
 
 - More
