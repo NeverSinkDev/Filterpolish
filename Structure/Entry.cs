@@ -4,24 +4,36 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Runtime.Serialization.Formatters.Binary;
+using System.IO;
+using FilterPolish.Modules.Command;
 
 namespace FilterPolish
 {
+    [Serializable]
     public class Entry
     {
         public string Raw;
-        public List<Line> Lines;
+        public List<Line> Lines = new List<Line>();
         public int Type = 0;
         public int N = 0;
         public int id = 0;
         public List<string> BuildTags = new List<string>();
 
+        public Filter Filter { get; set; }
+
+        public Entry()
+        {
+
+        }
+
         /// <summary>
         /// Default constructor
         /// </summary>
-        public Entry()
+        public Entry(Filter f)
         {
             this.Lines = new List<Line>();
+            this.Filter = f;
         }
 
         /// <summary>
@@ -88,6 +100,56 @@ namespace FilterPolish
                 }
             }
             return changedLines;
+        }
+
+        /// <summary>
+        /// Modify thea attribute every line with a specific identifier
+        /// </summary>
+        /// <param name="mod"></param>
+        /// <param name="op"></param>
+        /// <param name="change"></param>
+        public void ModifyAttribute2(string mod, string op = "default", string change = "default", string com = "default")
+        {
+            bool changes = false;
+            List<Line> changedLines = new List<Line>();
+            for (int n = 0; n < this.Lines.Count; n++)
+            {
+                changes = false;
+                if (this.Lines[n].Identifier == mod)
+                {
+                    if (op != "default")
+                    {
+                        changes = true;
+                        this.Lines[n].Oper = op;
+                    }
+
+                    if (change != "default")
+                    {
+                        changes = true;
+                        this.Lines[n].Value = change;
+                    }
+
+                    if (com != "default")
+                    {
+                        changes = true;
+                        this.Lines[n].Comment = com;
+                    }
+
+                    if (changes == true)
+                    {
+                        this.Lines[n].RebuildLine(true);
+                        this.Lines[n].Identify();
+                        break;
+                    };
+                }
+            }
+
+            if (changes == false)
+            {
+                Line l = new Line(mod + " " + (op != "default" ? op + " " : "") + (change != "default" ? change + " " : "") + (com != "default" ? com + " " : ""));
+                l.Identify();
+                this.Lines.Add(l);
+            }
         }
 
         public void ModifyAttributeSimple(string mod, string change)
@@ -177,9 +239,18 @@ namespace FilterPolish
             bool changed = false;
             if(this.BuildTags.Count > 0)
             {
-                foreach (string Tag in BuildTags)
+                foreach (string tag in BuildTags)
                 {
-                    string innertag = ReturnTagIfApplies(strictness, Tag);
+                    if (tag == "%UP")
+                    {
+                        var c = new EntryFractureUpCommand();
+                        c.e = this;
+                        this.Filter.CommandList.Add(c);
+                        continue;
+                    }
+
+
+                    string innertag = ReturnTagIfApplies(strictness, tag);
                     if(innertag.Length > 0)
                     {
                         HandleInnerTag(innertag);
@@ -212,6 +283,10 @@ namespace FilterPolish
             {
                 this.Lines.Remove(Lines.Single(s => s.Identifier == "SetBackgroundColor"));
             }
+            else if (tag == "%HS")
+            {
+                this.Lines.Remove(Lines.Single(s => s.Identifier == "PlayAlertSound"));
+            }
             else if (tag=="%HBR")
             {
                 this.Lines.Where(l => l.Identifier == "SetBackgroundColor").ToList().ForEach(l => l.ChangeValueAndApplyToRaw(4,"200"));
@@ -237,6 +312,11 @@ namespace FilterPolish
                         if (tag.Substring(0, index) == "%HB")
                         {
                             return ("%D");
+                        }
+
+                        if (tag.Substring(0, index) == "%HS")
+                        {
+                            return ("%H");
                         }
                     }
                     return tag.Substring(0, index);
@@ -354,6 +434,16 @@ namespace FilterPolish
             // Case: Line is unique.
             return 0;
             
+        }
+
+        internal void RemoveAnyTags()
+        {
+            if (this.getType() == "Show" || this.getType() == "Hide")
+            {
+                this.Lines[0].Comment = "";
+                this.Lines[0].Outtro = "";
+                this.Lines[0].RebuildLine(true);
+            }
         }
 
         public Line FindLineWithSameComment(Line line)

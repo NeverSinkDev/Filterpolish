@@ -28,12 +28,13 @@ namespace FilterPolish
         public List<string> Tags = new List<string>();
         public List<string> BuildTags = new List<string>();
 
-        public List<string> Attributes;
+        public List<string> Attributes { get; set; }
 
         public List<string> SplitString = new List<string>();
+
         public List<string> Values = new List<string>();
         public int FontSize;
-        public int DropSound;
+        public string DropSound;
         public int DropVolume;
         public int R;
         public int G;
@@ -357,6 +358,22 @@ namespace FilterPolish
                     TypeLine = Type.LineType.AttributeVisual.ToString();
                     Identifier = Attributes[0];
 
+                    //if (CountAttri > 4)
+                    //{
+                    //    if (Attributes[4] == "" || Attributes[4] == " ")
+                    //    {
+                    //        CountAttri = 4;
+                    //    }
+                    //}
+
+                    //if (CountAttri > 3)
+                    //{
+                    //    if (Attributes[3] == "" || Attributes[3] == " ")
+                    //    {
+                    //        CountAttri = 3;
+                    //    }
+                    //}
+
                     // RGBO
                     if (CountAttri == 5)
                     {
@@ -390,13 +407,13 @@ namespace FilterPolish
                         }
 
                         //FONTSIZE
-                        DropSound = int.Parse(Attributes[1]);
+                        DropSound = Attributes[1];
                         Value = DropSound.ToString();
                         return TypeLine;
                     }
                     else
                     {
-                        DropSound = int.Parse(Attributes[1]);
+                        DropSound = Attributes[1];
                         DropVolume = int.Parse(Attributes[2]);
                         Value = DropSound + " " + DropVolume;
                         return TypeLine;

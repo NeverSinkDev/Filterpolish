@@ -30,6 +30,7 @@ namespace FilterPolish
         Filter Fverystrict;
         Filter Fstrict;
         Filter Fuberstrict;
+        Filter Fuberplusstrict;
         Configuration config;
         TierListManager TLM;
         ConnectedTiers ConnectedTiers;
@@ -111,6 +112,7 @@ namespace FilterPolish
                 }
             }
 
+            this.RefreshBox();
             return text;
         }
 
@@ -207,12 +209,14 @@ namespace FilterPolish
                 FilterSettings Sstrict = new FilterSettings("3-STRICT", version, 2);
                 FilterSettings Sverystrict = new FilterSettings("4-VERY-STRICT", version, 3);
                 FilterSettings Suberstrict = new FilterSettings("5-UBER-STRICT", version, 4);
+                FilterSettings Suberplusstrict = new FilterSettings("6-UBER-PLUS-STRICT", version, 5);
 
                 Fregular = new Filter(text, Sregular);
                 Fstrict = new Filter(text, Sstrict);
                 Fsemistrict = new Filter(text, Ssemistrict);
                 Fverystrict = new Filter(text, Sverystrict);
                 Fuberstrict = new Filter(text, Suberstrict);
+                Fuberplusstrict = new Filter(text, Suberplusstrict);
 
                 // Initializes the stylesheets
                 StyleSheet SSdef = new StyleSheet("default");
@@ -230,12 +234,19 @@ namespace FilterPolish
                 FilterArray.Add(Fsemistrict);
                 FilterArray.Add(Fverystrict);
                 FilterArray.Add(Fuberstrict);
+                FilterArray.Add(Fuberplusstrict);
 
                 StyleSheetArray.Add(SSdef);
                 StyleSheetArray.Add(SSBlue);
                 StyleSheetArray.Add(SSSlick);
                 StyleSheetArray.Add(SSStreamer);
                 StyleSheetArray.Add(SSPurple);
+
+                this.RefreshBox();
+
+                FilterSettings Sseed = new FilterSettings("SEED", version, 0);
+                var Fseed = new Filter(text, Sseed);
+                this.CreateSeedFilter(Fseed);
 
                 // For every strictness and stylesheet...
                 foreach (Filter f in FilterArray)
@@ -266,6 +277,8 @@ namespace FilterPolish
                             s.ApplyStyleSheetDataToAttributes();
                         }
 
+                        // f.RemoveTags();
+
                         // Generate the filter
                         f.RebuildFilterFromEntries();
 
@@ -278,6 +291,8 @@ namespace FilterPolish
                         {
                             f.SaveToFile();
                         }
+
+                        this.RefreshBox();
                         AddTextToLogBox("---------------------------------");
                     }
 
@@ -289,11 +304,31 @@ namespace FilterPolish
 
                 OutputTransform.Text = Fregular.RawFilterRebuilt;
                 ts_label1.Text = "Ready";
+                this.RefreshBox();
+
 
                 // Open the folder. QOL confirmed.
                 Process.Start(Util.GetOutputPath());
             }
 
+        }
+
+        public void CreateSeedFilter(Filter f)
+        {
+            AddTextToLogBox("GENERATING SEED VERSION: " + f.settings.subVersionName);
+
+            f.ReadLines(this);
+            f.GenerateEntries();
+            f.GenerateTOC(true);
+            f.AdjustVersionName(0, 4);
+            f.AdjustVersionNumber(0, 3);
+            f.SortEntries();
+            f.RebuildFilterFromEntries();
+            f.SaveToFile(@"ADDITIONAL-FILES\SeedFilter\", "SeedFilter");
+
+            AddTextToLogBox("---------------------------------");
+            AddTextToLogBox(" SEED SAVED - STARTING GENERATION " + f.settings.subVersionName);
+            AddTextToLogBox("---------------------------------");
         }
 
         /// <summary>
@@ -304,6 +339,10 @@ namespace FilterPolish
         {
             logBox.Text += line;
             logBox.Text += System.Environment.NewLine;
+        }
+
+        public void RefreshBox()
+        {
             logBox.Invalidate();
             logBox.Update();
             logBox.Refresh();
@@ -884,6 +923,7 @@ namespace FilterPolish
             rm.ExecuteAll(this.TLM);
 
             this.AddTextToLogBox("DONE: PoE.ninja data crawled.");
+            this.RefreshBox();
 
 
             return;
@@ -913,6 +953,8 @@ namespace FilterPolish
             CreateConnectedTierButtons();
             this.FPIC.CompileAllChanges(this.changes);
             this.AddTextToLogBox("Generated Priced Tierlist : Unique Items: " + PTL.RowCount);
+            this.RefreshBox();
+
         }
 
         private void divinationCardsToolStripMenuItem_Click(object sender, EventArgs e)
@@ -924,6 +966,8 @@ namespace FilterPolish
             CreateConnectedTierButtons();
             this.FPIC.CompileAllChanges(this.changes);
             this.AddTextToLogBox("Generated Priced Tierlist : Divination Cards: " + PTL.RowCount);
+            this.RefreshBox();
+
         }
 
         private void mapsToolStripMenuItem_Click(object sender, EventArgs e)
@@ -935,6 +979,8 @@ namespace FilterPolish
             CreateConnectedTierButtons();
             this.FPIC.CompileAllChanges(this.changes);
             this.AddTextToLogBox("Generated Priced Tierlist : Maps: " + PTL.RowCount);
+            this.RefreshBox();
+
         }
 
         private void CreateConnectedTierButtons()

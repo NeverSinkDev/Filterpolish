@@ -65,9 +65,31 @@ namespace FilterPolish
             return getConfigValue("Output Folder");
         }
 
+        public static string GetRootPath()
+        {
+            return getConfigValue("Root Folder");
+        }
+
+        public static string GetSeedFilePath()
+        {
+            return getConfigValue("SeedFile Folder");
+        }
+
         public static string GetTodayDateTimeExtension()
         {
             return DateTime.Now.ToString("yyyy-M-d");
+        }
+
+        public static T DeepClone<T>(T obj)
+        {
+            using (var ms = new MemoryStream())
+            {
+                var formatter = new BinaryFormatter();
+                formatter.Serialize(ms, obj);
+                ms.Position = 0;
+
+                return (T)formatter.Deserialize(ms);
+            }
         }
     }
 }

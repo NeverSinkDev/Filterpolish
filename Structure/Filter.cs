@@ -1,4 +1,5 @@
-﻿using System;
+﻿using FilterPolish.Modules.Command;
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.IO;
@@ -22,6 +23,8 @@ namespace FilterPolish
         public StyleSheet CurrentStyle;
         public StyleSheet ImportedStyle;
         public TableOfContentsEntry TOC;
+
+        public List<ICommand> CommandList { get; set; }
 
         char[] _delimiterChars = { ' ', '\t' };
 
@@ -82,7 +85,7 @@ namespace FilterPolish
                 //HANDLE FILLERS
                 if (l.TypeLine == "Filler" && lastLine != "Filler")
                 {
-                    this.EntryList.Add(new Entry());
+                    this.EntryList.Add(new Entry(this));
                     this.EntryList.Last().SetType(l.TypeLine);
                     this.EntryList.Last().Lines.Add(l);
                 }
@@ -95,7 +98,7 @@ namespace FilterPolish
 
                 if ((l.TypeLine == "Comment") && lastEntry != "Comment")
                 {
-                    this.EntryList.Add(new Entry());
+                    this.EntryList.Add(new Entry(this));
                     this.EntryList.Last().SetType(l.TypeLine);
                     this.EntryList.Last().Lines.Add(l);
                 }
@@ -103,7 +106,7 @@ namespace FilterPolish
                 //HANDLE NEW ENTRIES
                 if (l.TypeLine == "Show" || l.TypeLine == "Hide")
                 {
-                    this.EntryList.Add(new Entry());
+                    this.EntryList.Add(new Entry(this));
                     this.EntryList.Last().id = n;
                     n++;
                     this.EntryList.Last().SetType(l.TypeLine);
@@ -163,6 +166,35 @@ namespace FilterPolish
             form1.control_ts_label3("PARSED:" + parsed.ToString() + "//");
             AddFilterProgressToLogBox("Initial line processing done. Lines: " + parsed.ToString());
             return true;
+        }
+
+        public Entry CopyEntry(Entry e)
+        {
+            Entry e2 = new Entry(e.Filter);
+            foreach(var line in e.Lines)
+            {
+                line.RebuildLine(true);
+
+                var newLine = new Line(line.Raw);
+                newLine.Identify();
+                e2.Lines.Add(newLine);
+            }
+
+            e2.Type = e.Type;
+
+            return e2;
+        }
+
+        public void InsertNewEntry(Entry e, Entry above)
+        {
+            Entry emptyEntry = new Entry(this);
+            Line l = new Line("\r\n");
+            l.Identify();
+            l.RebuildLine(true);
+            emptyEntry.Lines.Add(l);
+
+            this.EntryList.Insert(this.EntryList.IndexOf(above), e);
+            this.EntryList.Insert(this.EntryList.IndexOf(above),emptyEntry);
         }
 
         /// <summary>
@@ -299,6 +331,7 @@ namespace FilterPolish
         /// <returns></returns>
         public bool FindAndHandleVersionTags()
         {
+            this.CommandList = new List<ICommand>();
             int i = 0;
             AddFilterProgressToLogBox("Generating filterversion based on Version-Tags!");
             foreach (Entry e in this.EntryList)
@@ -309,6 +342,12 @@ namespace FilterPolish
                     i++;
                 }
             }
+
+            foreach(var c in this.CommandList)
+            {
+                c.Execute();
+            }
+
             AddFilterProgressToLogBox("Done adjusting filter based on version tags. CHANGES: " + i.ToString());
             return true;
         }
@@ -340,6 +379,14 @@ namespace FilterPolish
             this.CurrentStyle.Init();
             this.CurrentStyle.CheckFilterForStyles(labelNewStyles);
             return this.CurrentStyle;
+        }
+
+        public void RemoveTags()
+        {
+            foreach (var e in this.EntryList)
+            {
+                e.RemoveAnyTags();
+            }
         }
 
         public void ApplyStyleSheet(StyleSheet s)
@@ -457,7 +504,6 @@ namespace FilterPolish
         /// <returns></returns>
         public List<Entry> GetEntriesContaining(string attributes, string comment)
         {
-            string finalText = "";
             List<Entry> results = new List<Entry>();
             Line tempLine = new Line(attributes);
             tempLine.Identify();

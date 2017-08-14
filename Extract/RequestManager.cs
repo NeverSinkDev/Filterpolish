@@ -40,7 +40,7 @@ namespace FilterPolish.Extract
 
                 NinjaRequest n; 
                 
-                if (System.IO.File.Exists(Util.GetOutputPath() + "/EcoData/" + Util.GetTodayDateTimeExtension() + "/" + s + ".json"))
+                if (System.IO.File.Exists(Util.GetRootPath() + "/EcoData/" + Util.GetTodayDateTimeExtension() + "/" + s + ".json"))
                 {     
                     n = new NinjaRequest(s, "Reading from File", true);
                 }
