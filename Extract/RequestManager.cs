@@ -46,7 +46,7 @@ namespace FilterPolish.Extract
                 }
                 else
                 { 
-                    n = new NinjaRequest(s, "http://poeninja.azureedge.net/api/Data/" + s + "?league=" + Util.getConfigValue("Ninja League"), false);
+                    n = new NinjaRequest(s, Util.GetNinjaApi() + s + "?league=" + Util.getConfigValue("Ninja League"), false);
                     n.SaveToFile(s);
                 }
 
@@ -70,6 +70,11 @@ namespace FilterPolish.Extract
                     }
                     else
                     {
+                        if (ni.Links >= 5)
+                        {
+                            continue;
+                        }
+
                         UniquePricedCollection.Add(ni);
                     }
                 }

@@ -15,12 +15,12 @@ namespace FilterPolish.Modules.Command
             var entry = e.Filter.CopyEntry(e);
             bool commented = false;
 
-            if (e.Lines[0].Raw[0] == '#')
+            if (entry.Lines[0].Raw[0] == '#')
             {
-                return;
+                commented = true;
+                entry.Lines.ForEach(x => x.Uncomment());
             }
 
-                //entry.ModifyAttribute("ItemLevel", op: ">=", change: "75");
             entry.ModifyAttribute2("SetTextColor", change: "255 190 0", com: "# TEXTCOLOR:	 Rares - Level - 75+");
             entry.ModifyAttribute2("ItemLevel", op: ">=", change: "75");
 
@@ -28,12 +28,9 @@ namespace FilterPolish.Modules.Command
             {
                 foreach (var l in entry.Lines)
                 {
-                    if (l.Raw[0] != '#')
-                    {
-                        l.Raw = l.Raw.Insert(0, "#");
-                        l.Identify();
-                        l.RebuildLine();
-                    }
+                    l.Intro = l.Intro.Contains("#") ? l.Intro : "#" + l.Intro;
+                    l.RebuildLine(true);
+                    l.Identify();
                 }
             }
 

@@ -563,10 +563,15 @@ namespace FilterPolish
             return f;
         }
 
-        //Func<object,object,bool> GetComparisonPredicate()
-        //{
-               
-        //}
+        public void Uncomment()
+        {
+            if (this.Identifier == "" && this.Raw.Contains("#"))
+            {
+                this.Intro = "";
+                this.Raw = this.Raw.Substring(this.Raw.IndexOf("#")+1);
+                this.Identify();
+            }
+        }
     }
 
 }

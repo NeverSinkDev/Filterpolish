@@ -249,6 +249,13 @@ namespace FilterPolish
                         continue;
                     }
 
+                    if (tag == "%RVR")
+                    {
+                        var c = new RarityVariationRuleFractureUpCommand();
+                        c.e = this;
+                        this.Filter.CommandList.Add(c);
+                        continue;
+                    }
 
                     string innertag = ReturnTagIfApplies(strictness, tag);
                     if(innertag.Length > 0)
@@ -282,6 +289,10 @@ namespace FilterPolish
             else if (tag=="%HB")
             {
                 this.Lines.Remove(Lines.Single(s => s.Identifier == "SetBackgroundColor"));
+            }
+            else if (tag == "%RF")
+            {
+                this.Lines.Where(l => l.Identifier == "SetFontSize").ToList().ForEach(l => l.ChangeValueAndApplyToRaw(1,"36"));
             }
             else if (tag == "%HS")
             {
@@ -418,8 +429,7 @@ namespace FilterPolish
             List<Line> lines = this.GetLines(line.Identifier);
             if( lines == null )
             {
-                // should this ever happen?
-                return 0;
+                return -1;
             }
 
             // LETS PARSE ALL LINES. WE'RE COMPARING THE PAIRS, UNTIL WE MANAGE TO FIND A MATCH
@@ -440,9 +450,8 @@ namespace FilterPolish
         {
             if (this.getType() == "Show" || this.getType() == "Hide")
             {
-                this.Lines[0].Comment = "";
-                this.Lines[0].Outtro = "";
-                this.Lines[0].RebuildLine(true);
+                this.Lines[0].Raw = this.Lines[0].Raw.Substring(0,this.Lines[0].Raw.LastIndexOf("#"));
+                this.Lines[0].Identify();
             }
         }
 

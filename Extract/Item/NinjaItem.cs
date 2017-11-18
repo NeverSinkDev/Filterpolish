@@ -18,6 +18,9 @@ namespace FilterPolish.Extract.Item
         [JsonProperty("baseType")]
         public string BaseType { get; set; }
 
+        [JsonProperty("links")]
+        public float Links { get; set; }
+
         [JsonProperty("id")]
         public string ID { get; set; }
 

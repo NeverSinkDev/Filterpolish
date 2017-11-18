@@ -10,7 +10,7 @@ using System.Windows.Forms;
 
 namespace FilterPolish
 {
-    public class Util
+    public static class Util
     {
         public static ListViewGroup DeepCopy(ListViewGroup other)
         {
@@ -70,6 +70,11 @@ namespace FilterPolish
             return getConfigValue("Root Folder");
         }
 
+        public static string GetNinjaApi()
+        {
+            return getConfigValue("Ninja Request URL");
+        }
+
         public static string GetSeedFilePath()
         {
             return getConfigValue("SeedFile Folder");
@@ -89,6 +94,19 @@ namespace FilterPolish
                 ms.Position = 0;
 
                 return (T)formatter.Deserialize(ms);
+            }
+        }
+
+        public static IEnumerable<TSource> DistinctBy<TSource, TKey>
+    (this IEnumerable<TSource> source, Func<TSource, TKey> keySelector)
+        {
+            HashSet<TKey> seenKeys = new HashSet<TKey>();
+            foreach (TSource element in source)
+            {
+                if (seenKeys.Add(keySelector(element)))
+                {
+                    yield return element;
+                }
             }
         }
     }

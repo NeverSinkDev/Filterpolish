@@ -909,7 +909,7 @@ namespace FilterPolish
         {
             List<string> urlSuffix1 = new List<string>
             {
-                "GetUniqueMapOverview",
+                // "GetUniqueMapOverview",
                 "GetDivinationCardsOverview",
                 //"GetEssenceOverview",
                 //"GetUniqueJewelOverview",

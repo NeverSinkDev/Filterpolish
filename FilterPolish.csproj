@@ -78,6 +78,7 @@
     <Compile Include="Modules\ChangeGroup.cs" />
     <Compile Include="Modules\Command\EntryFractureUpCommand.cs" />
     <Compile Include="Modules\Command\ICommand.cs" />
+    <Compile Include="Modules\Command\RarityVariationRuleFractureUpCommand.cs" />
     <Compile Include="Modules\Economy\FilterPricedItemCollection.cs" />
     <Compile Include="Modules\Economy\PricedItemCollection.cs" />
     <Compile Include="Modules\TierLists\ConnectedTiers.cs" />
