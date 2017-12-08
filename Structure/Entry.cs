@@ -249,6 +249,14 @@ namespace FilterPolish
                         continue;
                     }
 
+                    if (tag == "%SHELDER")
+                    {
+                        var c = new ElderShapedCommand();
+                        c.e = this;
+                        this.Filter.CommandList.Add(c);
+                        continue;
+                    }
+
                     if (tag == "%RVR")
                     {
                         var c = new RarityVariationRuleFractureUpCommand();

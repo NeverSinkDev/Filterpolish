@@ -13,8 +13,6 @@ namespace FilterPolish.Modules.Command
 
     public void Execute()
     {
-
-
         var entry = e.Filter.CopyEntry(e);
         bool commented = false;
 
