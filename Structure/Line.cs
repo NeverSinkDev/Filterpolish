@@ -152,41 +152,19 @@ namespace FilterPolish
             {
                 if (this.Comment.Length >= 0)
                 {
-                    int founddolla = this.Comment.IndexOf("$");
-                    if (founddolla >= 1)
-                    {
-                        string[] tags = Comment.Substring(founddolla + 1).Split(' ');
-                        foreach (string s in tags)
-                        {
-                            s.Trim();
-                            if (s.Contains("%"))
-                            {
-                                this.BuildTags.Add(s);
-                            }
-                            else
-                            {
-                                this.Tags.Add(s);
-                            }
-                        }
-                    }
-                    else if (Comment.Contains("%"))
-                    {
-                        string[] tags = Comment.Split(' ');
-                        {
-                            foreach (string s in tags)
-                            {
-                                s.Trim();
-                                if (s.Contains("%"))
-                                {
-                                    this.BuildTags.Add(s);
-                                }
-                                else
-                                {
-                                    this.Tags.Add(s);
-                                }
-                            }
-                        }
-                    }
+                    int indexDolla = this.Comment.IndexOf("$");
+                    int indexPercent = this.Comment.IndexOf("%");
+
+                    List<int> list = new List<int>() { indexDolla, indexPercent };
+
+                    var index = list.Where(x => x >= 0).Min();
+
+                    this.Comment.Substring(index);
+
+                    List<string> tags = Comment.Substring(index).Split(' ').Where(x => x.Length > 1).ToList();
+
+                    this.BuildTags = tags.Where(x => x[0] == '%').ToList();
+                    this.Tags = tags.Where(x => x[0] == '$').ToList();
                 }
             }
         }
@@ -393,12 +371,17 @@ namespace FilterPolish
                         return TypeLine;
                     }
 
-                    //RGB
+                    if (Identifier.Equals("DisableDropSound"))
+                    {
+                        Identifier = "DisableDropSound";
+                        Value = "True";
+                        return TypeLine;
+                    }
 
                     //SOUND
-                    if (!(Identifier.Equals("PlayAlertSound") & (CountAttri == 3)))
+                    if (!(Identifier.Equals("PlayAlertSound") && (CountAttri == 3)))
                     {
-                        if (!(Identifier.Equals("PlayAlertSound") & (CountAttri == 2)))
+                        if (!(Identifier.Equals("PlayAlertSound") && (CountAttri == 2)))
                         {
                             if (!Identifier.Equals("SetFontSize")) return ("ERROR");
                             FontSize = int.Parse(Attributes[1]);

@@ -52,11 +52,12 @@ namespace FilterPolish
             SocketGroup = 9,
             Width = 10,
             Height = 11,
-            DropLevel = 12,
-            Class = 13,
-            BaseType = 14,
-            Rarity = 15,
-            ItemLevel = 16
+            ItemLevel = 12,
+            DropLevel = 13,
+            Class = 14,
+            BaseType = 15,
+            Rarity = 16,
+            ElderMap = 17
         }
 
         public enum LineAttributeVisual
@@ -66,7 +67,8 @@ namespace FilterPolish
             SetTextColor = 2,
             SetBorderColor = 3,
             SetBackgroundColor = 4,
-            PlayAlertSound = 5
+            PlayAlertSound = 5,
+            DisableDropSound = 6
 
         }
 

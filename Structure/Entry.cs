@@ -299,12 +299,22 @@ namespace FilterPolish
                 this.Lines.Remove(Lines.Single(s => s.Identifier == "SetBackgroundColor"));
             }
             else if (tag == "%RF")
-            {
+            {   
                 this.Lines.Where(l => l.Identifier == "SetFontSize").ToList().ForEach(l => l.ChangeValueAndApplyToRaw(1,"36"));
             }
             else if (tag == "%HS")
             {
-                this.Lines.Remove(Lines.Single(s => s.Identifier == "PlayAlertSound"));
+                if (this.Lines.Any(i => i.Identifier == "PlayAlertSound"))
+                {
+                    this.Lines.Remove(Lines.Single(s => s.Identifier == "PlayAlertSound"));
+                }
+            }
+            else if (tag == "%REMS")
+            {
+                if (this.Lines.Any(i => i.Identifier == "PlayAlertSound"))
+                {
+                    this.Lines.Remove(Lines.Single(s => s.Identifier == "PlayAlertSound"));
+                }
             }
             else if (tag=="%HBR")
             {

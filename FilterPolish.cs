@@ -1110,7 +1110,7 @@ namespace FilterPolish
 
         private void gatherChagnesToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            this.ChangeBox.Text = this.changes.GetAllChanges(true);
+            this.ChangeBox.Text = this.changes.GetAllChanges(false);
 
             if (this.ChangeBox.Text == null)
             {

@@ -1,0 +1,249 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1" GroupingSetting="Alphabetical" MembersFormat="FullSignature">
+  <Class Name="FilterPolish.Extract.Item.EconomyItem">
+    <Position X="16.75" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AABAANEAAAAAgAAAAAAAAAQAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Extract\Item\EconomyItem.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FilterPolish.Extract.Item.NinjaItem">
+    <Position X="7" Y="0.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AIAAAAAAAAAAgAAAAAIAAAQQAACAAgAICAABAAFAAAA=</HashCode>
+      <FileName>Extract\Item\NinjaItem.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FilterPolish.Extract.NinjaRequest">
+    <Position X="23" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAgABAAAAQAAAAAAAAAAAAMAAAAAAAAAACAAQA=</HashCode>
+      <FileName>Extract\NinjaRequest.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FilterPolish.Extract.RequestManager">
+    <Position X="25" Y="4.25" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAIAAAAAAAAAAAAAAQAAAAAAAAgAg=</HashCode>
+      <FileName>Extract\RequestManager.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FilterPolish.FilterPolish">
+    <Position X="9" Y="0.5" Width="3.75" />
+    <TypeIdentifier>
+      <HashCode>ZyKL5z0Q4OAkT1xbQLmrsIBDz/onWtkz33BoVQZZZeM=</HashCode>
+      <FileName>FilterPolish.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FilterPolish.PricedItemCollection">
+    <Position X="13" Y="0.5" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAIAAAAAAAAAIAAAAAAAAAAAAAAAAAAAAEAAAAAAAAA=</HashCode>
+      <FileName>Modules\Economy\PricedItemCollection.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FilterPolish.Tier">
+    <Position X="27" Y="4.25" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>gIAAAAAEAAAAAAAABAAAAAAAAAAAAAAAAAAgAAAAIBE=</HashCode>
+      <FileName>Modules\TierLists\Tier.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FilterPolish.TierListManager">
+    <Position X="18.5" Y="3.25" Width="2" />
+    <TypeIdentifier>
+      <HashCode>QAAAAAAAAAAAIAQBAAAAkAAAAAAAEAIAAAAAAIAAAAA=</HashCode>
+      <FileName>Modules\TierLists\TierListManager.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FilterPolish.StyleSheet">
+    <Position X="13" Y="3.75" Width="2.5" />
+    <TypeIdentifier>
+      <HashCode>AAAIAIEAiBEIAgQBAgACACRAAAAAQAAABAACAAAAAAA=</HashCode>
+      <FileName>Modules\Visual\StyleSheet.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FilterPolish.Program">
+    <Position X="0.5" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAAAAA=</HashCode>
+      <FileName>Program.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FilterPolish.Comparison_Delegates" Collapsed="true">
+    <Position X="28.25" Y="11.25" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAEEAACAAQSAAAAAAAAQAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Prototype\Comparison Delegates.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FilterPolish.Item" Collapsed="true">
+    <Position X="28.25" Y="10.5" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AACAAAAQIAAAQAAAAAAAAAAAAAAAAAIAAAAQAAAAAAA=</HashCode>
+      <FileName>Prototype\Item.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FilterPolish.TableOfContentsEntry">
+    <Position X="0.5" Y="1.5" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>IBAEAAAAAAAAAQABQEQAAABAAAAAAACAQAEAAABAAUA=</HashCode>
+      <FileName>Structure\AdvancedEntries\TableOfContentsEntry.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FilterPolish.VisualEntry">
+    <Position X="2.75" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAABAAAAAAAAADAAgKAAAAAAAAABAYAAAAEAACAA=</HashCode>
+      <FileName>Structure\AdvancedEntries\VisualEntry.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FilterPolish.Entry">
+    <Position X="3" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>oAEAAAACAAIAKAAIQIAEAAMAgxBYMAASAQAAAxQAAgE=</HashCode>
+      <FileName>Structure\Entry.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FilterPolish.Filter">
+    <Position X="0.5" Y="6" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>QABQACAgJAIIAAgAQAgEABEIYCCAABCAAQAECAIACAA=</HashCode>
+      <FileName>Structure\Filter.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FilterPolish.Line">
+    <Position X="4.75" Y="4.5" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>oEGCAIQGCARACAgAAgAAAoAQAAEBgEAxGABgaAkCAQA=</HashCode>
+      <FileName>Structure\Line.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FilterPolish.FilterSettings">
+    <Position X="18.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAACAAAAAAAABAAAAAACAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Utility\FilterSettings.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FilterPolish.Type">
+    <Position X="4.75" Y="0.75" Width="2" />
+    <NestedTypes>
+      <Enum Name="FilterPolish.Type.EntryType" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>Utility\Type.cs</NewMemberFileName>
+        </TypeIdentifier>
+      </Enum>
+      <Enum Name="FilterPolish.Type.LineType" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>Utility\Type.cs</NewMemberFileName>
+        </TypeIdentifier>
+      </Enum>
+      <Enum Name="FilterPolish.Type.Raritiy" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>Utility\Type.cs</NewMemberFileName>
+        </TypeIdentifier>
+      </Enum>
+      <Enum Name="FilterPolish.Type.LineAttributeClass" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>Utility\Type.cs</NewMemberFileName>
+        </TypeIdentifier>
+      </Enum>
+      <Enum Name="FilterPolish.Type.LineAttributeVisual" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>Utility\Type.cs</NewMemberFileName>
+        </TypeIdentifier>
+      </Enum>
+    </NestedTypes>
+    <TypeIdentifier>
+      <HashCode>AAAAABAAAAAEAAAAAAAAEAAAIAAAACAAAAAAAAAIAAA=</HashCode>
+      <FileName>Utility\Type.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FilterPolish.Util">
+    <Position X="15.75" Y="3.25" Width="2.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAQAAEAAAAQAAIAAAAAAAAAIAIAAAACAEEEAAAAAA=</HashCode>
+      <FileName>Utility\Util.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FilterPolish.Modules.Change">
+    <Position X="23.5" Y="9" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAAAQAAAAAAAgAAAAAEAAAgAAAAAABAAAEAAEIAAA=</HashCode>
+      <FileName>Modules\Change.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FilterPolish.Modules.ChangeCollection">
+    <Position X="21.75" Y="9" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAQAAAAAAAAAAAAAACAAAAAAAggAAAAAAQAAAAAAA=</HashCode>
+      <FileName>Modules\ChangeCollection.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FilterPolish.Modules.ChangeGroup">
+    <Position X="25.25" Y="9" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAgAAAAAAAQAAAAgAAAAAAAQEAEAAAA=</HashCode>
+      <FileName>Modules\ChangeGroup.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FilterPolish.Modules.Command.ElderShapedCommand" BaseTypeListCollapsed="true">
+    <Position X="16" Y="8.25" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAQAAAAAAAAAAAAAAAACAAAAAAAAAAA=</HashCode>
+      <FileName>Modules\Command\ElderShapedCommand.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="FilterPolish.Modules.Command.EntryFractureUpCommand" BaseTypeListCollapsed="true">
+    <Position X="16" Y="10" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAQAAAAAAAAAAAAAAAACAAAAAAAAAAA=</HashCode>
+      <FileName>Modules\Command\EntryFractureUpCommand.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="FilterPolish.Modules.Command.RarityVariationRuleFractureUpCommand" BaseTypeListCollapsed="true">
+    <Position X="18.25" Y="8.5" Width="3" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAQAAAAAAAAAAAAAAAACAAAAAAAAAAA=</HashCode>
+      <FileName>Modules\Command\RarityVariationRuleFractureUpCommand.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="FilterPolish.Modules.Economy.FilterPricedItemCollection">
+    <Position X="20.5" Y="0.5" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>AAAAAMAAAAAAAAAAAAAAAAAQQAAAAAAAAAAQAAAAAAA=</HashCode>
+      <FileName>Modules\Economy\FilterPricedItemCollection.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FilterPolish.Modules.TierLists.ConnectedTiers">
+    <Position X="15" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAIAQAAAAAAAAAAAAAAAAACAAAAAAABAAAAACAAAA=</HashCode>
+      <FileName>Modules\TierLists\ConnectedTiers.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FilterPolish.Properties.Resources">
+    <Position X="23" Y="4.25" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAABEAAAAQAAAAAAAAAAAAAAAIA=</HashCode>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FilterPolish.Properties.Settings">
+    <Position X="13" Y="2.25" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAIAAAAAABAAAAAAAAAAAAAAA=</HashCode>
+    </TypeIdentifier>
+  </Class>
+  <Interface Name="FilterPolish.Modules.Command.ICommand">
+    <Position X="18.25" Y="10" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Modules\Command\ICommand.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>
