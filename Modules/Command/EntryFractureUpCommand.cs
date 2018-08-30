@@ -21,7 +21,11 @@ namespace FilterPolish.Modules.Command
                 entry.Lines.ForEach(x => x.Uncomment());
             }
 
-            entry.ModifyAttribute2("SetTextColor", change: "255 190 0", com: "# TEXTCOLOR:	 Rares - Level - 75+");
+            var opacity = entry.GetLine("SetTextColor")?.O;
+
+
+
+            entry.ModifyAttribute2("SetTextColor", change: "255 190 0" + (opacity != default(int) ? " " + opacity : "") , com: "# TEXTCOLOR:	 Rares - Level - 75+");
             entry.ModifyAttribute2("ItemLevel", op: ">=", change: "75");
 
             if (commented)

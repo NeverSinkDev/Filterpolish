@@ -30,6 +30,9 @@ namespace FilterPolish.Extract.Item
         [JsonProperty("variant")]
         public string Variant { get; set; }
 
+        [JsonProperty("explicitModifiers")]
+        public string ExplicitModifiers { get; set; }
+
         [JsonProperty("icon")]
         public string Icon { get; set; }
 

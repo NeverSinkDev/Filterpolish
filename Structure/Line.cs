@@ -25,6 +25,8 @@ namespace FilterPolish
         public string Outtro = "";
         public string Comment = "";
 
+        public bool StopIdentLogic = false;
+
         public List<string> Tags = new List<string>();
         public List<string> BuildTags = new List<string>();
 
@@ -62,6 +64,10 @@ namespace FilterPolish
         /// <returns></returns>
         public string RebuildLine(bool ApplyToRaw = false)
         {
+            if (this.StopIdentLogic)
+            {
+                return this.Rebuilt;
+            }
 
             int StylePadding = 36;
 
@@ -93,6 +99,11 @@ namespace FilterPolish
         /// </summary>
         public void UpdateRaw()
         {
+            if (this.StopIdentLogic)
+            {
+                return;
+            }
+
             this.Raw =
                     Intro +
                     string.Join(" ", Attributes) + ((Comment != "" && (Identifier == "Show" || Identifier == "Hide")) ? " " : "")
@@ -175,6 +186,11 @@ namespace FilterPolish
         /// <returns></returns>
         public string Identify()
         {
+            if (this.StopIdentLogic)
+            {
+                return this.Rebuilt;
+            }
+
             this.Intro = "";
             this.Identifier = "";
             this.Outtro = "";
@@ -352,6 +368,13 @@ namespace FilterPolish
                     //    }
                     //}
 
+                    if (Identifier.Equals("MinimapIcon") || Identifier.Equals("PlayEffect"))
+                    {
+                        Values = Attributes.GetRange(1, CountAttri - 1).ToList();
+                        Value = string.Join(" ", Values);
+                        return TypeLine;
+                    }
+
                     // RGBO
                     if (CountAttri == 5)
                     {
@@ -422,6 +445,13 @@ namespace FilterPolish
             if (source == null)
                 return false; // or throw an exception
             return source.Any();
+        }
+
+        public void SetRawAndStopLogic(string ident, string content)
+        {
+            this.Identifier = ident;
+            this.Raw = content;
+            this.Rebuilt = content;
         }
 
         /// <summary>

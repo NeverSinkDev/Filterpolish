@@ -28,13 +28,14 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.ListViewGroup listViewGroup13 = new System.Windows.Forms.ListViewGroup("ListViewGroup", System.Windows.Forms.HorizontalAlignment.Left);
-            System.Windows.Forms.ListViewGroup listViewGroup14 = new System.Windows.Forms.ListViewGroup("ListViewGroup", System.Windows.Forms.HorizontalAlignment.Left);
-            System.Windows.Forms.ListViewGroup listViewGroup15 = new System.Windows.Forms.ListViewGroup("ListViewGroup", System.Windows.Forms.HorizontalAlignment.Left);
-            System.Windows.Forms.ListViewGroup listViewGroup16 = new System.Windows.Forms.ListViewGroup("ListViewGroup", System.Windows.Forms.HorizontalAlignment.Left);
+            System.Windows.Forms.ListViewGroup listViewGroup1 = new System.Windows.Forms.ListViewGroup("ListViewGroup", System.Windows.Forms.HorizontalAlignment.Left);
+            System.Windows.Forms.ListViewGroup listViewGroup2 = new System.Windows.Forms.ListViewGroup("ListViewGroup", System.Windows.Forms.HorizontalAlignment.Left);
+            System.Windows.Forms.ListViewGroup listViewGroup3 = new System.Windows.Forms.ListViewGroup("ListViewGroup", System.Windows.Forms.HorizontalAlignment.Left);
+            System.Windows.Forms.ListViewGroup listViewGroup4 = new System.Windows.Forms.ListViewGroup("ListViewGroup", System.Windows.Forms.HorizontalAlignment.Left);
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
+            this.neverSinkFilterNoStylesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.openFilterToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.openAndFillFieldsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -63,6 +64,8 @@
             this.saveStyleToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.economyToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.getNinjaJSONDataToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.gatherChagnesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.gatherChangesforumToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.advancedToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.debugAndTestingToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.generateDebugVersionToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -131,8 +134,6 @@
             this.SetTierListButton = new System.Windows.Forms.Button();
             this.tabPage7 = new System.Windows.Forms.TabPage();
             this.ChangeBox = new System.Windows.Forms.TextBox();
-            this.gatherChagnesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.gatherChangesforumToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.statusStrip1.SuspendLayout();
             this.tabControl.SuspendLayout();
@@ -183,6 +184,7 @@
             // 
             this.fileToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toolStripMenuItem1,
+            this.neverSinkFilterNoStylesToolStripMenuItem,
             this.toolStripSeparator1,
             this.openFilterToolStripMenuItem,
             this.openAndFillFieldsToolStripMenuItem,
@@ -197,52 +199,59 @@
             // toolStripMenuItem1
             // 
             this.toolStripMenuItem1.Name = "toolStripMenuItem1";
-            this.toolStripMenuItem1.Size = new System.Drawing.Size(200, 22);
+            this.toolStripMenuItem1.Size = new System.Drawing.Size(205, 22);
             this.toolStripMenuItem1.Text = "NeverSink Filter 1-Click";
             this.toolStripMenuItem1.Click += new System.EventHandler(this.doItAllToolStripMenuItem_Click);
+            // 
+            // neverSinkFilterNoStylesToolStripMenuItem
+            // 
+            this.neverSinkFilterNoStylesToolStripMenuItem.Name = "neverSinkFilterNoStylesToolStripMenuItem";
+            this.neverSinkFilterNoStylesToolStripMenuItem.Size = new System.Drawing.Size(205, 22);
+            this.neverSinkFilterNoStylesToolStripMenuItem.Text = "NeverSink Filter NoStyles";
+            this.neverSinkFilterNoStylesToolStripMenuItem.Click += new System.EventHandler(this.neverSinkFilterNoStylesToolStripMenuItem_Click);
             // 
             // toolStripSeparator1
             // 
             this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(197, 6);
+            this.toolStripSeparator1.Size = new System.Drawing.Size(202, 6);
             // 
             // openFilterToolStripMenuItem
             // 
             this.openFilterToolStripMenuItem.Name = "openFilterToolStripMenuItem";
-            this.openFilterToolStripMenuItem.Size = new System.Drawing.Size(200, 22);
+            this.openFilterToolStripMenuItem.Size = new System.Drawing.Size(205, 22);
             this.openFilterToolStripMenuItem.Text = "Open Filter";
             this.openFilterToolStripMenuItem.Click += new System.EventHandler(this.OpenFilter);
             // 
             // openAndFillFieldsToolStripMenuItem
             // 
             this.openAndFillFieldsToolStripMenuItem.Name = "openAndFillFieldsToolStripMenuItem";
-            this.openAndFillFieldsToolStripMenuItem.Size = new System.Drawing.Size(200, 22);
+            this.openAndFillFieldsToolStripMenuItem.Size = new System.Drawing.Size(205, 22);
             this.openAndFillFieldsToolStripMenuItem.Text = "Open and Fill Fields";
             this.openAndFillFieldsToolStripMenuItem.Click += new System.EventHandler(this.openAndFillFieldsToolStripMenuItem_Click);
             // 
             // saveToolStripMenuItem
             // 
             this.saveToolStripMenuItem.Name = "saveToolStripMenuItem";
-            this.saveToolStripMenuItem.Size = new System.Drawing.Size(200, 22);
+            this.saveToolStripMenuItem.Size = new System.Drawing.Size(205, 22);
             this.saveToolStripMenuItem.Text = "Save to C:\\FilterOutput\\";
             this.saveToolStripMenuItem.Click += new System.EventHandler(this.saveToolStripMenuItem_Click);
             // 
             // saveAsToolStripMenuItem
             // 
             this.saveAsToolStripMenuItem.Name = "saveAsToolStripMenuItem";
-            this.saveAsToolStripMenuItem.Size = new System.Drawing.Size(200, 22);
+            this.saveAsToolStripMenuItem.Size = new System.Drawing.Size(205, 22);
             this.saveAsToolStripMenuItem.Text = "Save As";
             this.saveAsToolStripMenuItem.Click += new System.EventHandler(this.saveAsToolStripMenuItem_Click);
             // 
             // toolStripSeparator2
             // 
             this.toolStripSeparator2.Name = "toolStripSeparator2";
-            this.toolStripSeparator2.Size = new System.Drawing.Size(197, 6);
+            this.toolStripSeparator2.Size = new System.Drawing.Size(202, 6);
             // 
             // exitToolStripMenuItem
             // 
             this.exitToolStripMenuItem.Name = "exitToolStripMenuItem";
-            this.exitToolStripMenuItem.Size = new System.Drawing.Size(200, 22);
+            this.exitToolStripMenuItem.Size = new System.Drawing.Size(205, 22);
             this.exitToolStripMenuItem.Text = "Exit";
             this.exitToolStripMenuItem.Click += new System.EventHandler(this.exitToolStripMenuItem_Click);
             // 
@@ -401,9 +410,23 @@
             // getNinjaJSONDataToolStripMenuItem
             // 
             this.getNinjaJSONDataToolStripMenuItem.Name = "getNinjaJSONDataToolStripMenuItem";
-            this.getNinjaJSONDataToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.getNinjaJSONDataToolStripMenuItem.Size = new System.Drawing.Size(202, 22);
             this.getNinjaJSONDataToolStripMenuItem.Text = "Get Ninja JSON data";
             this.getNinjaJSONDataToolStripMenuItem.Click += new System.EventHandler(this.getNinjaJSONDataToolStripMenuItem_Click);
+            // 
+            // gatherChagnesToolStripMenuItem
+            // 
+            this.gatherChagnesToolStripMenuItem.Name = "gatherChagnesToolStripMenuItem";
+            this.gatherChagnesToolStripMenuItem.Size = new System.Drawing.Size(202, 22);
+            this.gatherChagnesToolStripMenuItem.Text = "Gather Changes (reddit)";
+            this.gatherChagnesToolStripMenuItem.Click += new System.EventHandler(this.gatherChagnesToolStripMenuItem_Click);
+            // 
+            // gatherChangesforumToolStripMenuItem
+            // 
+            this.gatherChangesforumToolStripMenuItem.Name = "gatherChangesforumToolStripMenuItem";
+            this.gatherChangesforumToolStripMenuItem.Size = new System.Drawing.Size(202, 22);
+            this.gatherChangesforumToolStripMenuItem.Text = "Gather Changes (forum)";
+            this.gatherChangesforumToolStripMenuItem.Click += new System.EventHandler(this.gatherChangesforumToolStripMenuItem_Click);
             // 
             // advancedToolStripMenuItem
             // 
@@ -670,19 +693,19 @@
             this.columnHeader2});
             this.StyleListView.Dock = System.Windows.Forms.DockStyle.Fill;
             this.StyleListView.Font = new System.Drawing.Font("Lucida Console", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            listViewGroup13.Header = "ListViewGroup";
-            listViewGroup13.Name = "listViewGroup1";
-            listViewGroup14.Header = "ListViewGroup";
-            listViewGroup14.Name = "listViewGroup2";
-            listViewGroup15.Header = "ListViewGroup";
-            listViewGroup15.Name = "listViewGroup3";
-            listViewGroup16.Header = "ListViewGroup";
-            listViewGroup16.Name = "listViewGroup4";
+            listViewGroup1.Header = "ListViewGroup";
+            listViewGroup1.Name = "listViewGroup1";
+            listViewGroup2.Header = "ListViewGroup";
+            listViewGroup2.Name = "listViewGroup2";
+            listViewGroup3.Header = "ListViewGroup";
+            listViewGroup3.Name = "listViewGroup3";
+            listViewGroup4.Header = "ListViewGroup";
+            listViewGroup4.Name = "listViewGroup4";
             this.StyleListView.Groups.AddRange(new System.Windows.Forms.ListViewGroup[] {
-            listViewGroup13,
-            listViewGroup14,
-            listViewGroup15,
-            listViewGroup16});
+            listViewGroup1,
+            listViewGroup2,
+            listViewGroup3,
+            listViewGroup4});
             this.StyleListView.HideSelection = false;
             this.StyleListView.Location = new System.Drawing.Point(3, 3);
             this.StyleListView.MultiSelect = false;
@@ -942,7 +965,7 @@
             // 
             // PTL
             // 
-            this.PTL.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.AllCells;
+            this.PTL.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.DisplayedCells;
             this.PTL.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.PTL.Dock = System.Windows.Forms.DockStyle.Fill;
             this.PTL.Location = new System.Drawing.Point(3, 3);
@@ -1145,20 +1168,6 @@
             this.ChangeBox.Size = new System.Drawing.Size(1165, 564);
             this.ChangeBox.TabIndex = 0;
             // 
-            // gatherChagnesToolStripMenuItem
-            // 
-            this.gatherChagnesToolStripMenuItem.Name = "gatherChagnesToolStripMenuItem";
-            this.gatherChagnesToolStripMenuItem.Size = new System.Drawing.Size(202, 22);
-            this.gatherChagnesToolStripMenuItem.Text = "Gather Changes (reddit)";
-            this.gatherChagnesToolStripMenuItem.Click += new System.EventHandler(this.gatherChagnesToolStripMenuItem_Click);
-            // 
-            // gatherChangesforumToolStripMenuItem
-            // 
-            this.gatherChangesforumToolStripMenuItem.Name = "gatherChangesforumToolStripMenuItem";
-            this.gatherChangesforumToolStripMenuItem.Size = new System.Drawing.Size(202, 22);
-            this.gatherChangesforumToolStripMenuItem.Text = "Gather Changes (forum)";
-            this.gatherChangesforumToolStripMenuItem.Click += new System.EventHandler(this.gatherChangesforumToolStripMenuItem_Click);
-            // 
             // FilterPolish
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -1304,7 +1313,6 @@
         private System.Windows.Forms.ToolStripMenuItem divinationCardsToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem mapsToolStripMenuItem;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel10;
-        private System.Windows.Forms.DataGridView PTL;
         private System.Windows.Forms.ToolStripMenuItem sortingParametersToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem sortDirection;
         private System.Windows.Forms.ToolStripMenuItem sortLegacy;
@@ -1313,6 +1321,8 @@
         private System.Windows.Forms.TabPage tabPage7;
         private System.Windows.Forms.TextBox ChangeBox;
         private System.Windows.Forms.ToolStripMenuItem gatherChangesforumToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem neverSinkFilterNoStylesToolStripMenuItem;
+        protected System.Windows.Forms.DataGridView PTL;
     }
 }
 

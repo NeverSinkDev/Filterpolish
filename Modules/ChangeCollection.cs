@@ -37,6 +37,8 @@ namespace FilterPolish.Modules
 
         public string GetAllChanges(bool redditFormatting)
         {
+            redditFormatting = true;
+
             string result = "";
             foreach (var i in AllChangeGroups)
             {

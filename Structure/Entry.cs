@@ -59,12 +59,7 @@ namespace FilterPolish
                 this.Lines.Add(Lines[n]);
         }
 
-        /// <summary>
-        /// Modify thea attribute every line with a specific identifier
-        /// </summary>
-        /// <param name="mod"></param>
-        /// <param name="op"></param>
-        /// <param name="change"></param>
+
         public List<Line> ModifyAttribute(string mod, string op = "default", string change = "default", string com = "default")
         {
             List<Line> changedLines = new List<Line>();
@@ -102,13 +97,7 @@ namespace FilterPolish
             return changedLines;
         }
 
-        /// <summary>
-        /// Modify thea attribute every line with a specific identifier
-        /// </summary>
-        /// <param name="mod"></param>
-        /// <param name="op"></param>
-        /// <param name="change"></param>
-        public void ModifyAttribute2(string mod, string op = "default", string change = "default", string com = "default")
+        public void ModifyAttribute2(string mod, string op = "default", string change = "default", string com = "default", string newIdent = "default")
         {
             bool changes = false;
             List<Line> changedLines = new List<Line>();
@@ -133,6 +122,12 @@ namespace FilterPolish
                     {
                         changes = true;
                         this.Lines[n].Comment = com;
+                    }
+
+                    if (newIdent != "default")
+                    {
+                        changes = true;
+                        this.Lines[n].Identifier = newIdent;
                     }
 
                     if (changes == true)
@@ -289,10 +284,7 @@ namespace FilterPolish
             else if (tag=="%H")
             {
                 this.SwitchToHide();
-                if (this.Lines.Any(i => i.Identifier == "PlayAlertSound"))
-                {
-                    this.Lines.Remove(Lines.Single(s => s.Identifier == "PlayAlertSound"));
-                }
+                RemoveHighlights();
             }
             else if (tag=="%HB")
             {
@@ -304,21 +296,31 @@ namespace FilterPolish
             }
             else if (tag == "%HS")
             {
-                if (this.Lines.Any(i => i.Identifier == "PlayAlertSound"))
-                {
-                    this.Lines.Remove(Lines.Single(s => s.Identifier == "PlayAlertSound"));
-                }
+                RemoveHighlights();
             }
             else if (tag == "%REMS")
             {
-                if (this.Lines.Any(i => i.Identifier == "PlayAlertSound"))
-                {
-                    this.Lines.Remove(Lines.Single(s => s.Identifier == "PlayAlertSound"));
-                }
+                RemoveHighlights();
             }
             else if (tag=="%HBR")
             {
                 this.Lines.Where(l => l.Identifier == "SetBackgroundColor").ToList().ForEach(l => l.ChangeValueAndApplyToRaw(4,"200"));
+            }
+        }
+
+        private void RemoveHighlights()
+        {
+            if (this.Lines.Any(i => i.Identifier == "PlayEffect"))
+            {
+                this.Lines.Remove(Lines.Single(s => s.Identifier == "PlayEffect"));
+            }
+            if (this.Lines.Any(i => i.Identifier == "MinimapIcon"))
+            {
+                this.Lines.Remove(Lines.Single(s => s.Identifier == "MinimapIcon"));
+            }
+            if (this.Lines.Any(i => i.Identifier == "PlayAlertSound"))
+            {
+                this.Lines.Remove(Lines.Single(s => s.Identifier == "PlayAlertSound"));
             }
         }
 
@@ -489,7 +491,7 @@ namespace FilterPolish
 
             foreach(Line l in this.Lines)
             {
-                if (l.Identifier == line.Identifier)
+                if (l.Identifier == line.Identifier || (line.Identifier == "PlayAlertSound" && l.Identifier == "CustomAlertSound"))
                 {
                     if (l.Comment == line.Comment)
                     {

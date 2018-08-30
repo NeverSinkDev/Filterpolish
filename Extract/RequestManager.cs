@@ -51,13 +51,15 @@ namespace FilterPolish.Extract
                 }
 
                 JsonConvert.PopulateObject(n.responseContent, n.DSO);
-                dynamic D = JsonConvert.DeserializeObject<dynamic>(n.responseContent);
+                dynamic D = JsonConvert.DeserializeObject<dynamic>(n.responseContent, new JsonSerializerSettings() { CheckAdditionalContent = true });
 
                 var lines = D.lines;
                 var count  = Enumerable.Count(lines);
+
                 foreach ( JObject res in lines)
                 {
                     NinjaItem ni = new NinjaItem();
+                    res["explicitModifiers"] = res["explicitModifiers"].ToString();
                     JsonConvert.PopulateObject(res.ToString(), ni);
                     
                     if (s.Contains("Map"))

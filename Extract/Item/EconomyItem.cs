@@ -23,7 +23,9 @@ namespace FilterPolish.Extract.Item
 
         public string AllNames { get; set; }
 
-        public EconomyItem(string Name, string Group, float MinC, float Variants, string AllNames)
+        public string ExtraData { get; set; }
+
+        public EconomyItem(string Name, string Group, float MinC, float Variants, string AllNames, string extraData = "")
         {
             this.Name = Name;
             this.Group = Group;
@@ -31,6 +33,7 @@ namespace FilterPolish.Extract.Item
             this.MinC = MinC;
             this.Variants = Variants;
             this.AllNames = AllNames;
+            this.ExtraData = extraData;
         }
 
         public void ResetToOld()

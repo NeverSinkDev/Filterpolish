@@ -43,7 +43,7 @@ namespace FilterPolish.Modules.Economy
                 string names = string.Join(", ", this.ConnectedTiers.PIC.getItemsByName(i.Key).Select( it => (it.isItemRelic() ? "[L]" : "") + it.Name + " (" + it.CVal + ")").ToList());
 
                 // Create the economy item
-                EconomyItem eI = new EconomyItem(i.Key, this.ConnectedTiers.GetItemTier(i.Key), item.CVal, i.Value.Count, names);
+                EconomyItem eI = new EconomyItem(i.Key, this.ConnectedTiers.GetItemTier(i.Key), item.CVal, i.Value.Count, names, item.ExplicitModifiers.ToString());
                 eList.Add(eI);
             }
 

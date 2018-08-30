@@ -25,6 +25,7 @@ namespace FilterPolish
     /// </summary>
     public partial class FilterPolish : Form
     {
+        Filter Fsoft;
         Filter Fregular;
         Filter Fsemistrict;
         Filter Fverystrict;
@@ -37,6 +38,8 @@ namespace FilterPolish
         FilterPricedItemCollection FPIC;
         int CurrentPricedTier = 0;
         ChangeCollection changes = new ChangeCollection();
+
+        public bool GenerateStyles { get; private set; } = true;
 
         /// <summary>
         /// Ye' generic on load configuration
@@ -193,6 +196,12 @@ namespace FilterPolish
         /// <param name="e"></param>
         private void doItAllToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            this.GenerateStyles = true;
+            this.DoItAll();
+        }
+
+        private void DoItAll()
+        {
             string text = OpenFilterFileAndGetText("NeverSink");
 
             if (text != "")
@@ -204,6 +213,7 @@ namespace FilterPolish
                 string version = Util.getConfigValue("Version Number");
 
                 // Generates the filter-strictness subversions. I'll move this to a file-based system if it becomes more complex
+                FilterSettings Ssoft = new FilterSettings("0-SOFT", version, -1);
                 FilterSettings Sregular = new FilterSettings("1-REGULAR", version, 0);
                 FilterSettings Ssemistrict = new FilterSettings("2-SEMI-STRICT", version, 1);
                 FilterSettings Sstrict = new FilterSettings("3-STRICT", version, 2);
@@ -212,6 +222,7 @@ namespace FilterPolish
                 FilterSettings Suberplusstrict = new FilterSettings("6-UBER-PLUS-STRICT", version, 5);
 
                 Fregular = new Filter(text, Sregular);
+                Fsoft = new Filter(text, Ssoft);
                 Fstrict = new Filter(text, Sstrict);
                 Fsemistrict = new Filter(text, Ssemistrict);
                 Fverystrict = new Filter(text, Sverystrict);
@@ -220,15 +231,13 @@ namespace FilterPolish
 
                 // Initializes the stylesheets
                 StyleSheet SSdef = new StyleSheet("default");
-                StyleSheet SSBlue = new StyleSheet("Blue");
-                StyleSheet SSSlick = new StyleSheet("Slick");
-                StyleSheet SSPurple = new StyleSheet("Purple");
-                StyleSheet SSStreamer = new StyleSheet("StreamSound");
+
 
                 // Adds filters and stylesheets to their relevant arrays
                 List<Filter> FilterArray = new List<Filter>();
                 List<StyleSheet> StyleSheetArray = new List<StyleSheet>();
 
+                FilterArray.Add(Fsoft);
                 FilterArray.Add(Fregular);
                 FilterArray.Add(Fstrict);
                 FilterArray.Add(Fsemistrict);
@@ -237,10 +246,27 @@ namespace FilterPolish
                 FilterArray.Add(Fuberplusstrict);
 
                 StyleSheetArray.Add(SSdef);
-                StyleSheetArray.Add(SSBlue);
-                StyleSheetArray.Add(SSSlick);
-                StyleSheetArray.Add(SSStreamer);
-                StyleSheetArray.Add(SSPurple);
+
+                if (this.GenerateStyles)
+                {
+                    StyleSheet SSBlue = new StyleSheet("Blue");
+                    StyleSheet SSCrimson = new StyleSheet("Crimson");
+                    StyleSheet SSSlick = new StyleSheet("Slick");
+                    StyleSheet SSPurple = new StyleSheet("Purple");
+                    StyleSheet SSStreamer = new StyleSheet("CustomSounds");
+                    StyleSheet SSVaal = new StyleSheet("Vaal");
+                    StyleSheet SSVelvet = new StyleSheet("Velvet");
+                    StyleSheetArray.Add(SSBlue);
+                    StyleSheetArray.Add(SSSlick);
+                    StyleSheetArray.Add(SSStreamer);
+                    StyleSheetArray.Add(SSPurple);
+                    StyleSheetArray.Add(SSVaal);
+                    StyleSheetArray.Add(SSVelvet);
+                    StyleSheetArray.Add(SSCrimson);
+
+
+                    //StyleSheetArray.Add(SSTest);
+                }
 
                 this.RefreshBox();
 
@@ -310,7 +336,6 @@ namespace FilterPolish
                 // Open the folder. QOL confirmed.
                 Process.Start(Util.GetOutputPath());
             }
-
         }
 
         public void CreateSeedFilter(Filter f)
@@ -1166,6 +1191,12 @@ namespace FilterPolish
                     TierListView.Focus();
                     break;
             }
+        }
+
+        private void neverSinkFilterNoStylesToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            this.GenerateStyles = false;
+            this.DoItAll();
         }
     }
 }

@@ -138,7 +138,22 @@ namespace FilterPolish
                             }
                             else
                             {
-                                e.ModifyAttribute(v.identifier, change: string.Join(" ", result.Attributes));
+                                if (result.Raw.Contains("CustomAlertSound"))
+                                {
+                                    e.Lines.RemoveAll(x => x.Identifier == "PlayAlertSound");
+                                    e.Lines.Add(new Line("\t" + result.Raw)
+                                    {
+                                        Rebuilt = "\t" + result.Raw,
+                                        StopIdentLogic = true,
+                                        Identifier = "CustomAlertSound"
+                                    });
+
+                                    // e.ModifyAttribute2(v.identifier, change: string.Join(" ", result.Attributes), newIdent: "CustomAlertSound");
+                                }
+                                else
+                                {
+                                    e.ModifyAttribute(v.identifier, change: string.Join(" ", result.Attributes));
+                                }
                             }
                         }
                     }

@@ -49,15 +49,18 @@ namespace FilterPolish
             Sockets = 6,
             Quality = 7,
             Identified = 8,
-            SocketGroup = 9,
-            Width = 10,
-            Height = 11,
-            ItemLevel = 12,
-            DropLevel = 13,
+            Width = 9,
+            Height = 10,
+            ItemLevel = 11,
+            DropLevel = 12,
+            Rarity = 13,
             Class = 14,
             BaseType = 15,
-            Rarity = 16,
-            ElderMap = 17
+            SocketGroup = 16,
+            ElderMap = 17,
+            HasExplicitMod = 18,
+            StackSize = 19,
+            GemLevel = 20
         }
 
         public enum LineAttributeVisual
@@ -68,8 +71,10 @@ namespace FilterPolish
             SetBorderColor = 3,
             SetBackgroundColor = 4,
             PlayAlertSound = 5,
-            DisableDropSound = 6
-
+            CustomAlertSound = 6,
+            DisableDropSound = 7,
+            MinimapIcon = 8,
+            PlayEffect = 9
         }
 
         public static bool Match_Operator(string s)
