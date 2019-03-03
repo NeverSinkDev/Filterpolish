@@ -6,6 +6,7 @@ using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using FilterPolish.Modules.Economy;
 
 namespace FilterPolish
 {
@@ -23,6 +24,8 @@ namespace FilterPolish
         public PricedItemCollection pricedUniques { get; set; }
         public PricedItemCollection pricedDivinationCards { get; set; }
         public PricedItemCollection pricedMaps { get; set; }
+        public PricedItemCollection pricedBases { get; set; }
+        public PricedItemCollectionOverview pricedBasesOverview { get; set; }
 
         public TierListManager(Filter filter)
         {

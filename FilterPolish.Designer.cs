@@ -113,6 +113,9 @@
             this.uniquesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.divinationCardsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.mapsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.shaperToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.elderToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.normalToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.sortingParametersToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.sortDirection = new System.Windows.Forms.ToolStripMenuItem();
             this.sortLegacy = new System.Windows.Forms.ToolStripMenuItem();
@@ -134,6 +137,7 @@
             this.SetTierListButton = new System.Windows.Forms.Button();
             this.tabPage7 = new System.Windows.Forms.TabPage();
             this.ChangeBox = new System.Windows.Forms.TextBox();
+            this.atlasBaseCheatsheatToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.statusStrip1.SuspendLayout();
             this.tabControl.SuspendLayout();
@@ -402,7 +406,8 @@
             this.economyToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.getNinjaJSONDataToolStripMenuItem,
             this.gatherChagnesToolStripMenuItem,
-            this.gatherChangesforumToolStripMenuItem});
+            this.gatherChangesforumToolStripMenuItem,
+            this.atlasBaseCheatsheatToolStripMenuItem});
             this.economyToolStripMenuItem.Name = "economyToolStripMenuItem";
             this.economyToolStripMenuItem.Size = new System.Drawing.Size(69, 20);
             this.economyToolStripMenuItem.Text = "Economy";
@@ -900,7 +905,10 @@
             this.activeSubtierToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.uniquesToolStripMenuItem,
             this.divinationCardsToolStripMenuItem,
-            this.mapsToolStripMenuItem});
+            this.mapsToolStripMenuItem,
+            this.shaperToolStripMenuItem,
+            this.elderToolStripMenuItem,
+            this.normalToolStripMenuItem});
             this.activeSubtierToolStripMenuItem.Name = "activeSubtierToolStripMenuItem";
             this.activeSubtierToolStripMenuItem.Size = new System.Drawing.Size(92, 20);
             this.activeSubtierToolStripMenuItem.Text = "Active Subtier";
@@ -925,6 +933,24 @@
             this.mapsToolStripMenuItem.Size = new System.Drawing.Size(161, 22);
             this.mapsToolStripMenuItem.Text = "Maps";
             this.mapsToolStripMenuItem.Click += new System.EventHandler(this.mapsToolStripMenuItem_Click);
+            // 
+            // shaperToolStripMenuItem
+            // 
+            this.shaperToolStripMenuItem.Name = "shaperToolStripMenuItem";
+            this.shaperToolStripMenuItem.Size = new System.Drawing.Size(161, 22);
+            this.shaperToolStripMenuItem.Text = "Shaper";
+            // 
+            // elderToolStripMenuItem
+            // 
+            this.elderToolStripMenuItem.Name = "elderToolStripMenuItem";
+            this.elderToolStripMenuItem.Size = new System.Drawing.Size(161, 22);
+            this.elderToolStripMenuItem.Text = "Elder";
+            // 
+            // normalToolStripMenuItem
+            // 
+            this.normalToolStripMenuItem.Name = "normalToolStripMenuItem";
+            this.normalToolStripMenuItem.Size = new System.Drawing.Size(161, 22);
+            this.normalToolStripMenuItem.Text = "Normal";
             // 
             // sortingParametersToolStripMenuItem
             // 
@@ -965,12 +991,14 @@
             // 
             // PTL
             // 
+            this.PTL.AllowUserToResizeRows = false;
             this.PTL.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.DisplayedCells;
             this.PTL.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.PTL.Dock = System.Windows.Forms.DockStyle.Fill;
             this.PTL.Location = new System.Drawing.Point(3, 3);
             this.PTL.MultiSelect = false;
             this.PTL.Name = "PTL";
+            this.PTL.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.AutoSizeToAllHeaders;
             this.PTL.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.PTL.Size = new System.Drawing.Size(913, 434);
             this.PTL.TabIndex = 0;
@@ -1168,6 +1196,13 @@
             this.ChangeBox.Size = new System.Drawing.Size(1165, 564);
             this.ChangeBox.TabIndex = 0;
             // 
+            // atlasBaseCheatsheatToolStripMenuItem
+            // 
+            this.atlasBaseCheatsheatToolStripMenuItem.Name = "atlasBaseCheatsheatToolStripMenuItem";
+            this.atlasBaseCheatsheatToolStripMenuItem.Size = new System.Drawing.Size(202, 22);
+            this.atlasBaseCheatsheatToolStripMenuItem.Text = "Atlas Base Cheatsheat";
+            this.atlasBaseCheatsheatToolStripMenuItem.Click += new System.EventHandler(this.atlasBaseCheatsheatToolStripMenuItem_Click);
+            // 
             // FilterPolish
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -1323,6 +1358,10 @@
         private System.Windows.Forms.ToolStripMenuItem gatherChangesforumToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem neverSinkFilterNoStylesToolStripMenuItem;
         protected System.Windows.Forms.DataGridView PTL;
+        private System.Windows.Forms.ToolStripMenuItem shaperToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem elderToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem normalToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem atlasBaseCheatsheatToolStripMenuItem;
     }
 }
 

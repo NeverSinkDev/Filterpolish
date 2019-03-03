@@ -42,8 +42,17 @@ namespace FilterPolish.Extract.Item
         [JsonProperty("exaltedValue")]
         public float XVal { get; set; }
 
+        //[JsonProperty("sparkline")]
+        //public int[] SparkLine {get; set;}
+
+        //[JsonProperty("lowConfidenceSparkline")]
+        //public int[] LowConfSparkLine { get; set; }
+
         [JsonProperty("levelRequired")]
         public float LevelRequired { get; set; }
+
+        [JsonProperty("itemClass")]
+        public float ItemClass { get; set; }
 
         [JsonProperty("count")]
         public float IndexedCount { get; set; }

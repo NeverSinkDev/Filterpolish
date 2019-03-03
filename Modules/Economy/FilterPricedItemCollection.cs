@@ -25,26 +25,61 @@ namespace FilterPolish.Modules.Economy
             this.ConnectedTiers = CT;
             this.Group = group;
 
+            IncludeRelic = false;
+
             List<EconomyItem> eList = new List<EconomyItem>();
             foreach (var i in this.ConnectedTiers.PIC.sortedCollection)
             {
                 NinjaItem item;
                 if (!TierSortingAscending)
                 {
-                // Get the cheapest item in a Tier
-                item = i.Value.Where(j => (!j.isItemRelic() || IncludeRelic)).Aggregate((i1, i2) => i1.CVal < i2.CVal ? i1 : i2);
+                    var relicList = i.Value?.Where(j => (!j.isItemRelic() || IncludeRelic));
+                    if (relicList.Count() <= 0)
+                    {
+                        continue;
+                    }
+
+                    item = relicList.Aggregate((i1, i2) => i1.CVal < i2.CVal ? i1 : i2);
                 }
                 else
                 {
-                item = i.Value.Where(j => (!j.isItemRelic() || IncludeRelic)).Aggregate((i1, i2) => i1.CVal < i2.CVal  ? i2 : i1);
+                    if (i.Value.Count <= 1)
+                    {
+                        continue;
+                    }
+
+                    var relicList = i.Value?.Where(j => (!j.isItemRelic() || IncludeRelic));
+                    if (relicList.Count() <= 0)
+                    {
+                        continue;
+                    }
+
+                    item = relicList.Aggregate((i1, i2) => i1.CVal < i2.CVal ? i2 : i1);
                 }
 
                 // Get the list of all item Names in a Tier
-                string names = string.Join(", ", this.ConnectedTiers.PIC.getItemsByName(i.Key).Select( it => (it.isItemRelic() ? "[L]" : "") + it.Name + " (" + it.CVal + ")").ToList());
 
-                // Create the economy item
-                EconomyItem eI = new EconomyItem(i.Key, this.ConnectedTiers.GetItemTier(i.Key), item.CVal, i.Value.Count, names, item.ExplicitModifiers.ToString());
-                eList.Add(eI);
+                if (group.Contains("Divination"))
+                {
+                    var uniquesPerBaseType = this.ConnectedTiers.PIC.getItemsByName(i.Key).ToList();
+
+                    string names = string.Join(", ", uniquesPerBaseType.Select(
+                            x => x.Name + "( " + x.CVal + " )").ToList());
+
+                    EconomyItem eI = new EconomyItem(i.Key, this.ConnectedTiers.GetItemTier(i.Key), item.CVal, i.Value.Count, names, item.ExplicitModifiers.ToString());
+                    eList.Add(eI);
+                }
+                else
+                {
+                     var uniquesPerBaseType = this.ConnectedTiers.PIC.getItemsByName(i.Key).GroupBy(x => x.Name).ToList();
+
+                    string names = string.Join(", ", uniquesPerBaseType.Select(
+                            x => x.Key + string.Join("", (x.Select(y => " (" + (y.isItemRelic() ? "L" : "") + Math.Round(y.CVal) + ")").ToList()))));
+
+                    // Create the economy item
+                    EconomyItem eI = new EconomyItem(i.Key, this.ConnectedTiers.GetItemTier(i.Key), item.CVal, i.Value.Count, names, item.ExplicitModifiers.ToString());
+                    eList.Add(eI);
+                }
             }
 
                 this.TierList = new BindingList<EconomyItem>(eList.OrderByDescending(i => i.MinC).ToList());

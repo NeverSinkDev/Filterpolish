@@ -82,6 +82,7 @@
     <Compile Include="Modules\Command\RarityVariationRuleFractureUpCommand.cs" />
     <Compile Include="Modules\Economy\FilterPricedItemCollection.cs" />
     <Compile Include="Modules\Economy\PricedItemCollection.cs" />
+    <Compile Include="Modules\Economy\PricedItemCollectionOverview.cs" />
     <Compile Include="Modules\TierLists\ConnectedTiers.cs" />
     <Compile Include="Modules\TierLists\Tier.cs" />
     <Compile Include="Prototype\Comparison Delegates.cs" />

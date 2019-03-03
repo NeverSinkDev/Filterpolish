@@ -45,22 +45,24 @@ namespace FilterPolish
             ElderItem = 2,
             ShaperItem = 3,
             Corrupted = 4,
-            LinkedSockets = 5,
-            Sockets = 6,
-            Quality = 7,
-            Identified = 8,
-            Width = 9,
-            Height = 10,
-            ItemLevel = 11,
-            DropLevel = 12,
-            Rarity = 13,
-            Class = 14,
-            BaseType = 15,
-            SocketGroup = 16,
-            ElderMap = 17,
-            HasExplicitMod = 18,
-            StackSize = 19,
-            GemLevel = 20
+            Identified = 5,
+            ElderMap = 6,
+            LinkedSockets = 7,
+            Sockets = 8,
+            Quality = 9,
+            MapTier = 10,
+            Width = 11,
+            Height = 12,
+            StackSize = 13,
+            GemLevel = 14,
+            ItemLevel = 15,
+            DropLevel = 16,
+            Rarity = 17,
+            SocketGroup = 18,
+            Class = 19,
+            BaseType = 20,
+            HasExplicitMod = 21,
+            Prophecy = 22
         }
 
         public enum LineAttributeVisual
@@ -131,13 +133,13 @@ namespace FilterPolish
                 return 20 + GetEnumC(line.Identifier); }
             if (line.TypeLine == "AttributeVisual")
             {
-                return 40 + GetEnumV(line.Identifier); }
+                return 50 + GetEnumV(line.Identifier); }
             if (line.TypeLine == "Comment")
             {
                 return 05; }
             if (line.TypeLine == "Filler")
             {
-                return 80; }
+                return 90; }
             return -1;
         }
 

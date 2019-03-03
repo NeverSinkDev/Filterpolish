@@ -27,7 +27,7 @@ namespace FilterPolish.Extract
             if (LoadFromFile)
             {
                 this.responseContent = System.IO.File.ReadAllText(Util.GetRootPath()
-                                   + "/EcoData/" + Util.GetTodayDateTimeExtension() + "/" + name + ".json");
+                                   + "/EcoData/" + Util.GetTodayDateTimeExtension() + "/" + name.Replace("ItemOverview?type=BaseType", "itemStats") + ".json");
             }
             else
             {
@@ -55,7 +55,7 @@ namespace FilterPolish.Extract
         public void SaveToFile(string s)
         {
             System.IO.FileInfo file = new FileInfo(Util.GetRootPath()
-                                   + "/EcoData/" + Util.GetTodayDateTimeExtension() + "/" + s + ".json");
+                                   + "/EcoData/" + Util.GetTodayDateTimeExtension() + "/" + s.Replace("ItemOverview?type=BaseType","itemStats") + ".json");
             file.Directory.Create();
             System.IO.File.WriteAllText(file.FullName, this.responseContent);
         }

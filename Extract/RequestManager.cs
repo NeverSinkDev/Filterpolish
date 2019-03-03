@@ -7,6 +7,7 @@ using Newtonsoft.Json;
 using System.Collections;
 using FilterPolish.Extract.Item;
 using Newtonsoft.Json.Linq;
+using FilterPolish.Modules.Economy;
 
 namespace FilterPolish.Extract
 {
@@ -29,24 +30,24 @@ namespace FilterPolish.Extract
 
             var urlbase = Util.getConfigValue("Ninja Request URL");
 
-            var UniquePricedCollection = new List<NinjaItem>();
-            var DiviPricedCollection = new List<NinjaItem>();
-            var MapPricedCollection = new List<NinjaItem>();
-
-            
+            var uniquePricedCollection = new List<NinjaItem>();
+            var diviPricedCollection = new List<NinjaItem>();
+            var mapPricedCollection = new List<NinjaItem>();
+            var baseTypePriceCollection = new List<NinjaItem>();
 
             foreach (string s in urlSuffix)
             {
 
                 NinjaRequest n; 
                 
-                if (System.IO.File.Exists(Util.GetRootPath() + "/EcoData/" + Util.GetTodayDateTimeExtension() + "/" + s + ".json"))
+                if (System.IO.File.Exists(Util.GetRootPath() + "/EcoData/" + Util.GetTodayDateTimeExtension() + "/" + s.Replace("ItemOverview?type=BaseType", "itemStats") + ".json"))
                 {     
                     n = new NinjaRequest(s, "Reading from File", true);
                 }
                 else
-                { 
-                    n = new NinjaRequest(s, Util.GetNinjaApi() + s + "?league=" + Util.getConfigValue("Ninja League"), false);
+                {
+                    var leagueKey = s.Contains("?") ? "&league=" : "?league=";
+                    n = new NinjaRequest(s, Util.GetNinjaApi() + s + leagueKey + Util.getConfigValue("Ninja League"), false);
                     n.SaveToFile(s);
                 }
 
@@ -64,11 +65,15 @@ namespace FilterPolish.Extract
                     
                     if (s.Contains("Map"))
                     {
-                        MapPricedCollection.Add(ni);
+                        mapPricedCollection.Add(ni);
                     }
                     else if (s.Contains("Divination"))
                     {
-                        DiviPricedCollection.Add(ni);
+                        diviPricedCollection.Add(ni);
+                    }
+                    else if (s.Contains("BaseType"))
+                    {
+                        baseTypePriceCollection.Add(ni);
                     }
                     else
                     {
@@ -77,13 +82,15 @@ namespace FilterPolish.Extract
                             continue;
                         }
 
-                        UniquePricedCollection.Add(ni);
+                        uniquePricedCollection.Add(ni);
                     }
                 }
             }
-            TLM.pricedUniques = new PricedItemCollection(UniquePricedCollection);
-            TLM.pricedDivinationCards = new PricedItemCollection(DiviPricedCollection);
-            TLM.pricedMaps = new PricedItemCollection(MapPricedCollection);
+            TLM.pricedUniques = new PricedItemCollection(uniquePricedCollection);
+            TLM.pricedDivinationCards = new PricedItemCollection(diviPricedCollection);
+            TLM.pricedMaps = new PricedItemCollection(mapPricedCollection);
+            TLM.pricedBases = new PricedItemCollection(baseTypePriceCollection);
+            TLM.pricedBasesOverview = new PricedItemCollectionOverview(baseTypePriceCollection);
         }
 
         // recursively yield all children of json

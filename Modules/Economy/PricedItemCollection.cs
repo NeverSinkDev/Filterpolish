@@ -13,6 +13,12 @@ namespace FilterPolish
 
         public bool BaseTypeExists { get; set; }
 
+        public PricedItemCollection CreateSubCollection()
+        {
+            var col = this.sortedCollection.Select(x => x.Value.Where(z => z.Variant == "Shaper")?.ToList()).SelectMany(x => x).ToList();
+            return new PricedItemCollection(col);
+        }
+
         public PricedItemCollection(List<NinjaItem> initlist)
         {
             this.sortedCollection = new Dictionary<string, List<NinjaItem>>();
@@ -26,7 +32,6 @@ namespace FilterPolish
                 {
                     keyTag = item.Name;
                     this.BaseTypeExists = false;
-                    
                 }
                 else
                 {
