@@ -1,8 +1,4 @@
-# Filterpolish
-
-![Build passing?](https://api.travis-ci.org/NeverSinkDev/Filterpolish.svg?branch=master)
-
-[work in progress] This is a small tool that works with .filter files. It reads them into memory and rebuilds them, while optimizing the structure. It also provides a small set of tools for creating automatic subversions. The syntax can be adapted for other similar markup languages or rule-based systems. Currently it only works with PoE. filter files.
+This tool is deprecated and no longer updated. Please use https://github.com/NeverSinkDev/FilterPolishZ instead.
 
 *This tool is not designed to replace Notepad++ or Filtration for .filter editing. It's designed to help filter-makers automate processes and repetitive tasks.*
 
@@ -31,7 +27,3 @@ What it currently does:
 - Provides a link to poe.ninja and crawls economy data
 
 - Allows the quick and comfortable resorting of tier-lists
-
-- Creates tier-list based changelogs
-
-- More
